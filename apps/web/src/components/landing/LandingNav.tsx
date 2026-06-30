@@ -2,6 +2,7 @@ import { Link } from "react-router-dom";
 import { JalLogo } from "../JalLogo";
 import { ThemeToggle } from "../ThemeToggle";
 import { useTheme } from "../../context/ThemeContext";
+import { useAuth } from "../../context/AuthContext";
 import { JAL_TAGLINE } from "../../lib/jal-brand";
 
 const links = [
@@ -15,6 +16,7 @@ const links = [
 
 export function LandingNav() {
   const { theme } = useTheme();
+  const { user } = useAuth();
 
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4">
@@ -54,6 +56,11 @@ export function LandingNav() {
           <Link to="/studio" className="nav-link hidden rounded-full px-3 py-1.5 text-sm lg:inline">
             Studio
           </Link>
+          {user && (
+            <Link to="/dashboard" className="nav-link hidden rounded-full px-3 py-1.5 text-sm md:inline">
+              Dashboard
+            </Link>
+          )}
           <Link to="/studio/onboard" className="btn-primary inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold">
             Attach repo
           </Link>
