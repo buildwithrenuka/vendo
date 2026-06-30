@@ -8,6 +8,11 @@
 
 <br />
 
+[![GitHub](https://img.shields.io/badge/GitHub-buildwithrenuka%2Fvendo-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/buildwithrenuka/vendo)
+[![License](https://img.shields.io/badge/License-Private-red?style=for-the-badge)](https://github.com/buildwithrenuka/vendo)
+
+<br />
+
 [![Node.js](https://img.shields.io/badge/Node.js-≥20-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 [![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-F38020?style=for-the-badge&logo=cloudflare&logoColor=white)](https://workers.cloudflare.com/)
@@ -24,7 +29,14 @@ collect compliance docs, auto-approve clear cases, and keep finance audit-ready.
 
 <br />
 
-[Quick Start](#-quick-start) · [Features](#-features) · [Architecture](#-architecture) · [API](#-api) · [Deploy](#-deployment)
+[Quick Start](#-quick-start) · [Features](#-features) · [Architecture](#-architecture) · [API](#-api) · [Deploy](#-deployment) · [GitHub](https://github.com/buildwithrenuka/vendo)
+
+<br />
+
+```bash
+git clone https://github.com/buildwithrenuka/vendo.git
+cd vendo
+```
 
 </div>
 
@@ -235,7 +247,8 @@ vendo/
 ### Run locally
 
 ```bash
-# Clone & install
+git clone https://github.com/buildwithrenuka/vendo.git
+cd vendo
 npm install
 
 # Build shared packages (required first)
@@ -493,6 +506,10 @@ Update `APP_URL` / `API_URL` and OAuth redirect URIs for production.
 
 <br />
 
-*Private · All rights reserved*
+[**github.com/buildwithrenuka/vendo**](https://github.com/buildwithrenuka/vendo)
+
+<br />
+
+*Private · All rights reserved · © buildwithrenuka*
 
 </div>
