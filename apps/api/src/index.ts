@@ -85,4 +85,8 @@ app.onError((err, c) => {
   return c.json({ error: "Internal server error" }, 500);
 });
 
-export default app;
+/** Production serves the SPA from Worker assets; browser calls `/api/*`. */
+const root = new Hono<AppEnv>();
+root.route("/api", app);
+
+export default root;

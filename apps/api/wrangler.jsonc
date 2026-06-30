@@ -11,18 +11,25 @@
   "dev": {
     "port": 8787
   },
+  "assets": {
+    "directory": "../web/dist",
+    "not_found_handling": "single-page-application",
+    "run_worker_first": ["/api/*"]
+  },
   "d1_databases": [
     {
       "binding": "DB",
       "database_name": "vendo-db",
-      "database_id": "00000000-0000-0000-0000-000000000001",
+      "database_id": "62c4c64e-5f58-431f-b636-a3e6313edf1c",
       "migrations_dir": "migrations"
     }
   ],
   "vars": {
-    "APP_URL": "http://localhost:5173",
-    "API_URL": "http://localhost:8787",
+    "APP_URL": "https://vendo-api.renuka-khirwadkarr.workers.dev",
+    "API_URL": "https://vendo-api.renuka-khirwadkarr.workers.dev",
     "FROM_EMAIL": "onboarding@vendo.app",
-    "VENDO_ADMIN_USERNAME": "admin"
+    "VENDO_ADMIN_USERNAME": "admin",
+    "JAL_PROFILE": "vendo",
+    "GITHUB_REPO": "buildwithrenuka/vendo"
   }
 }
