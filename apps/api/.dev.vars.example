@@ -1,0 +1,24 @@
+APP_URL=http://localhost:5173
+API_URL=http://localhost:8787
+SESSION_SECRET=dev-secret-change-in-production-min-32-chars
+GOOGLE_CLIENT_ID=
+GOOGLE_CLIENT_SECRET=
+
+# Razorpay (from magic-secretary — use test keys for local dev if preferred)
+RAZORPAY_KEY_ID=
+RAZORPAY_KEY_SECRET=
+OIDC_ISSUER=http://localhost:3000
+OIDC_CLIENT_ID=vendo
+OIDC_CLIENT_SECRET=vendo_secret
+RESEND_API_KEY=
+FROM_EMAIL=onboarding@vendo.app
+OPENAI_API_KEY=
+
+# ShipFlow dev queue
+DEV_EMAILS=you@gmail.com
+GITHUB_TOKEN=
+GITHUB_REPO=your-org/your-repo
+
+# Bootstrap first Vendo admin (created once if no admin exists)
+VENDO_ADMIN_USERNAME=admin
+VENDO_ADMIN_PASSWORD=change-me-min-8-chars
