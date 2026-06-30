@@ -4,6 +4,7 @@ import { FlowRiverHero } from "../components/landing/FlowRiverHero";
 import { FeedbackRiverShowcase } from "../components/landing/FeedbackRiverShowcase";
 import { ShapeShiftProfiles } from "../components/landing/ShapeShiftProfiles";
 import { LandingNav } from "../components/landing/LandingNav";
+import { JudgeTrySection } from "../components/landing/JudgeTrySection";
 import { JalLogo } from "../components/JalLogo";
 import { GoogleIcon, googleAuthStartUrl } from "../lib/google-auth";
 import { JAL_TAGLINE, JAL_TAGLINE_LONG, JAL_HERO_HEADLINE, JAL_HERO_HEADLINE_ACCENT } from "../lib/jal-brand";
@@ -318,6 +319,8 @@ export function HomePage() {
           </div>
         </section>
 
+        <JudgeTrySection />
+
         {/* Vendo demo */}
         <section id="demo" className="px-6 py-20">
           <div className="mx-auto max-w-6xl">
@@ -326,7 +329,7 @@ export function HomePage() {
                 <p className="section-label">Live reference</p>
                 <h2 className="mt-3 text-3xl font-bold">Vendo — Jal on a real product</h2>
                 <p className="mt-4 text-landing-muted">
-                  Procurement app with buyer feedback tab + internal dev queue. Same widget + pipeline pattern you get in Studio.
+                  Procurement app with buyer feedback tab + internal dev queue. Same pipeline as Jal Studio — see ready-made ideas in <a href="#try" className="text-[var(--jal-phosphor)] underline">Try it</a>.
                 </p>
                 <div className="mt-8 flex flex-wrap gap-3">
                   <Link to="/internal/login" className="btn-primary rounded-xl px-6 py-3 text-sm font-semibold">Dev queue demo</Link>

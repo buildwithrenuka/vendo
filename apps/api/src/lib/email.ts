@@ -15,7 +15,7 @@ export type SendInviteEmailResult = SendEmailResult & {
 };
 
 function formatFrom(fromEmail: string): string {
-  return fromEmail.includes("<") ? fromEmail : `Vendo <${fromEmail}>`;
+  return fromEmail.includes("<") ? fromEmail : `Jal <${fromEmail}>`;
 }
 
 function friendlyResendError(message: string): string {

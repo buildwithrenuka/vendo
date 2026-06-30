@@ -6,6 +6,7 @@ import { JAL_TAGLINE } from "../../lib/jal-brand";
 
 const links = [
   { href: "#river", label: "River" },
+  { href: "#try", label: "Try it" },
   { href: "#studio", label: "Studio" },
   { href: "#pipeline", label: "Pipeline" },
   { href: "#dual", label: "Studio + npm" },

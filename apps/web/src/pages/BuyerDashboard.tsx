@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import { useSearchParams } from "react-router-dom";
 import type { FormSchemaPayload } from "@vendo/forms";
 import { SUPPLIER_STARTER_FIELDS } from "@vendo/forms";
 import { api } from "../lib/api";
@@ -24,6 +25,7 @@ import {
 } from "../components/ui";
 import type { FeatureRequest, GstInvoice } from "@vendo/shared";
 import { STANDARD_TIER_MAX_SUPPLIERS } from "@vendo/shared";
+import { clearJudgeTryDraft, loadJudgeTryDraft, type JudgeTryDraft } from "../lib/judge-try";
 
 type DashboardTab = "overview" | "suppliers" | "setup" | "feedback";
 type SetupSection = "form" | "rules" | "gst";
@@ -74,6 +76,7 @@ type QueueItem = {
 
 export function BuyerDashboard() {
   const { user, logout } = useAuth();
+  const [searchParams] = useSearchParams();
   const [tab, setTab] = useState<DashboardTab>("overview");
   const [setupSection, setSetupSection] = useState<SetupSection>("form");
   const [inviteEmail, setInviteEmail] = useState("");
@@ -98,6 +101,7 @@ export function BuyerDashboard() {
   const [loadingShareId, setLoadingShareId] = useState<string | null>(null);
   const [featureRequests, setFeatureRequests] = useState<FeatureRequest[]>([]);
   const [submittingFeature, setSubmittingFeature] = useState(false);
+  const [judgeDraft, setJudgeDraft] = useState<JudgeTryDraft | null>(null);
   const [gstInvoices, setGstInvoices] = useState<GstInvoice[]>([]);
 
   const buyerName = user?.companyName ?? user?.name ?? "Your company";
@@ -141,6 +145,18 @@ export function BuyerDashboard() {
   useEffect(() => {
     refresh().catch(console.error);
   }, []);
+
+  useEffect(() => {
+    if (searchParams.get("tab") === "feedback") {
+      setTab("feedback");
+    }
+    const draft = loadJudgeTryDraft();
+    if (draft?.path === "vendo") {
+      setJudgeDraft(draft);
+      setTab("feedback");
+      clearJudgeTryDraft();
+    }
+  }, [searchParams]);
 
   const sendInvite = async () => {
     setMessage(null);
@@ -523,6 +539,17 @@ export function BuyerDashboard() {
         <FeatureRequestTracker
           requests={featureRequests}
           submitting={submittingFeature}
+          initialDraft={
+            judgeDraft
+              ? {
+                  title: judgeDraft.title,
+                  description: judgeDraft.description,
+                  requestType: judgeDraft.requestType,
+                  targetUser: judgeDraft.targetUser,
+                  currentPain: judgeDraft.currentPain,
+                }
+              : null
+          }
             onSubmit={async (data) => {
               setSubmittingFeature(true);
               try {

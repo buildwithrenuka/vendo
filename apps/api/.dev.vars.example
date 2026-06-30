@@ -11,7 +11,7 @@ OIDC_ISSUER=http://localhost:3000
 OIDC_CLIENT_ID=vendo
 OIDC_CLIENT_SECRET=vendo_secret
 RESEND_API_KEY=
-FROM_EMAIL=onboarding@vendo.app
+FROM_EMAIL=hello@jal.app
 OPENAI_API_KEY=
 
 # Jal — adapts AI to host product (vendo | travel | generic)

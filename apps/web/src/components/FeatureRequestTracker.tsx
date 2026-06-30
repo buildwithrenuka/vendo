@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import type { FeatureRequest, FeatureRequestStatus } from "@vendo/shared";
 import {
   FEATURE_REQUEST_STATUS_DESCRIPTIONS,
@@ -81,16 +81,27 @@ type Props = {
   onSubmit: (data: SubmitPayload) => Promise<void>;
   onClarify: (id: string, reply: string) => Promise<void>;
   submitting?: boolean;
+  initialDraft?: SubmitPayload | null;
 };
 
-export function FeatureRequestTracker({ requests, onSubmit, onClarify, submitting }: Props) {
-  const [title, setTitle] = useState("");
-  const [description, setDescription] = useState("");
-  const [requestType, setRequestType] = useState<"feature" | "bug">("feature");
-  const [targetUser, setTargetUser] = useState<SubmitPayload["targetUser"]>("buyer");
-  const [currentPain, setCurrentPain] = useState("");
-  const [showForm, setShowForm] = useState(requests.length === 0);
+export function FeatureRequestTracker({ requests, onSubmit, onClarify, submitting, initialDraft }: Props) {
+  const [title, setTitle] = useState(initialDraft?.title ?? "");
+  const [description, setDescription] = useState(initialDraft?.description ?? "");
+  const [requestType, setRequestType] = useState<"feature" | "bug">(initialDraft?.requestType ?? "feature");
+  const [targetUser, setTargetUser] = useState<SubmitPayload["targetUser"]>(initialDraft?.targetUser ?? "buyer");
+  const [currentPain, setCurrentPain] = useState(initialDraft?.currentPain ?? "");
+  const [showForm, setShowForm] = useState(requests.length === 0 || Boolean(initialDraft));
   const [clarifyReplies, setClarifyReplies] = useState<Record<string, string>>({});
+
+  useEffect(() => {
+    if (!initialDraft) return;
+    setTitle(initialDraft.title);
+    setDescription(initialDraft.description);
+    setRequestType(initialDraft.requestType);
+    if (initialDraft.targetUser) setTargetUser(initialDraft.targetUser);
+    setCurrentPain(initialDraft.currentPain ?? "");
+    setShowForm(true);
+  }, [initialDraft]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

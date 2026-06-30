@@ -21,14 +21,18 @@ The world's first **Feedback River UI** — plus hosted **Jal Studio**, headless
 
 | | |
 |:---:|:---|
-| **Live demo** | [`http://localhost:5173`](http://localhost:5173) after `npm run dev` |
-| **Attach a repo** | [`/studio/onboard`](http://localhost:5173/studio/onboard) |
-| **See the river** | Homepage `#river` → click droplets → Dual Lens |
+| **Live (production)** | [**vendo-api.renuka-khirwadkarr.workers.dev**](https://vendo-api.renuka-khirwadkarr.workers.dev) |
+| **Try it (judges)** | [Homepage `#try`](https://vendo-api.renuka-khirwadkarr.workers.dev/#try) — one-click feature ideas |
+| **Attach a repo** | [`/studio/onboard`](https://vendo-api.renuka-khirwadkarr.workers.dev/studio/onboard) |
+| **See the river** | [`#river`](https://vendo-api.renuka-khirwadkarr.workers.dev/#river) → click droplets → Dual Lens |
+| **Vendo demo** | [`/internal/login`](https://vendo-api.renuka-khirwadkarr.workers.dev/internal/login) · buyer [`/dashboard`](https://vendo-api.renuka-khirwadkarr.workers.dev/dashboard) |
+| **Docs** | [`/docs`](https://vendo-api.renuka-khirwadkarr.workers.dev/docs) |
 | **npm engine** | [`@buildwithrenuka/jal`](https://www.npmjs.com/package/@buildwithrenuka/jal) |
+| **Product domain** | **`jal.app`** *(DNS migration in progress)* |
 
 <br />
 
-[90-Second Demo](#-90-second-demo-for-judges) · [What's New](#-what-jal-invented) · [Quick Start](#-quick-start) · [Documentation](/docs) · [Studio](#-jal-studio) · [Architecture](#-architecture) · [API](#-api)
+[90-Second Demo](#-90-second-demo-for-judges) · [Try It](#-try-it-jal--vendo) · [What's New](#-what-jal-invented) · [Quick Start](#-quick-start) · [Documentation](/docs) · [Studio](#-jal-studio) · [Architecture](#-architecture) · [API](#-api)
 
 <br />
 
@@ -49,11 +53,32 @@ git clone https://github.com/buildwithrenuka/vendo.git && cd vendo && npm instal
 | **1** | Open **`/`** (homepage) | Hero + **live pipeline animation** (Request → Merge) |
 | **2** | Scroll to **`#river`** | Interactive river — **click any droplet** |
 | **3** | Watch **Dual Lens** | Left = customer widget · Right = ship console · Same request |
-| **4** | Go **`/studio/onboard`** | Sign in → paste `owner/repo` → **Repo Pour** fills with AI context |
-| **5** | Open **`/studio/projects/:id`** | Real **Feedback River** inbox — enqueue → AI Build → PR → merge |
-| **6** | Optional: **`/internal/login`** | Vendo — same pipeline on a production procurement app |
+| **4** | Scroll to **`#try`** | **One-click feature ideas** — pre-filled forms for Jal Studio & Vendo |
+| **5** | Go **`/studio/onboard`** | Sign in → paste `owner/repo` → **Repo Pour** fills with AI context |
+| **6** | Open **`/studio/projects/:id`** | Real **Feedback River** inbox — enqueue → AI Build → PR → merge |
+| **7** | Optional: **`/internal/login`** | Vendo — same pipeline on a production procurement app |
 
 **One-liner for the panel:** *"Jal closes the loop from customer widget to merged GitHub PR — with a UI metaphor nobody else ships."*
+
+---
+
+## 🎯 Try it — Jal & Vendo
+
+**Jal** is the product. **Vendo** is the live demo app (procurement) proving the same pipeline on a real product. Both run on one deploy — judges pick a path:
+
+| Path | Who it's for | Start here | Pre-filled ideas |
+|------|--------------|------------|------------------|
+| **Jal Studio** | Attach any GitHub repo | [`/studio/onboard`](https://vendo-api.renuka-khirwadkarr.workers.dev/studio/onboard) | Homepage **`#try`** → Studio cards |
+| **Vendo demo** | See Jal on a real SaaS | [Google sign-in → Feedback](https://vendo-api.renuka-khirwadkarr.workers.dev/api/auth/google?redirect=%2Fdashboard%3Ftab%3Dfeedback) | Homepage **`#try`** → Vendo cards |
+| **Dev queue** | Internal ship console | [`/internal/login`](https://vendo-api.renuka-khirwadkarr.workers.dev/internal/login) | Enqueue → AI Build → merge |
+
+### Sample ideas judges can try in ~2 minutes
+
+**Jal Studio:** public changelog from shipped feedback · Slack ping when PR ready · merge duplicate river droplets · widget theme from host brand
+
+**Vendo demo:** bulk supplier CSV invite · GST invoice PO match · WhatsApp onboarding nudge · supplier scorecard PDF export
+
+Click any card on **`#try`** — the form opens **pre-filled**. Submit and watch AI triage immediately.
 
 ---
 
@@ -253,6 +278,7 @@ npm run dev
 | Health | `GET /health` |
 | Studio | `/studio/onboard` |
 | **Docs** | [`/docs`](http://localhost:5173/docs) — step-by-step guides (Expo-style) |
+| **Live** | [workers.dev deploy](https://vendo-api.renuka-khirwadkarr.workers.dev) |
 
 ### Widget in your app
 
@@ -356,9 +382,9 @@ CSS: `apps/web/src/index.css` · Tokens: `apps/web/src/lib/jal-brand.ts`
 
 ---
 
-## 🏢 Vendo (reference deployment)
+## 🏢 Vendo (reference demo — not the product)
 
-Proves Jal isn't a demo — it's deployed patterns on a **real procurement platform**.
+**Jal** ships on **`jal.app`**. **Vendo** is the bundled demo app so judges can try the pipeline on a **real procurement product** without attaching their own repo.
 
 | Module | Route | Jal integration |
 |--------|-------|-----------------|
@@ -392,15 +418,22 @@ Full list: [`apps/api/.dev.vars.example`](apps/api/.dev.vars.example)
 <details>
 <summary><strong>Deploy</strong></summary>
 
-```bash
-# API → Cloudflare Workers
-wrangler secret put SESSION_SECRET OPENAI_API_KEY GITHUB_TOKEN
-npm run db:migrate:remote --workspace @vendo/api
-npm run deploy --workspace @vendo/api
+**Live:** [https://vendo-api.renuka-khirwadkarr.workers.dev](https://vendo-api.renuka-khirwadkarr.workers.dev)  
+**Product domain:** `jal.app` — add zone on Cloudflare, point NS, then enable custom domain in `wrangler.jsonc`
 
-# Web → static (Pages / Vercel)
-npm run build --workspace @vendo/web
+```bash
+# One command — builds web + deploys Worker + static assets
+npm run deploy:all --workspace @vendo/api
+
+# First-time setup
+npm run db:migrate:remote --workspace @vendo/api
+cd apps/api && npx wrangler secret bulk .deploy-secrets.env   # see .dev.vars.example
+
+# After jal.app is on Cloudflare — Resend DNS records
+npm run setup:dns --workspace @vendo/api
 ```
+
+Email sender: `hello@jal.app` (Resend domain verify required).
 
 </details>
 

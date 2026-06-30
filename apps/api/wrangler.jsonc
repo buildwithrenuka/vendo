@@ -11,6 +11,8 @@
   "dev": {
     "port": 8787
   },
+  "workers_dev": true,
+  "preview_urls": true,
   "assets": {
     "directory": "../web/dist",
     "not_found_handling": "single-page-application",
@@ -27,7 +29,7 @@
   "vars": {
     "APP_URL": "https://vendo-api.renuka-khirwadkarr.workers.dev",
     "API_URL": "https://vendo-api.renuka-khirwadkarr.workers.dev",
-    "FROM_EMAIL": "onboarding@vendo.app",
+    "FROM_EMAIL": "hello@jal.app",
     "VENDO_ADMIN_USERNAME": "admin",
     "JAL_PROFILE": "vendo",
     "GITHUB_REPO": "buildwithrenuka/vendo"

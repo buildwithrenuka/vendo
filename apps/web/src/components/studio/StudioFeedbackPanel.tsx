@@ -2,6 +2,7 @@ import { useCallback, useEffect, useState } from "react";
 import type { FeatureRequest } from "@vendo/shared";
 import { FEATURE_REQUEST_STATUS_LABELS } from "@vendo/shared";
 import { studioFeedbackApi, storageKey } from "../../lib/studio-api";
+import { clearJudgeTryDraft, loadJudgeTryDraft } from "../../lib/judge-try";
 import { Button, Input, Textarea } from "../ui";
 
 type Props = {
@@ -29,6 +30,13 @@ export function StudioFeedbackPanel({ projectId, apiKey, productName, compact }:
   useEffect(() => {
     const stored = localStorage.getItem(storageKey(projectId, "email"));
     if (stored) setEmail(stored);
+    const draft = loadJudgeTryDraft();
+    if (draft?.path === "studio") {
+      setTitle(draft.title);
+      setDescription(draft.description);
+      setRequestType(draft.requestType);
+      clearJudgeTryDraft();
+    }
     load().catch(() => setRequests([]));
   }, [load, projectId]);
 
