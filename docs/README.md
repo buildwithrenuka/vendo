@@ -12,6 +12,6 @@ Step-by-step guides for Jal Studio, the embed widget, npm package, and API.
 | [Get started](./get-started.md) | First repo attach in 5 minutes |
 | [Jal Studio](./studio.md) | River, Dual Lens, dev queue |
 | [Embed widget](./widget.md) | Drop the feedback widget on your site |
-| [npm package](./npm.md) | Headless `@buildwithrenuka/jal` |
+| [npm package](./npm.md) | Headless `@jal_ai/jal` |
 | [API reference](./api.md) | Studio REST endpoints |
 | [Troubleshooting](./troubleshooting.md) | Common fixes |

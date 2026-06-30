@@ -10,8 +10,8 @@ import { GoogleIcon, googleAuthStartUrl } from "../lib/google-auth";
 import { JAL_TAGLINE, JAL_TAGLINE_LONG, JAL_HERO_HEADLINE, JAL_HERO_HEADLINE_ACCENT } from "../lib/jal-brand";
 
 const GITHUB_URL = "https://github.com/buildwithrenuka/vendo";
-const NPM_URL = "https://www.npmjs.com/package/@buildwithrenuka/jal";
-const NPM_INSTALL = "npm install @buildwithrenuka/jal";
+const NPM_URL = "https://www.npmjs.com/package/@jal_ai/jal";
+const NPM_INSTALL = "npm install @jal_ai/jal";
 
 const studioSteps = [
   {
@@ -56,7 +56,7 @@ const dualDoors = [
     cta: "View on npm",
     href: NPM_URL,
     external: true,
-    features: ["@buildwithrenuka/jal package", "Self-host with env vars", "Wire your own routes", "Vendo = live reference"],
+    features: ["@jal_ai/jal package", "Self-host with env vars", "Wire your own routes", "Vendo = live reference"],
   },
 ];
 
@@ -272,7 +272,7 @@ export function HomePage() {
         {/* Dual doors */}
         <section id="dual" className="landing-section-alt px-6 py-20">
           <div className="mx-auto max-w-6xl">
-            <SectionHeading label="Two doors, one engine" title="Studio or npm — your call" subtitle="Same @buildwithrenuka/jal pipeline. Pick hosted speed or self-hosted control." />
+            <SectionHeading label="Two doors, one engine" title="Studio or npm — your call" subtitle="Same @jal_ai/jal pipeline. Pick hosted speed or self-hosted control." />
             <div className="mt-14 grid gap-6 md:grid-cols-2">
               {dualDoors.map((door) => (
                 <article key={door.title} className="landing-card landing-card-hover flex flex-col rounded-2xl p-6">

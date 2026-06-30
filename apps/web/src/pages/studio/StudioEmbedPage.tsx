@@ -11,7 +11,7 @@ import {
   StudioShell,
 } from "../../components/studio/StudioUI";
 
-const NPM_INSTALL = "npm install @buildwithrenuka/jal";
+const NPM_INSTALL = "npm install @jal_ai/jal";
 
 export function StudioEmbedPage() {
   const { projectId = "" } = useParams();

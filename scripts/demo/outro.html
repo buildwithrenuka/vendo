@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh; overflow: hidden;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      background: #010a0f; font-family: system-ui, sans-serif; color: #d4fff8; text-align: center;
+    }
+    .bars { position: fixed; left: 0; right: 0; height: 72px; background: #000; }
+    .bars.top { top: 0; } .bars.bottom { bottom: 0; }
+    .glow {
+      position: fixed; inset: 0; pointer-events: none;
+      background: radial-gradient(ellipse 60% 50% at 50% 50%, rgba(0,245,212,0.1) 0%, transparent 60%);
+    }
+    h1 {
+      font-size: 3.5rem; font-weight: 900; letter-spacing: -0.03em;
+      opacity: 0; animation: in 1s 0.3s forwards;
+    }
+    .links { margin-top: 2.5rem; display: flex; flex-direction: column; gap: 1rem; }
+    .link {
+      font-size: 1.15rem; opacity: 0; animation: in 0.8s forwards;
+    }
+    .link:nth-child(1) { animation-delay: 0.7s; }
+    .link:nth-child(2) { animation-delay: 0.95s; }
+    .link:nth-child(3) { animation-delay: 1.2s; }
+    .link span { color: #00f5d4; font-weight: 700; }
+    .cta {
+      margin-top: 3rem; padding: 0.85rem 2rem; border-radius: 14px;
+      background: linear-gradient(135deg, #00f5d4, #00c4aa); color: #010a0f;
+      font-weight: 800; font-size: 1rem; letter-spacing: 0.05em;
+      opacity: 0; animation: in 0.8s 1.5s forwards;
+      box-shadow: 0 0 40px rgba(0,245,212,0.35);
+    }
+    @keyframes in { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: none; } }
+  </style>
+</head>
+<body>
+  <div class="bars top"></div>
+  <div class="bars bottom"></div>
+  <div class="glow"></div>
+  <h1>Try Jal now</h1>
+  <div class="links">
+    <div class="link">Live → <span>vendo-api.renuka-khirwadkarr.workers.dev</span></div>
+    <div class="link">npm → <span>@jal_ai/jal</span></div>
+    <div class="link">GitHub → <span>github.com/buildwithrenuka/vendo</span></div>
+  </div>
+  <div class="cta">Feedback flows. Features ship.</div>
+</body>
+</html>

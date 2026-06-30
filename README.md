@@ -6,12 +6,12 @@
 
 **Customer feedback flows in as droplets. AI triages, builds, opens PRs. You merge. Done.**
 
-The world's first **Feedback River UI** — plus hosted **Jal Studio**, headless **`@buildwithrenuka/jal` npm**, and **Vendo** as live proof on a real product.
+The world's first **Feedback River UI** — plus hosted **Jal Studio**, headless **`@jal_ai/jal` npm**, and **Vendo** as live proof on a real product.
 
 <br />
 
 [![GitHub](https://img.shields.io/badge/GitHub-buildwithrenuka%2Fvendo-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/buildwithrenuka/vendo)
-[![npm](https://img.shields.io/badge/npm-@buildwithrenuka%2Fjal-CB3837?style=for-the-badge&logo=npm&logoColor=white)](https://www.npmjs.com/package/@buildwithrenuka/jal)
+[![npm](https://img.shields.io/badge/npm-@jal_ai%2Fjal-CB3837?style=for-the-badge&logo=npm&logoColor=white)](https://www.npmjs.com/package/@jal_ai/jal)
 [![Cloudflare Workers](https://img.shields.io/badge/Edge-Cloudflare-F38020?style=for-the-badge&logo=cloudflare&logoColor=white)](https://workers.cloudflare.com/)
 [![OpenAI](https://img.shields.io/badge/AI-OpenAI_Pipeline-412991?style=for-the-badge&logo=openai&logoColor=white)](https://openai.com/)
 [![React](https://img.shields.io/badge/UI-React_19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
@@ -27,12 +27,13 @@ The world's first **Feedback River UI** — plus hosted **Jal Studio**, headless
 | **See the river** | [`#river`](https://vendo-api.renuka-khirwadkarr.workers.dev/#river) → click droplets → Dual Lens |
 | **Vendo demo** | [`/internal/login`](https://vendo-api.renuka-khirwadkarr.workers.dev/internal/login) · buyer [`/dashboard`](https://vendo-api.renuka-khirwadkarr.workers.dev/dashboard) |
 | **Docs** | [`/docs`](https://vendo-api.renuka-khirwadkarr.workers.dev/docs) |
-| **npm engine** | [`@buildwithrenuka/jal`](https://www.npmjs.com/package/@buildwithrenuka/jal) |
+| **npm engine** | [`@jal_ai/jal`](https://www.npmjs.com/package/@jal_ai/jal) |
 | **Product domain** | **`jal.app`** *(DNS migration in progress)* |
+| **Hackathon demo video** | `demo-output/jal-hackathon-demo.mp4` (~2 min) — `npm run demo:record` |
 
 <br />
 
-[90-Second Demo](#-90-second-demo-for-judges) · [Try It](#-try-it-jal--vendo) · [What's New](#-what-jal-invented) · [Quick Start](#-quick-start) · [Documentation](/docs) · [Studio](#-jal-studio) · [Architecture](#-architecture) · [API](#-api)
+[All links](#-all-links) · [90-Second Demo](#-90-second-demo-for-judges) · [Try It](#-try-it-jal--vendo) · [What's New](#-what-jal-invented) · [Quick Start](#-quick-start) · [Documentation](/docs) · [Studio](#-jal-studio) · [Architecture](#-architecture) · [API](#-api)
 
 <br />
 
@@ -41,6 +42,52 @@ git clone https://github.com/buildwithrenuka/vendo.git && cd vendo && npm instal
 ```
 
 </div>
+
+---
+
+## 🔗 All links
+
+**Live base URL:** [https://vendo-api.renuka-khirwadkarr.workers.dev](https://vendo-api.renuka-khirwadkarr.workers.dev)
+
+### Product & demo (judges)
+
+| What | Link |
+|------|------|
+| **Homepage** | [vendo-api.renuka-khirwadkarr.workers.dev](https://vendo-api.renuka-khirwadkarr.workers.dev/) |
+| **Try it (`#try`)** | [One-click feature ideas](https://vendo-api.renuka-khirwadkarr.workers.dev/#try) |
+| **Feedback River (`#river`)** | [Interactive river + Dual Lens](https://vendo-api.renuka-khirwadkarr.workers.dev/#river) |
+| **Jal Studio — attach repo** | [/studio/onboard](https://vendo-api.renuka-khirwadkarr.workers.dev/studio/onboard) |
+| **Jal Studio — projects** | [/studio](https://vendo-api.renuka-khirwadkarr.workers.dev/studio) |
+| **In-app docs** | [/docs](https://vendo-api.renuka-khirwadkarr.workers.dev/docs) |
+| **Vendo — Google → Feedback** | [Sign in & submit](https://vendo-api.renuka-khirwadkarr.workers.dev/api/auth/google?redirect=%2Fdashboard%3Ftab%3Dfeedback) |
+| **Vendo — buyer dashboard** | [/dashboard](https://vendo-api.renuka-khirwadkarr.workers.dev/dashboard) |
+| **Vendo — internal dev queue** | [/internal/login](https://vendo-api.renuka-khirwadkarr.workers.dev/internal/login) |
+| **API health** | [/api/health](https://vendo-api.renuka-khirwadkarr.workers.dev/api/health) |
+
+### Code & packages
+
+| What | Link |
+|------|------|
+| **GitHub repo** | [github.com/buildwithrenuka/vendo](https://github.com/buildwithrenuka/vendo) |
+| **npm package** | [@jal_ai/jal on npm](https://www.npmjs.com/package/@jal_ai/jal) |
+| **Package README** | [packages/shipflow/README.md](packages/shipflow/README.md) |
+
+### Domains & contact
+
+| What | Link / value |
+|------|----------------|
+| **Product domain (target)** | [jal.app](https://jal.app) *(DNS pending)* |
+| **Email sender** | `hello@jal.app` |
+
+### Hackathon demo video
+
+| What | Details |
+|------|---------|
+| **Final video** | `demo-output/jal-hackathon-demo.mp4` (~2 min 21 sec, 1080p) |
+| **Record** | `npm run demo:record` |
+| **Change background music** | `npm run demo:music` or `npm run demo:music -- "https://youtube.com/watch?v=..."` |
+
+Upload `jal-hackathon-demo.mp4` to your hackathon portal (or host on YouTube / Drive and paste that URL in the submission form).
 
 ---
 
@@ -174,18 +221,18 @@ Attach GitHub → AI scans context → drop widget → ship from UI.
 /.../embed       Widget + API key
 ```
 
-[**Open Studio →**](http://localhost:5173/studio/onboard)
+[**Open Studio →**](https://vendo-api.renuka-khirwadkarr.workers.dev/studio/onboard)
 
 </td>
 <td width="33%" valign="top">
 
-### 📦 `@buildwithrenuka/jal`
+### 📦 `@jal_ai/jal`
 **Full control · your infra**
 
 Same pipeline as npm — triage, tasks, build, PR, merge.
 
 ```bash
-npm install @buildwithrenuka/jal
+npm install @jal_ai/jal
 ```
 
 Profiles: `vendo` · `travel` · `generic`
@@ -207,7 +254,7 @@ Procurement app with buyer widget + internal dev queue.
 
 Not a mock — production patterns.
 
-[**Dev demo →**](http://localhost:5173/internal/login)
+[**Dev demo →**](https://vendo-api.renuka-khirwadkarr.workers.dev/internal/login)
 
 </td>
 </tr>
@@ -294,7 +341,7 @@ npm run dev
 ### npm (headless)
 
 ```typescript
-import { loadJalContext, triageFeatureRequest, runAiCodeBuilder } from "@buildwithrenuka/jal";
+import { loadJalContext, triageFeatureRequest, runAiCodeBuilder } from "@jal_ai/jal";
 
 const jal = loadJalContext({ JAL_PROFILE: "generic", JAL_PRODUCT_NAME: "My SaaS" });
 ```
@@ -324,7 +371,7 @@ flowchart TB
         D1[("D1 SQLite")]
     end
 
-    subgraph Brain["@buildwithrenuka/jal"]
+    subgraph Brain["@jal_ai/jal"]
         TRI["Triage"]
         BLDR["Code builder"]
         REV["PR review"]
@@ -353,7 +400,7 @@ vendo/
 ├── packages/
 │   ├── shared/           Types · Jal project models · status labels
 │   ├── forms/            Zod schemas · field catalog
-│   └── shipflow/         @buildwithrenuka/jal — portable AI pipeline
+│   └── shipflow/         @jal_ai/jal — portable AI pipeline
 └── package.json
 ```
 
@@ -494,7 +541,7 @@ Vendo: **Standard** (3 suppliers free) · **Enterprise** (GST, unlimited)
 
 <br />
 
-[**▶ Run the demo**](http://localhost:5173) · [**Attach a repo**](http://localhost:5173/studio/onboard) · [**npm**](https://www.npmjs.com/package/@buildwithrenuka/jal) · [**GitHub**](https://github.com/buildwithrenuka/vendo)
+[**▶ Run the demo**](https://vendo-api.renuka-khirwadkarr.workers.dev) · [**Attach a repo**](https://vendo-api.renuka-khirwadkarr.workers.dev/studio/onboard) · [**Try it `#try`**](https://vendo-api.renuka-khirwadkarr.workers.dev/#try) · [**npm**](https://www.npmjs.com/package/@jal_ai/jal) · [**GitHub**](https://github.com/buildwithrenuka/vendo)
 
 <br />
 

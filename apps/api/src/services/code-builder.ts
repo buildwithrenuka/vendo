@@ -1,11 +1,11 @@
 import type { FeatureRequestAssessment } from "@vendo/shared";
-import type { GitHubConfig, ShipFlowContext } from "@buildwithrenuka/jal";
+import type { GitHubConfig, ShipFlowContext } from "@jal_ai/jal";
 import {
   githubConfigFromEnv,
   loadJalContext,
   runAiCodeBuilder as runBuilder,
   type AiBuildResult,
-} from "@buildwithrenuka/jal";
+} from "@jal_ai/jal";
 
 export type { AiBuildResult };
 

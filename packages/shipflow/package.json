@@ -1,5 +1,5 @@
 {
-  "name": "@buildwithrenuka/jal",
+  "name": "@jal_ai/jal",
   "version": "0.1.0",
   "description": "Jal — context-adaptive AI pipeline: feature triage, tasks, code builder & GitHub PR merge for any product",
   "type": "module",

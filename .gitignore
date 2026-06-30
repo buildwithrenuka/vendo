@@ -8,3 +8,8 @@ dist/
 *.local
 .DS_Store
 Thumbs.db
+demo-output/
+scripts/demo/bg-music.mp3
+scripts/demo/youtube-music.mp3
+scripts/demo/youtube-music.webm
+scripts/bin/

@@ -1,5 +1,5 @@
 import type { FeatureRequestAssessment } from "@vendo/shared";
-import { generateTasksFromAssessment as generateTasks, loadJalContext } from "@buildwithrenuka/jal";
+import { generateTasksFromAssessment as generateTasks, loadJalContext } from "@jal_ai/jal";
 import { logFeatureActivity } from "./activity-log";
 
 export type GeneratedTask = Awaited<ReturnType<typeof generateTasks>>[number];

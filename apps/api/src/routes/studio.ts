@@ -26,7 +26,7 @@ import {
 } from "../lib/studio-projects";
 import { getJalContextForProject } from "../lib/jal-env";
 import { parseJson } from "../lib/utils";
-import { appendUserReply, buildRequestContext, fetchPullRequestDiff, reviewPullRequestAgainstPrd } from "@buildwithrenuka/jal";
+import { appendUserReply, buildRequestContext, fetchPullRequestDiff, reviewPullRequestAgainstPrd } from "@jal_ai/jal";
 import type { ClarificationMessage, DevQueueStatus, FeatureRequest, JalProjectContext } from "@vendo/shared";
 import { enqueueFeatureForDevelopment } from "../services/task-generator";
 import { logFeatureActivity } from "../services/activity-log";
@@ -276,7 +276,7 @@ studioRoutes.get("/projects/:projectId/embed", requireAuth(), requireProjectOwne
     projectId: project.id,
     embedUrl: `${appUrl}/embed/${project.id}`,
     widgetSnippet: `<JalWidget projectId="${project.id}" apiKey="YOUR_API_KEY" />`,
-    npmSnippet: `npm install @buildwithrenuka/jal`,
+    npmSnippet: `npm install @jal_ai/jal`,
     iframeUrl: `${appUrl}/embed/${project.id}`,
   });
 });

@@ -2,7 +2,7 @@ import {
   loadJalContext,
   type JalEnvConfig,
   type ShipFlowContext,
-} from "@buildwithrenuka/jal";
+} from "@jal_ai/jal";
 import type { JalProjectContext } from "@vendo/shared";
 
 export function getJalContext(env: Env): ShipFlowContext {

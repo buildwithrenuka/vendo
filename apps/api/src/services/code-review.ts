@@ -1,5 +1,5 @@
 import type { FeatureRequestAssessment } from "@vendo/shared";
-import { loadJalContext, reviewPullRequestAgainstPrd as reviewPr } from "@buildwithrenuka/jal";
+import { loadJalContext, reviewPullRequestAgainstPrd as reviewPr } from "@jal_ai/jal";
 
 export type AiCodeReviewResult = Awaited<ReturnType<typeof reviewPr>>;
 

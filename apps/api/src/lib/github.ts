@@ -12,7 +12,7 @@ import {
   type CreatePrResult,
   type GitHubPullRequest,
   type MergePullRequestResult,
-} from "@buildwithrenuka/jal";
+} from "@jal_ai/jal";
 
 export type { CodeChange, CreatePrResult, GitHubPullRequest, MergePullRequestResult };
 

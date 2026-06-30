@@ -78,7 +78,7 @@ npm run dev
 
 ### Path B — npm only *(headless)*
 
-See [npm package](/docs/npm) — use `@buildwithrenuka/jal` in your own backend.
+See [npm package](/docs/npm) — use `@jal_ai/jal` in your own backend.
 
 ### Path C — Vendo demo *(reference app)*
 

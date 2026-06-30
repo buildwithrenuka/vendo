@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <style>
+    * { box-sizing: border-box; margin: 0; padding: 0; }
+    body {
+      min-height: 100vh; overflow: hidden;
+      display: flex; flex-direction: column; align-items: center; justify-content: center;
+      background: #010a0f;
+      font-family: "Segoe UI", system-ui, sans-serif;
+      color: #d4fff8; text-align: center;
+    }
+    .bars { position: fixed; left: 0; right: 0; height: 72px; background: #000; z-index: 10; }
+    .bars.top { top: 0; animation: barIn 1.2s ease forwards; }
+    .bars.bottom { bottom: 0; animation: barIn 1.2s ease forwards; }
+    .glow {
+      position: fixed; inset: 0; pointer-events: none;
+      background:
+        radial-gradient(ellipse 50% 40% at 50% 45%, rgba(0,245,212,0.12) 0%, transparent 55%),
+        radial-gradient(ellipse 30% 25% at 70% 60%, rgba(124,92,255,0.1) 0%, transparent 50%);
+      animation: pulseGlow 4s ease-in-out infinite;
+    }
+    .grain {
+      position: fixed; inset: 0; opacity: 0.04; pointer-events: none;
+      background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    }
+    .content { position: relative; z-index: 2; padding: 2rem; }
+    .logo {
+      width: 100px; height: 100px; border-radius: 26px; margin: 0 auto 2.5rem;
+      background: linear-gradient(135deg, #00f5d4, #7c5cff);
+      display: grid; place-items: center; font-size: 48px; font-weight: 900; color: #010a0f;
+      box-shadow: 0 0 80px rgba(0,245,212,0.4);
+      opacity: 0; animation: scaleIn 1s 0.3s cubic-bezier(0.34,1.56,0.64,1) forwards;
+    }
+    h1 {
+      font-size: 6rem; font-weight: 900; letter-spacing: -0.04em; line-height: 1;
+      background: linear-gradient(135deg, #d4fff8 0%, #00f5d4 45%, #a78bfa 100%);
+      -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+      opacity: 0; animation: fadeUp 1s 0.7s forwards;
+    }
+    .tagline {
+      margin-top: 1.25rem; font-size: 1.65rem; font-weight: 500; color: #6b9e96;
+      opacity: 0; animation: fadeUp 1s 1s forwards;
+    }
+    .line {
+      width: 0; height: 2px; margin: 2rem auto 0;
+      background: linear-gradient(90deg, transparent, #00f5d4, transparent);
+      animation: lineGrow 1.2s 1.4s forwards;
+    }
+    .sub {
+      margin-top: 1.5rem; font-size: 0.75rem; letter-spacing: 0.35em;
+      text-transform: uppercase; color: #3d6b66;
+      opacity: 0; animation: fadeUp 0.8s 1.8s forwards;
+    }
+    @keyframes barIn { from { transform: scaleY(0); } to { transform: scaleY(1); } }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
+    @keyframes scaleIn { from { opacity: 0; transform: scale(0.6); } to { opacity: 1; transform: scale(1); } }
+    @keyframes lineGrow { to { width: 280px; } }
+    @keyframes pulseGlow { 0%,100% { opacity: 0.7; } 50% { opacity: 1; } }
+  </style>
+</head>
+<body>
+  <div class="bars top"></div>
+  <div class="bars bottom"></div>
+  <div class="glow"></div>
+  <div class="grain"></div>
+  <div class="content">
+    <div class="logo">J</div>
+    <h1>Jal</h1>
+    <p class="tagline">Feedback flows. Features ship.</p>
+    <div class="line"></div>
+    <p class="sub">The Feedback River UI</p>
+  </div>
+</body>
+</html>

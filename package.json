@@ -9,14 +9,18 @@
     "dev": "concurrently -n api,web -c blue,green \"npm run dev:api\" \"npm run dev:web\"",
     "dev:api": "npm run dev --workspace @vendo/api",
     "dev:web": "npm run dev --workspace @vendo/web",
-    "build": "npm run build --workspace @vendo/shared && npm run build --workspace @vendo/forms && npm run build --workspace @buildwithrenuka/jal && npm run build --workspace @vendo/api && npm run build --workspace @vendo/web",
+    "build": "npm run build --workspace @vendo/shared && npm run build --workspace @vendo/forms && npm run build --workspace @jal_ai/jal && npm run build --workspace @vendo/api && npm run build --workspace @vendo/web",
     "db:migrate:local": "npm run db:migrate:local --workspace @vendo/api",
-    "typecheck": "npm run typecheck --workspaces --if-present"
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "demo:record": "node scripts/record-jal-demo.mjs",
+    "demo:music": "node scripts/mux-youtube-music.mjs"
   },
   "engines": {
     "node": ">=20"
   },
   "devDependencies": {
-    "concurrently": "^9.2.1"
+    "concurrently": "^9.2.1",
+    "ffmpeg-static": "^5.2.0",
+    "playwright": "^1.52.0"
   }
 }

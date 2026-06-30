@@ -1,16 +1,16 @@
-# @buildwithrenuka/jal
+# @jal_ai/jal
 
 **Jal** — context-adaptive AI pipeline: feature triage → engineering tasks → code builder → GitHub PR → merge.  
 Works like water: same pipeline, any product domain (procurement, travel, fintech, SaaS).
 
-[![npm version](https://img.shields.io/npm/v/@buildwithrenuka/jal)](https://www.npmjs.com/package/@buildwithrenuka/jal)
+[![npm version](https://img.shields.io/npm/v/@jal_ai/jal)](https://www.npmjs.com/package/@jal_ai/jal)
 
 ---
 
 ## Install
 
 ```bash
-npm install @buildwithrenuka/jal
+npm install @jal_ai/jal
 ```
 
 **Requirements:** Node.js ≥ 20, `OPENAI_API_KEY`, optional `GITHUB_TOKEN` + `GITHUB_REPO` for PR automation.
@@ -22,7 +22,7 @@ npm install @buildwithrenuka/jal
 ### Step 1 — Pick a product profile
 
 ```typescript
-import { loadJalContext } from "@buildwithrenuka/jal";
+import { loadJalContext } from "@jal_ai/jal";
 
 // Built-in: vendo | travel | generic
 const jal = loadJalContext({
@@ -34,7 +34,7 @@ const jal = loadJalContext({
 ### Step 2 — Triage a feature request (AI PM)
 
 ```typescript
-import { triageFeatureRequest } from "@buildwithrenuka/jal";
+import { triageFeatureRequest } from "@jal_ai/jal";
 
 const result = await triageFeatureRequest(
   process.env.OPENAI_API_KEY!,
@@ -56,7 +56,7 @@ console.log(result.assessment.verdict);
 ### Step 3 — Generate engineering tasks
 
 ```typescript
-import { generateTasksFromAssessment } from "@buildwithrenuka/jal";
+import { generateTasksFromAssessment } from "@jal_ai/jal";
 
 const tasks = await generateTasksFromAssessment(
   process.env.OPENAI_API_KEY,
@@ -70,7 +70,7 @@ const tasks = await generateTasksFromAssessment(
 ### Step 4 — AI code builder + open GitHub PR
 
 ```typescript
-import { runAiCodeBuilder, githubConfigFromEnv } from "@buildwithrenuka/jal";
+import { runAiCodeBuilder, githubConfigFromEnv } from "@jal_ai/jal";
 
 const github = githubConfigFromEnv({
   GITHUB_TOKEN: process.env.GITHUB_TOKEN,
@@ -101,7 +101,7 @@ import {
   reviewPullRequestAgainstPrd,
   fetchPullRequestDiff,
   mergePullRequest,
-} from "@buildwithrenuka/jal";
+} from "@jal_ai/jal";
 
 const diff = await fetchPullRequestDiff(github!, build.prNumber);
 

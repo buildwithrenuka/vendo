@@ -9,7 +9,7 @@ import {
   appendUserReply,
   buildRequestContext,
   triageFeatureRequest,
-} from "@buildwithrenuka/jal";
+} from "@jal_ai/jal";
 import { getJalContext } from "../lib/jal-env";
 import { enqueueFeatureForDevelopment } from "../services/task-generator";
 import { logFeatureActivity } from "../services/activity-log";

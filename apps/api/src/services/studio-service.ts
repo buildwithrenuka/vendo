@@ -9,7 +9,7 @@ import {
   appendClarification,
   appendUserReply,
   reviewPullRequestAgainstPrd,
-} from "@buildwithrenuka/jal";
+} from "@jal_ai/jal";
 import type {
   ClarificationMessage,
   DevFeatureDetail,

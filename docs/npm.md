@@ -1,11 +1,11 @@
 # npm package
 
-Use **`@buildwithrenuka/jal`** when you want the AI pipeline inside **your own backend** — same engine as Studio, your routes, your infra.
+Use **`@jal_ai/jal`** when you want the AI pipeline inside **your own backend** — same engine as Studio, your routes, your infra.
 
 ## Install
 
 ```bash
-npm install @buildwithrenuka/jal
+npm install @jal_ai/jal
 ```
 
 Requirements: Node.js ≥ 20, `OPENAI_API_KEY`, optional `GITHUB_TOKEN` + `GITHUB_REPO`.
@@ -19,7 +19,7 @@ import {
   generateTasksFromAssessment,
   runAiCodeBuilder,
   githubConfigFromEnv,
-} from "@buildwithrenuka/jal";
+} from "@jal_ai/jal";
 
 const jal = loadJalContext({
   JAL_PROFILE: "generic",
