@@ -1,93 +1,125 @@
 import { Link } from "react-router-dom";
+import { useTheme } from "../context/ThemeContext";
+import { FlowRiverHero } from "../components/landing/FlowRiverHero";
+import { FeedbackRiverShowcase } from "../components/landing/FeedbackRiverShowcase";
+import { ShapeShiftProfiles } from "../components/landing/ShapeShiftProfiles";
 import { LandingNav } from "../components/landing/LandingNav";
+import { JalLogo } from "../components/JalLogo";
 import { GoogleIcon, googleAuthStartUrl } from "../lib/google-auth";
+import { JAL_TAGLINE, JAL_TAGLINE_LONG, JAL_HERO_HEADLINE, JAL_HERO_HEADLINE_ACCENT } from "../lib/jal-brand";
 
-const offerings = [
-  {
-    title: "Message-first invites",
-    desc: "Share onboarding links on WhatsApp, email, or any channel — wherever your suppliers already are.",
-    icon: "💬",
-  },
-  {
-    title: "Compliance in one place",
-    desc: "Tax IDs, certificates, bank details — one form per supplier. Versioned and audit-ready.",
-    icon: "📋",
-  },
-  {
-    title: "Tax & invoice matching",
-    desc: "Match supplier invoices against your books — GST, VAT, or local tax rules. Catch mismatches early.",
-    icon: "🧾",
-  },
-  {
-    title: "Auto-approve the easy ones",
-    desc: "Set rules in plain language. Clear submissions approve in seconds — you only review exceptions.",
-    icon: "⚡",
-  },
-];
+const GITHUB_URL = "https://github.com/buildwithrenuka/vendo";
+const NPM_URL = "https://www.npmjs.com/package/@buildwithrenuka/jal";
+const NPM_INSTALL = "npm install @buildwithrenuka/jal";
 
-const steps = [
+const studioSteps = [
   {
-    n: "1",
-    title: "Invite your supplier",
-    desc: "Create a secure link from your dashboard and share it on WhatsApp, email, or SMS.",
+    step: "01",
+    title: "Attach your repo",
+    desc: "Paste owner/repo in Jal Studio. AI scans README, package.json, and your folder tree.",
+    code: "github.com/your-org/your-app",
   },
   {
-    n: "2",
-    title: "Supplier fills the form",
-    desc: "They sign in with Google, complete your compliance checklist, and submit.",
+    step: "02",
+    title: "Context locks in",
+    desc: "Product name, stack, and existing features auto-detected — edit anytime.",
+    code: "Jal reads → productContext + stackContext",
   },
   {
-    n: "3",
-    title: "Approve or auto-approve",
-    desc: "Valid docs pass your rules instantly. Only edge cases land in your queue.",
+    step: "03",
+    title: "Drop the widget",
+    desc: "Floating Jal icon appears in your app. Customers submit features & track status.",
+    code: '<JalWidget projectId="…" apiKey="jal_live_…" />',
+  },
+  {
+    step: "04",
+    title: "Dev queue ships",
+    desc: "Your team triages, AI builds code, opens a PR, reviews, and merges on approval.",
+    code: "Triage → Tasks → AI Build → PR → Merge",
   },
 ];
 
-const lifeEasier = [
-  "No more compliance docs lost in chat threads",
-  "One dashboard — see who's onboarding, approved, or pending",
-  "Suppliers verify once and reuse with new buyers worldwide",
-  "Full audit trail when finance or compliance asks",
+const dualDoors = [
+  {
+    title: "Jal Studio",
+    badge: "Zero setup",
+    desc: "Hosted UI — connect GitHub, scan repo, get widget snippet, run dev queue in browser.",
+    cta: "Open Studio",
+    href: "/studio/onboard",
+    features: ["Repo scan & AI context", "Floating customer widget", "Full dev pipeline UI", "Per-project API keys"],
+  },
+  {
+    title: "Jal npm",
+    badge: "Full control",
+    desc: "Embed the engine in your own backend — same triage, build, and PR pipeline, your infra.",
+    cta: "View on npm",
+    href: NPM_URL,
+    external: true,
+    features: ["@buildwithrenuka/jal package", "Self-host with env vars", "Wire your own routes", "Vendo = live reference"],
+  },
 ];
 
-const without = [
-  "Docs scattered across WhatsApp and email",
-  "Same checks repeated for every supplier",
-  "Excel doesn’t remember who’s reliable",
-  "Enterprise tools need tickets and months of waiting",
+const pipelineSteps = [
+  { title: "AI triage", desc: "Every request classified — planned, duplicate, out of scope, or needs clarification." },
+  { title: "Engineering tasks", desc: "Approved requests become structured assessments and concrete dev tasks." },
+  { title: "AI code builder", desc: "Jal reads your attached repo, implements the change, opens a GitHub PR." },
+  { title: "AI code review", desc: "PR diff validated against the original requirements — pass, fix, or escalate." },
+  { title: "Approve & merge", desc: "Human approves once. Jal merges — full audit trail from feedback to ship." },
 ];
 
-const withVendo = [
-  "One link, one form, one status tracker",
-  "Rules auto-approve what’s clearly valid",
-  "Green / yellow / red supplier scorecard",
-  "Feature requests tracked — not lost in a queue",
+const pricingPlans = [
+  {
+    name: "Free trial",
+    price: "$0",
+    period: " to start",
+    highlight: false,
+    cta: "Try Studio",
+    ctaHref: "/studio/onboard",
+    primary: false,
+    external: false,
+    features: ["3 pipeline runs", "1 repo attach", "Customer widget", "AI triage & status tracking"],
+  },
+  {
+    name: "Pro",
+    price: "$49",
+    period: "/month",
+    highlight: true,
+    badge: "Most popular",
+    cta: "Attach repo",
+    ctaHref: "/studio/onboard",
+    primary: true,
+    external: false,
+    features: ["Unlimited pipeline runs", "Multiple repos", "GitHub PR automation", "npm + Studio bridge"],
+  },
+  {
+    name: "Team",
+    price: "Custom",
+    period: "",
+    highlight: false,
+    cta: "Contact sales",
+    ctaHref: "mailto:hello@jal.dev",
+    primary: false,
+    external: true,
+    features: ["SSO & audit exports", "Custom context packs", "Dedicated support", "SLA"],
+  },
 ];
-
-const procurementFor = [
-  { role: "Procurement teams", desc: "Onboard raw-material and packaging vendors before peak season — anywhere you operate." },
-  { role: "Finance & compliance", desc: "Collect tax IDs, certificates, and vendor docs with a full audit trail." },
-  { role: "Growing buyers", desc: "Replace spreadsheet vendor lists with one structured process, in any market." },
-];
-
-const requestStatuses = ["Received", "AI Review", "Planned", "In Development", "Shipped"];
 
 const faqItems = [
   {
-    q: "Is Vendo a procurement app?",
-    a: "Yes. Vendo is a procurement platform for buyers worldwide — onboard, verify, and manage suppliers with vendor compliance, tax docs, approvals, and scorecards in one place.",
+    q: "What happens when I attach a repo?",
+    a: "Jal scans your GitHub repository, detects stack and product context, stores it per project, and uses it for every triage and AI build — code lands in that repo as PRs.",
   },
   {
-    q: "Is it really free to start?",
-    a: "Yes — up to 3 suppliers, no credit card. Upgrade when you need tax reconciliation, more suppliers, or priority support.",
+    q: "How does the customer widget work?",
+    a: "After attach, you get an API key and a <JalWidget /> component. Drop it in your app — customers see a floating icon, submit feedback, and track status. They never see the dev queue.",
   },
   {
-    q: "Is Vendo only for one country?",
-    a: "No. Vendo is built for procurement teams globally. Tax and compliance fields adapt to your market — GST in India, VAT in the EU, EIN in the US, and more.",
+    q: "Studio vs npm — which do I pick?",
+    a: "Studio if you want speed: connect repo, copy widget, ship. npm if you want the engine inside your own product (like Vendo does for procurement). Use both — same pipeline.",
   },
   {
-    q: "Does every feature request get built?",
-    a: "Every request gets reviewed and honest feedback. Not all will ship — but you'll always see status in your dashboard, not a black hole.",
+    q: "What is Vendo?",
+    a: "A reference app in this repo showing Jal on a real product — buyer feedback widget + internal dev queue. Proof that the pipeline works end-to-end.",
   },
 ];
 
@@ -99,49 +131,7 @@ function IconCheck() {
   );
 }
 
-function DashboardPreview() {
-  return (
-    <div className="landing-card overflow-hidden rounded-2xl">
-      <div className="border-b border-[var(--color-landing-border)] px-4 py-3">
-        <p className="text-center text-[11px] font-medium uppercase tracking-wide text-[var(--color-landing-accent)] opacity-80">
-          Procurement dashboard
-        </p>
-        <p className="text-center text-[11px] text-landing-muted">Onboard vendors fast</p>
-      </div>
-      <div className="space-y-2 p-4">
-        {[
-          { name: "Peak Materials (RM vendor)", status: "Approved", ok: true },
-          { name: "Nova Components (packaging)", status: "Auto-approved", ok: true },
-          { name: "Acme Logistics (3PL)", status: "Pending docs", ok: false },
-        ].map((row) => (
-          <div
-            key={row.name}
-            className="landing-row flex items-center justify-between rounded-xl border border-[var(--color-landing-border)] px-4 py-3"
-          >
-            <span className="text-sm font-medium">{row.name}</span>
-            <span
-              className={`rounded-full px-2.5 py-0.5 text-[11px] font-semibold ${
-                row.ok ? "status-ok" : "status-pill-active"
-              }`}
-            >
-              {row.status}
-            </span>
-          </div>
-        ))}
-      </div>
-    </div>
-  );
-}
-
-function SectionHeading({
-  label,
-  title,
-  subtitle,
-}: {
-  label: string;
-  title: string;
-  subtitle?: string;
-}) {
+function SectionHeading({ label, title, subtitle }: { label: string; title: string; subtitle?: string }) {
   return (
     <div className="mx-auto max-w-2xl text-center">
       <p className="section-label">{label}</p>
@@ -152,210 +142,204 @@ function SectionHeading({
 }
 
 export function HomePage() {
+  const { theme } = useTheme();
+
   return (
     <div className="relative min-h-screen bg-[var(--color-landing-bg)] text-[var(--color-landing-text)]">
       <div className="landing-grid pointer-events-none fixed inset-0 z-0" />
+      <div className="jal-ambient pointer-events-none fixed inset-0 z-0" aria-hidden />
       <div className="relative z-10">
         <LandingNav />
 
-        {/* Hero */}
+        {/* Hero — copy + live river pipeline */}
         <section className="mesh-hero px-6 pb-20 pt-28 lg:pb-28 lg:pt-32">
           <div className="mx-auto grid max-w-6xl items-center gap-12 lg:grid-cols-2 lg:gap-16">
-            <div>
-              <p className="inline-flex items-center gap-2 rounded-full border border-[var(--color-landing-border)] bg-[var(--color-landing-accent-soft)] px-3 py-1 text-xs font-semibold text-[var(--color-landing-accent)]">
-                Onboard vendors fast
+            <div className="animate-fade-up">
+              <p className="inline-flex items-center gap-2 rounded-full border border-[var(--color-landing-border)] bg-[var(--color-landing-accent-soft)] px-3 py-1 font-display text-xs font-semibold tracking-wide text-[var(--color-landing-accent)]">
+                <JalLogo size={18} variant={theme === "light" ? "light" : "dark"} animated={false} showWordmark={false} />
+                {JAL_TAGLINE}
               </p>
-              <h1 className="mt-4 text-4xl font-extrabold leading-[1.1] tracking-tight sm:text-5xl lg:text-[3.25rem]">
-                Invite vendors. Verify compliance.{" "}
-                <span className="text-genZ">Approve without the chaos.</span>
+              <h1 className="mt-4 text-4xl font-extrabold leading-[1.08] tracking-tight sm:text-5xl lg:text-[3.25rem]">
+                {JAL_HERO_HEADLINE}{" "}
+                <span className="text-genZ">{JAL_HERO_HEADLINE_ACCENT}</span>
               </h1>
               <p className="mt-5 max-w-lg text-lg leading-relaxed text-landing-muted">
-                Vendo is a procurement platform for buyers worldwide — share a link on any channel,
-                collect compliance docs, auto-approve clear cases, and keep finance audit-ready.
+                <strong className="font-semibold text-[var(--color-landing-text)]">Attach your repo.</strong>{" "}
+                AI reads your product context. Customers submit via a floating widget. Your team ships with PR automation —
+                like water taking the shape of any container.
               </p>
               <div className="mt-6 flex flex-wrap gap-2 text-xs text-landing-muted">
-                {["Vendor onboarding", "Tax compliance", "Supplier scorecards", "Purchase-ready vendors"].map((tag) => (
-                  <span key={tag} className="rounded-full border border-[var(--color-landing-border)] px-3 py-1">
-                    {tag}
-                  </span>
+                {["Repo attach", "AI context scan", "Customer widget", "Dev queue", "GitHub PR merge"].map((tag) => (
+                  <span key={tag} className="rounded-full border border-[var(--color-landing-border)] px-3 py-1">{tag}</span>
                 ))}
               </div>
               <div className="mt-8 flex flex-wrap gap-3">
-                <a
-                  href={googleAuthStartUrl({ redirect: "/dashboard" })}
-                  className="btn-primary inline-flex items-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold"
-                >
-                  <GoogleIcon size={18} />
-                  Start free — 3 suppliers
-                </a>
-                <a href="#how" className="btn-secondary inline-flex rounded-xl px-6 py-3.5 text-sm font-semibold">
-                  See how it works
+                <Link to="/studio/onboard" className="btn-primary inline-flex items-center gap-2 rounded-xl px-6 py-3.5 text-sm font-semibold">
+                  Attach your repo — free
+                </Link>
+                <a href="#river" className="btn-secondary inline-flex rounded-xl px-6 py-3.5 text-sm font-semibold">
+                  See the river
                 </a>
               </div>
-              <p className="mt-4 text-sm text-landing-muted">No credit card · Setup in minutes</p>
+              <p className="mt-4 text-sm text-landing-muted">No credit card · 3 free pipeline runs · Widget in minutes</p>
             </div>
-            <DashboardPreview />
+            <FlowRiverHero />
           </div>
         </section>
 
-        {/* Who it's for — procurement */}
-        <section className="border-b border-[var(--color-landing-border)] px-6 py-12">
+        {/* Feedback River — interactive demo */}
+        <section id="river" className="relative overflow-hidden border-y border-[var(--color-landing-border)] px-6 py-24">
           <div className="mx-auto max-w-6xl">
-            <p className="text-center text-sm font-medium text-landing-muted">
-              Built for procurement teams managing vendors worldwide
-            </p>
-            <div className="mt-8 grid gap-4 md:grid-cols-3">
-              {procurementFor.map((item) => (
-                <div key={item.role} className="landing-card rounded-xl px-5 py-4 text-center md:text-left">
-                  <p className="text-sm font-bold text-[var(--color-landing-accent)]">{item.role}</p>
-                  <p className="mt-1 text-sm text-landing-muted">{item.desc}</p>
+            <SectionHeading
+              label="The Feedback River"
+              title="Watch feedback flow downstream"
+              subtitle="Click a droplet — customer lens on the left, your ship console on the right. Same request, two views."
+            />
+            <div className="mt-14">
+              <FeedbackRiverShowcase />
+            </div>
+            <div className="mt-12 flex flex-wrap justify-center gap-3">
+              <Link to="/studio/onboard" className="btn-primary rounded-xl px-6 py-3 text-sm font-bold">
+                Attach your repo
+              </Link>
+              <Link to="/studio" className="btn-secondary rounded-xl px-6 py-3 text-sm font-semibold">
+                Open Studio
+              </Link>
+            </div>
+          </div>
+        </section>
+
+        {/* Studio flow */}
+        <section id="studio" className="border-y border-[var(--color-landing-border)] px-6 py-20">
+          <div className="mx-auto max-w-6xl">
+            <SectionHeading
+              label="Jal Studio"
+              title="Repo in. Widget out. Features ship."
+              subtitle="Connect GitHub once — AI attaches to your codebase and your app simultaneously."
+            />
+            <div className="mt-14 grid gap-6 lg:grid-cols-2">
+              <div className="landing-card rounded-2xl p-6">
+                <p className="text-xs font-bold uppercase tracking-wide text-[var(--color-landing-accent)]">Customer view</p>
+                <h3 className="mt-2 text-xl font-bold">Floating widget in your app</h3>
+                <p className="mt-2 text-sm text-landing-muted">
+                  After attach, drop <code className="text-[var(--color-landing-accent)]">&lt;JalWidget /&gt;</code> anywhere.
+                  Customers submit features, track Received → Shipped — never see internal tools.
+                </p>
+                <div className="relative mt-6 h-40 rounded-xl border border-dashed border-[var(--color-landing-border)] bg-[var(--color-landing-elevated)]">
+                  <span className="absolute inset-0 flex items-center justify-center text-xs text-landing-muted">Your app UI</span>
+                  <span className="absolute bottom-3 right-3 flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-landing-accent)] shadow-lg">
+                    <JalLogo size={22} variant="dark" showWordmark={false} animated={false} />
+                  </span>
+                </div>
+              </div>
+              <div className="landing-card rounded-2xl p-6">
+                <p className="text-xs font-bold uppercase tracking-wide text-[var(--color-landing-accent)]">Dev view</p>
+                <h3 className="mt-2 text-xl font-bold">Full pipeline in Studio</h3>
+                <p className="mt-2 text-sm text-landing-muted">
+                  Inbox, AI triage, task kanban, AI Build → PR, code review, approve & merge. Scoped to your attached repo.
+                </p>
+                <div className="mt-4 flex flex-wrap gap-2">
+                  {["Inbox", "AI Build", "PR #42", "Merge"].map((s, i) => (
+                    <span key={s} className={`rounded-lg px-3 py-1.5 text-xs font-semibold ${i === 2 ? "status-pill-active" : "status-pill-inactive"}`}>{s}</span>
+                  ))}
+                </div>
+                <Link to="/studio" className="btn-primary mt-6 inline-block rounded-xl px-5 py-2.5 text-sm font-semibold">
+                  Open Studio
+                </Link>
+              </div>
+            </div>
+            <div className="mt-14 space-y-0">
+              {studioSteps.map((item, i) => (
+                <div key={item.step} className="jal-step-row relative grid gap-6 pb-12 md:grid-cols-[auto_1fr] md:gap-10">
+                  {i < studioSteps.length - 1 && (
+                    <span className="jal-step-connector absolute left-[1.65rem] top-14 hidden h-[calc(100%-2rem)] w-px md:block" aria-hidden />
+                  )}
+                  <span className="jal-step-badge flex h-14 w-14 shrink-0 items-center justify-center rounded-2xl border border-[var(--color-landing-border)] bg-[var(--color-landing-surface)] font-mono text-sm font-bold text-[var(--color-landing-accent)]">
+                    {item.step}
+                  </span>
+                  <div className="landing-card rounded-2xl p-6">
+                    <h3 className="text-lg font-bold">{item.title}</h3>
+                    <p className="mt-2 text-sm text-landing-muted">{item.desc}</p>
+                    <pre className="mt-4 overflow-x-auto rounded-xl border border-[var(--color-landing-border)] bg-[var(--color-landing-elevated)] p-4 font-mono text-xs text-[var(--color-landing-accent)]">{item.code}</pre>
+                  </div>
                 </div>
               ))}
             </div>
           </div>
         </section>
 
-        {/* What we offer */}
-        <section id="features" className="border-t border-[var(--color-landing-border)] px-6 py-20">
+        {/* Dual doors */}
+        <section id="dual" className="landing-section-alt px-6 py-20">
           <div className="mx-auto max-w-6xl">
-            <SectionHeading
-              label="procurement features"
-              title="What your procurement team gets"
-              subtitle="Vendor onboarding, compliance, and approvals — for procurement teams in every market."
-            />
-            <div className="mt-14 grid gap-5 sm:grid-cols-2">
-              {offerings.map((item) => (
-                <article key={item.title} className="landing-card rounded-2xl p-6">
-                  <span className="text-2xl" aria-hidden>{item.icon}</span>
-                  <h3 className="mt-4 text-lg font-bold">{item.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-landing-muted">{item.desc}</p>
+            <SectionHeading label="Two doors, one engine" title="Studio or npm — your call" subtitle="Same @buildwithrenuka/jal pipeline. Pick hosted speed or self-hosted control." />
+            <div className="mt-14 grid gap-6 md:grid-cols-2">
+              {dualDoors.map((door) => (
+                <article key={door.title} className="landing-card landing-card-hover flex flex-col rounded-2xl p-6">
+                  <span className="text-xs font-bold uppercase text-[var(--color-landing-accent)]">{door.badge}</span>
+                  <h3 className="mt-2 text-2xl font-bold">{door.title}</h3>
+                  <p className="mt-2 flex-1 text-sm text-landing-muted">{door.desc}</p>
+                  <ul className="mt-4 space-y-2 text-sm">
+                    {door.features.map((f) => (
+                      <li key={f} className="flex gap-2"><IconCheck />{f}</li>
+                    ))}
+                  </ul>
+                  {door.external ? (
+                    <a href={door.href} target="_blank" rel="noreferrer" className="btn-secondary mt-6 rounded-xl py-3 text-center text-sm font-semibold">{door.cta}</a>
+                  ) : (
+                    <Link to={door.href} className="btn-primary mt-6 rounded-xl py-3 text-center text-sm font-semibold">{door.cta}</Link>
+                  )}
                 </article>
               ))}
             </div>
           </div>
         </section>
 
-        {/* How it works */}
-        <section id="how" className="landing-section-alt px-6 py-20">
+        {/* Pipeline */}
+        <section id="pipeline" className="px-6 py-20">
           <div className="mx-auto max-w-6xl">
-            <SectionHeading
-              label="how it works"
-              title="Three steps. That's it."
-            />
-            <div className="mt-14 grid gap-6 md:grid-cols-3">
-              {steps.map((step) => (
-                <div key={step.n} className="landing-card rounded-2xl p-6 text-center md:text-left">
-                  <span className="inline-flex h-10 w-10 items-center justify-center rounded-full bg-[var(--color-landing-accent-soft)] text-sm font-bold text-[var(--color-landing-accent)]">
-                    {step.n}
-                  </span>
-                  <h3 className="mt-4 text-lg font-bold">{step.title}</h3>
-                  <p className="mt-2 text-sm leading-relaxed text-landing-muted">{step.desc}</p>
-                </div>
+            <SectionHeading label="The pipeline" title="Not codegen — a complete product loop" subtitle="Feedback → triage → build → PR → merge. Traceable end to end." />
+            <div className="mt-14 grid gap-4 sm:grid-cols-2 lg:grid-cols-5">
+              {pipelineSteps.map((item, i) => (
+                <article key={item.title} className="landing-card landing-card-hover rounded-2xl p-5">
+                  <span className="font-mono text-[10px] font-bold uppercase tracking-widest text-[var(--color-landing-accent)]">Stage {i + 1}</span>
+                  <h3 className="mt-2 text-base font-bold">{item.title}</h3>
+                  <p className="mt-2 text-sm text-landing-muted">{item.desc}</p>
+                </article>
               ))}
             </div>
           </div>
         </section>
 
-        {/* Life gets easier */}
-        <section className="px-6 py-20">
+        {/* Profiles */}
+        <section id="profiles" className="landing-section-alt px-6 py-20">
           <div className="mx-auto max-w-6xl">
-            <div className="grid items-start gap-12 lg:grid-cols-2">
-              <div>
-                <p className="section-label">why teams switch</p>
-                <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
-                  We make procurement life easier.
-                </h2>
-                <p className="mt-4 text-landing-muted">
-                  You shouldn&apos;t spend your week forwarding PDFs and asking &quot;did you fill the form yet?&quot;
-                </p>
-                <ul className="mt-8 space-y-4">
-                  {lifeEasier.map((item) => (
-                    <li key={item} className="flex items-start gap-3 text-sm">
-                      <IconCheck />
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-
-              <div className="landing-card overflow-hidden rounded-2xl">
-                <div className="grid md:grid-cols-2">
-                  <div className="border-b border-[var(--color-landing-border)] p-6 md:border-b-0 md:border-r">
-                    <p className="text-xs font-semibold uppercase tracking-wide text-landing-muted">Without Vendo</p>
-                    <ul className="mt-4 space-y-3 text-sm text-landing-muted">
-                      {without.map((t) => (
-                        <li key={t} className="flex gap-2">
-                          <span className="text-landing-muted opacity-60">✕</span>
-                          {t}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                  <div className="with-panel p-6">
-                    <p className="text-xs font-semibold uppercase tracking-wide text-[var(--color-landing-accent)]">With Vendo</p>
-                    <ul className="mt-4 space-y-3 text-sm">
-                      {withVendo.map((t) => (
-                        <li key={t} className="flex gap-2">
-                          <IconCheck />
-                          {t}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
+            <SectionHeading label="Context-adaptive" title="One pipeline. Any product shape." subtitle="Procurement, travel, fintech — or your own repo context from AI scan." />
+            <div className="mt-14"><ShapeShiftProfiles /></div>
           </div>
         </section>
 
-        {/* Feature requests */}
-        <section id="feature-requests" className="landing-section-alt px-6 py-20">
+        {/* Vendo demo */}
+        <section id="demo" className="px-6 py-20">
           <div className="mx-auto max-w-6xl">
             <div className="grid items-center gap-10 lg:grid-cols-2">
               <div>
-                <p className="section-label">product feedback</p>
-                <h2 className="mt-3 text-3xl font-bold tracking-tight sm:text-4xl">
-                  Need something for your procurement workflow? Ask us.
-                </h2>
+                <p className="section-label">Live reference</p>
+                <h2 className="mt-3 text-3xl font-bold">Vendo — Jal on a real product</h2>
                 <p className="mt-4 text-landing-muted">
-                  Unlike legacy tools where you file a support ticket and wait months, submit a feature
-                  request from your dashboard — AI triages it, and you track every step until it ships.
+                  Procurement app with buyer feedback tab + internal dev queue. Same widget + pipeline pattern you get in Studio.
                 </p>
-                <p className="mt-3 text-sm text-landing-muted">
-                  Every request reviewed · honest feedback · not every request will be built
-                </p>
-                <a
-                  href={googleAuthStartUrl({ redirect: "/dashboard#feature-requests" })}
-                  className="btn-primary mt-6 inline-flex rounded-xl px-6 py-3 text-sm font-semibold"
-                >
-                  Submit a feature request
-                </a>
-                <p className="mt-3 text-xs text-landing-muted">
-                  Most requests reviewed within 48 hours · Enterprise gets priority queue + 72hr SLA
-                </p>
-              </div>
-
-              <div className="landing-card rounded-2xl p-6">
-                <p className="text-xs font-semibold uppercase tracking-wide text-landing-muted">
-                  Request status — always visible
-                </p>
-                <div className="mt-4 flex flex-wrap gap-2">
-                  {requestStatuses.map((status, i) => (
-                    <span
-                      key={status}
-                      className={`rounded-lg px-3 py-2 text-xs font-semibold ${
-                        i === 1 ? "status-pill-active" : "status-pill-inactive"
-                      }`}
-                    >
-                      {status}
-                    </span>
-                  ))}
+                <div className="mt-8 flex flex-wrap gap-3">
+                  <Link to="/internal/login" className="btn-primary rounded-xl px-6 py-3 text-sm font-semibold">Dev queue demo</Link>
+                  <a href={googleAuthStartUrl({ redirect: "/dashboard#feature-requests" })} className="btn-secondary inline-flex items-center gap-2 rounded-xl px-6 py-3 text-sm font-semibold">
+                    <GoogleIcon size={16} /> Buyer widget demo
+                  </a>
                 </div>
-                <p className="mt-4 border-t border-[var(--color-landing-border)] pt-4 text-sm text-landing-muted">
-                  Also: <span className="text-[var(--color-landing-text)]">Declined (with reason)</span> ·{" "}
-                  <span className="text-[var(--color-landing-text)]">Already exists</span> — so you never wait for
-                  something Vendo already has.
-                </p>
+              </div>
+              <div className="landing-card rounded-2xl p-6 font-mono text-xs">
+                <p className="text-landing-muted"># npm — headless engine</p>
+                <p className="mt-2 text-[var(--color-landing-accent)]">{NPM_INSTALL}</p>
+                <p className="mt-4 text-landing-muted"># Studio — hosted UI</p>
+                <p className="text-[var(--color-landing-text)]">/studio/onboard → attach → widget → ship</p>
               </div>
             </div>
           </div>
@@ -364,65 +348,23 @@ export function HomePage() {
         {/* Pricing */}
         <section id="pricing" className="landing-section-alt px-6 py-20">
           <div className="mx-auto max-w-6xl">
-            <SectionHeading
-              label="pricing"
-              title="Simple plans. No commission on orders."
-              subtitle="Start free anywhere. Upgrade when you outgrow 3 suppliers. Local currency billing available."
-            />
-            <div className="mx-auto mt-14 grid max-w-4xl gap-6 md:grid-cols-3">
-              <div className="landing-card rounded-2xl p-6">
-                <p className="text-sm font-semibold text-[var(--color-sage)]">Free</p>
-                <p className="mt-2 text-4xl font-bold">$0</p>
-                <ul className="mt-6 space-y-2.5 text-sm text-landing-muted">
-                  {["Up to 3 suppliers", "WhatsApp & link invites", "Basic forms & scorecard", "Submit feature requests"].map((f) => (
-                    <li key={f} className="flex gap-2"><IconCheck />{f}</li>
-                  ))}
-                </ul>
-                <a
-                  href={googleAuthStartUrl({ redirect: "/dashboard" })}
-                  className="btn-secondary mt-6 flex w-full justify-center rounded-xl py-3 text-sm font-semibold"
-                >
-                  Start free
-                </a>
-              </div>
-
-              <div className="landing-card pricing-popular relative rounded-2xl p-6">
-                <span className="absolute -top-2.5 right-4 rounded-full bg-[var(--color-landing-accent)] px-2.5 py-0.5 text-[10px] font-bold uppercase text-[var(--color-landing-btn-primary-text)]">
-                  Popular
-                </span>
-                <p className="text-sm font-semibold text-landing-muted">Standard</p>
-                <p className="mt-2 text-4xl font-bold">
-                  $149<span className="text-base font-normal text-landing-muted">/mo</span>
-                </p>
-                <p className="mt-1 text-xs text-landing-muted">~₹9,999/mo in India · local pricing on request</p>
-                <ul className="mt-6 space-y-2.5 text-sm text-landing-muted">
-                  {["50 suppliers", "Tax / invoice reconciliation", "Auto-approval rules", "Roadmap feature requests"].map((f) => (
-                    <li key={f} className="flex gap-2"><IconCheck />{f}</li>
-                  ))}
-                </ul>
-                <a
-                  href={googleAuthStartUrl({ redirect: "/buyer/verify" })}
-                  className="btn-primary mt-6 flex w-full justify-center rounded-xl py-3 text-sm font-semibold"
-                >
-                  Start trial
-                </a>
-              </div>
-
-              <div className="landing-card rounded-2xl p-6">
-                <p className="text-sm font-semibold text-landing-muted">Enterprise</p>
-                <p className="mt-2 text-4xl font-bold">Custom</p>
-                <ul className="mt-6 space-y-2.5 text-sm text-landing-muted">
-                  {["Unlimited suppliers", "SSO & audit exports", "Priority feature queue", "72hr status SLA"].map((f) => (
-                    <li key={f} className="flex gap-2"><IconCheck />{f}</li>
-                  ))}
-                </ul>
-                <a
-                  href="mailto:hello@vendo.app"
-                  className="btn-secondary mt-6 flex w-full justify-center rounded-xl py-3 text-sm font-semibold"
-                >
-                  Contact sales
-                </a>
-              </div>
+            <SectionHeading label="Pricing" title="Attach free. Ship more on Pro." />
+            <div className="mx-auto mt-14 grid max-w-5xl gap-6 md:grid-cols-3">
+              {pricingPlans.map((plan) => (
+                <div key={plan.name} className={`landing-card flex flex-col rounded-2xl p-6 ${plan.highlight ? "pricing-popular relative" : ""}`}>
+                  {plan.badge && <span className="absolute -top-2.5 right-4 rounded-full bg-[var(--color-landing-accent)] px-2.5 py-0.5 text-[10px] font-bold uppercase text-[var(--color-landing-btn-primary-text)]">{plan.badge}</span>}
+                  <p className="text-sm font-semibold text-[var(--color-landing-accent)]">{plan.name}</p>
+                  <p className="mt-2 text-4xl font-bold">{plan.price}{plan.period && <span className="text-base font-normal text-landing-muted">{plan.period}</span>}</p>
+                  <ul className="mt-6 flex-1 space-y-2.5 text-sm text-landing-muted">
+                    {plan.features.map((f) => (<li key={f} className="flex gap-2"><IconCheck />{f}</li>))}
+                  </ul>
+                  {plan.external ? (
+                    <a href={plan.ctaHref} className={`mt-6 flex w-full justify-center rounded-xl py-3 text-sm font-semibold ${plan.primary ? "btn-primary" : "btn-secondary"}`}>{plan.cta}</a>
+                  ) : (
+                    <Link to={plan.ctaHref} className={`mt-6 flex w-full justify-center rounded-xl py-3 text-sm font-semibold ${plan.primary ? "btn-primary" : "btn-secondary"}`}>{plan.cta}</Link>
+                  )}
+                </div>
+              ))}
             </div>
           </div>
         </section>
@@ -430,7 +372,7 @@ export function HomePage() {
         {/* FAQ */}
         <section id="faq" className="px-6 py-20">
           <div className="mx-auto max-w-2xl">
-            <SectionHeading label="questions" title="Quick answers" />
+            <SectionHeading label="FAQ" title="Common questions" />
             <dl className="mt-10 space-y-4">
               {faqItems.map((item) => (
                 <div key={item.q} className="landing-card rounded-xl p-5">
@@ -444,29 +386,28 @@ export function HomePage() {
 
         {/* CTA */}
         <section className="px-6 pb-16 pt-4">
-          <div className="mx-auto max-w-3xl rounded-3xl dark-panel px-8 py-14 text-center">
-            <h2 className="text-2xl font-bold sm:text-3xl">Start onboarding vendors today</h2>
-          <p className="mx-auto mt-3 max-w-md text-landing-muted">
-              Free for 3 suppliers. Used by procurement teams globally — not enterprise ticket queues.
-            </p>
-            <a
-              href={googleAuthStartUrl({ redirect: "/dashboard" })}
-              className="btn-primary mt-8 inline-flex items-center gap-2 rounded-xl px-8 py-3.5 text-sm font-semibold"
-            >
-              <GoogleIcon size={18} />
-              Get started free
-            </a>
+          <div className="jal-cta-panel mx-auto max-w-3xl rounded-3xl px-8 py-14 text-center">
+            <h2 className="text-2xl font-bold sm:text-3xl">Attach your repo. Ship this week.</h2>
+            <p className="mx-auto mt-3 max-w-md text-landing-muted">{JAL_TAGLINE_LONG}</p>
+            <div className="mt-8 flex flex-wrap justify-center gap-3">
+              <Link to="/studio/onboard" className="btn-primary rounded-xl px-8 py-3.5 text-sm font-semibold">Open Jal Studio</Link>
+              <a href={NPM_URL} target="_blank" rel="noreferrer" className="btn-secondary rounded-xl px-8 py-3.5 text-sm font-semibold">npm install</a>
+            </div>
           </div>
         </section>
 
         <footer className="border-t border-[var(--color-landing-border)] py-8">
-          <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-4 px-6 text-sm text-landing-muted sm:flex-row">
-            <p>© {new Date().getFullYear()} Vendo · Onboard vendors fast</p>
-            <div className="flex gap-6">
-              <Link to="/login" className="transition hover:text-[var(--color-landing-text)]">Sign in</Link>
-              <a href="#pricing" className="transition hover:text-[var(--color-landing-text)]">Pricing</a>
+          <div className="mx-auto flex max-w-6xl flex-col items-center justify-between gap-6 px-6 sm:flex-row">
+            <JalLogo size={36} variant={theme === "light" ? "light" : "dark"} animated={false} showWordmark showTagline tagline={JAL_TAGLINE} className="opacity-90" />
+            <div className="flex flex-wrap justify-center gap-6 text-sm text-landing-muted">
+              <Link to="/studio">Studio</Link>
+              <Link to="/docs">Documentation</Link>
+              <a href={NPM_URL} target="_blank" rel="noreferrer">npm</a>
+              <a href={GITHUB_URL} target="_blank" rel="noreferrer">GitHub</a>
+              <Link to="/internal/login">Vendo demo</Link>
             </div>
           </div>
+          <p className="mt-4 text-center text-xs text-landing-muted">© {new Date().getFullYear()} Jal · MIT</p>
         </footer>
       </div>
     </div>

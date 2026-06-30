@@ -14,7 +14,7 @@ import {
   DEV_TASK_STATUS_LABELS,
   FEATURE_REQUEST_STATUS_LABELS,
   REQUEST_TYPE_LABELS,
-  SHIPFLOW_PIPELINE,
+  JAL_PIPELINE,
 } from "@vendo/shared";
 import { api } from "../lib/api";
 import { useAuth } from "../context/AuthContext";
@@ -142,7 +142,7 @@ export function VendoInternalPage() {
   return (
     <Shell
       title="Vendo Engineering"
-      subtitle={employeeUsername ? `@${employeeUsername} · ShipFlow` : "ShipFlow"}
+      subtitle={employeeUsername ? `@${employeeUsername} · Jal` : "Jal"}
       actions={
         <Button variant="ghost" onClick={() => logout()}>Sign out</Button>
       }
@@ -177,7 +177,7 @@ export function VendoInternalPage() {
                 view === tab ? "bg-[var(--color-copper)]/20 text-[var(--color-copper)]" : "text-[var(--color-ink-muted)]"
               }`}
             >
-              {tab === "pipeline" ? "ShipFlow pipeline" : tab === "inbox" ? "All customer requests" : "Team admin"}
+              {tab === "pipeline" ? "Jal pipeline" : tab === "inbox" ? "All customer requests" : "Team admin"}
             </button>
           ))}
         </div>
@@ -212,7 +212,7 @@ export function VendoInternalPage() {
           ) : view === "pipeline" ? (
             <div className="overflow-x-auto pb-2">
               <div className="flex min-w-[900px] gap-3">
-                {SHIPFLOW_PIPELINE.map((status) => (
+                {JAL_PIPELINE.map((status) => (
                   <div key={status} className="w-44 shrink-0">
                     <p className="mb-2 text-xs font-semibold uppercase tracking-wide text-[var(--color-ink-muted)]">
                       {DEV_QUEUE_STATUS_LABELS[status]}
@@ -306,7 +306,7 @@ export function VendoInternalPage() {
               {detail.devQueueStatus && (
                 <Card>
                   <SectionHeader
-                    title="ShipFlow actions"
+                    title="Jal actions"
                     description="AI can write code + open GitHub PR automatically"
                   />
                   <div className="flex flex-wrap gap-2">
@@ -342,7 +342,7 @@ export function VendoInternalPage() {
                         Run AI builder → PR
                       </Button>
                     )}
-                    {SHIPFLOW_PIPELINE.filter((s) => s !== detail.devQueueStatus).map((next) => (
+                    {JAL_PIPELINE.filter((s) => s !== detail.devQueueStatus).map((next) => (
                       <Button
                         key={next}
                         variant="secondary"
@@ -508,13 +508,24 @@ export function VendoInternalPage() {
                       const res = await api.devApproveShip(detail.id);
                       setDetail(res.feature);
                       await refreshAll();
-                      if (res.customerEmailSent) {
-                        setMessage("Shipped — customer notified by email.");
-                      } else if (res.customerEmailError) {
-                        setMessage(`Shipped, but email failed: ${res.customerEmailError}`);
-                      } else {
-                        setMessage("Shipped — email skipped (no Resend key).");
+                      const parts: string[] = [];
+                      if (res.githubPrMerged) {
+                        parts.push(
+                          res.githubMergeMessage ?? `GitHub PR merged${res.githubMergeSha ? ` (${res.githubMergeSha.slice(0, 7)})` : ""}.`,
+                        );
+                      } else if (res.githubMergeError) {
+                        parts.push(res.githubMergeError);
                       }
+                      if (res.customerEmailSent) {
+                        parts.push("Customer notified by email.");
+                      } else if (res.customerEmailError) {
+                        parts.push(`Email failed: ${res.customerEmailError}`);
+                      } else if (parts.length === 0) {
+                        parts.push("Shipped — email skipped (no Resend key).");
+                      } else {
+                        parts.push("Shipped — email skipped (no Resend key).");
+                      }
+                      setMessage(parts.join(" "));
                     })
                   }
                 >

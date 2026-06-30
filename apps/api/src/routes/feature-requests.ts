@@ -9,7 +9,8 @@ import {
   appendUserReply,
   buildRequestContext,
   triageFeatureRequest,
-} from "../lib/feature-triage";
+} from "@buildwithrenuka/jal";
+import { getJalContext } from "../lib/jal-env";
 import { enqueueFeatureForDevelopment } from "../services/task-generator";
 import { logFeatureActivity } from "../services/activity-log";
 
@@ -54,6 +55,7 @@ function mapRow(row: DbRow): FeatureRequest {
 }
 
 async function applyTriage(
+  env: Env,
   db: D1Database,
   id: string,
   title: string,
@@ -62,8 +64,30 @@ async function applyTriage(
   apiKey: string | undefined,
   requestType: FeatureRequest["requestType"],
   buyerEmail?: string,
+  buyerId?: string,
 ): Promise<FeatureRequest> {
-  const result = await triageFeatureRequest(apiKey, title, description, thread, requestType);
+  const jal = getJalContext(env);
+  const result = await triageFeatureRequest(apiKey, title, description, thread, requestType, buyerId
+    ? {
+        shipflow: jal,
+        excludeRequestId: id,
+        findPriorRequests: async (excludeRequestId) => {
+          const { results } = await db
+            .prepare(
+              `SELECT id, title, description, status
+               FROM feature_requests
+               WHERE buyer_id = ?
+                 AND id != COALESCE(?, '')
+                 AND status IN ('shipped', 'already_exists', 'planned', 'in_development', 'ai_review')
+               ORDER BY updated_at DESC
+               LIMIT 25`,
+            )
+            .bind(buyerId, excludeRequestId ?? null)
+            .all<{ id: string; title: string; description: string; status: FeatureRequestStatus }>();
+          return results ?? [];
+        },
+      }
+    : undefined);
 
   let updatedThread = thread;
   if (result.clarificationQuestions?.length) {
@@ -120,6 +144,7 @@ async function applyTriage(
 
   if (result.status === "planned") {
     await enqueueFeatureForDevelopment(
+      env,
       db,
       id,
       title,
@@ -178,6 +203,7 @@ featureRequestRoutes.post("/", requireAuth(), requireRole("buyer"), async (c) =>
   });
 
   const request = await applyTriage(
+    c.env,
     c.env.DB,
     id,
     body.title,
@@ -186,6 +212,7 @@ featureRequestRoutes.post("/", requireAuth(), requireRole("buyer"), async (c) =>
     c.env.OPENAI_API_KEY,
     body.requestType,
     user.email,
+    user.id,
   );
 
   return c.json({ request }, 201);
@@ -219,6 +246,7 @@ featureRequestRoutes.post("/:id/clarify", requireAuth(), requireRole("buyer"), a
   });
 
   const request = await applyTriage(
+    c.env,
     c.env.DB,
     id,
     row.title,
@@ -227,6 +255,7 @@ featureRequestRoutes.post("/:id/clarify", requireAuth(), requireRole("buyer"), a
     c.env.OPENAI_API_KEY,
     row.request_type ?? "feature",
     user.email,
+    user.id,
   );
 
   return c.json({ request });

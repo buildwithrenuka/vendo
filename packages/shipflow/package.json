@@ -1,0 +1,55 @@
+{
+  "name": "@buildwithrenuka/jal",
+  "version": "0.1.0",
+  "description": "Jal — context-adaptive AI pipeline: feature triage, tasks, code builder & GitHub PR merge for any product",
+  "type": "module",
+  "main": "./dist/index.js",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js"
+    }
+  },
+  "scripts": {
+    "build": "tsc",
+    "typecheck": "tsc --noEmit",
+    "prepublishOnly": "npm run build"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/buildwithrenuka/vendo.git",
+    "directory": "packages/shipflow"
+  },
+  "homepage": "https://github.com/buildwithrenuka/vendo/tree/main/packages/shipflow#readme",
+  "bugs": {
+    "url": "https://github.com/buildwithrenuka/vendo/issues"
+  },
+  "keywords": [
+    "jal",
+    "feature-requests",
+    "ai-triage",
+    "product-discovery",
+    "github",
+    "pull-request",
+    "openai",
+    "hackathon",
+    "context-adaptive"
+  ],
+  "author": "buildwithrenuka",
+  "license": "MIT",
+  "engines": {
+    "node": ">=20"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.3"
+  }
+}

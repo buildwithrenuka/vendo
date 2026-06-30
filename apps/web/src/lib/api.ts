@@ -4,6 +4,7 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
   const res = await fetch(`${API_BASE}${path}`, {
     ...init,
     credentials: "include",
+    signal: init?.signal ?? AbortSignal.timeout(10_000),
     headers: {
       "Content-Type": "application/json",
       ...init?.headers,
@@ -12,7 +13,8 @@ async function request<T>(path: string, init?: RequestInit): Promise<T> {
 
   if (!res.ok) {
     const err = await res.json().catch(() => ({ error: res.statusText }));
-    throw new Error(err.error ?? "Request failed");
+    const msg = err.details ?? err.error ?? "Request failed";
+    throw new Error(typeof msg === "string" ? msg : "Request failed");
   }
 
   return res.json() as Promise<T>;
@@ -264,6 +266,10 @@ export const api = {
       feature: import("@vendo/shared").DevFeatureDetail;
       customerEmailSent?: boolean;
       customerEmailError?: string;
+      githubPrMerged?: boolean;
+      githubMergeSha?: string | null;
+      githubMergeMessage?: string | null;
+      githubMergeError?: string | null;
     }>(
       `/dev/features/${featureId}/approve-ship`,
       { method: "POST" },
@@ -274,4 +280,96 @@ export const api = {
       `/dev/features/${featureId}/reject-ship`,
       { method: "POST", body: JSON.stringify({ reason }) },
     ),
+
+  // Jal Studio
+  studioListProjects: () =>
+    request<{ projects: import("@vendo/shared").JalProjectPublic[] }>("/studio/projects"),
+
+  studioCreateProject: (data: {
+    name: string;
+    githubRepo: string;
+    jalContext?: Partial<import("@vendo/shared").JalProjectContext>;
+  }) =>
+    request<{ project: import("@vendo/shared").JalProjectPublic; apiKey: string }>("/studio/projects", {
+      method: "POST",
+      body: JSON.stringify(data),
+    }),
+
+  studioGetProject: (projectId: string) =>
+    request<{ project: import("@vendo/shared").JalProjectPublic }>(`/studio/projects/${projectId}`),
+
+  studioUpdateProject: (
+    projectId: string,
+    data: { name?: string; githubRepo?: string; jalContext?: Partial<import("@vendo/shared").JalProjectContext> },
+  ) =>
+    request<{ project: import("@vendo/shared").JalProject }>(`/studio/projects/${projectId}`, {
+      method: "PATCH",
+      body: JSON.stringify(data),
+    }),
+
+  studioScanRepo: (projectId: string) =>
+    request<{ scan: import("@vendo/shared").JalRepoScanResult; jalContext: import("@vendo/shared").JalProjectContext }>(
+      `/studio/projects/${projectId}/scan`,
+      { method: "POST" },
+    ),
+
+  studioRegenerateKey: (projectId: string) =>
+    request<{ apiKey: string }>(`/studio/projects/${projectId}/regenerate-key`, { method: "POST" }),
+
+  studioEmbedInfo: (projectId: string) =>
+    request<{ projectId: string; embedUrl: string; widgetSnippet: string; npmSnippet: string; iframeUrl: string }>(
+      `/studio/projects/${projectId}/embed`,
+    ),
+
+  studioStats: (projectId: string) =>
+    request<{ stats: import("@vendo/shared").InternalDashboardStats }>(`/studio/projects/${projectId}/stats`),
+
+  studioInbox: (projectId: string, type?: "feature" | "bug") =>
+    request<{ items: import("@vendo/shared").InternalInboxItem[] }>(
+      type ? `/studio/projects/${projectId}/inbox?type=${type}` : `/studio/projects/${projectId}/inbox`,
+    ),
+
+  studioQueue: (projectId: string) =>
+    request<{ items: import("@vendo/shared").FeatureRequest[] }>(`/studio/projects/${projectId}/queue`),
+
+  studioFeature: (projectId: string, featureId: string) =>
+    request<{ feature: import("@vendo/shared").DevFeatureDetail }>(
+      `/studio/projects/${projectId}/features/${featureId}`,
+    ),
+
+  studioEnqueue: (projectId: string, featureId: string) =>
+    request<{ feature: import("@vendo/shared").DevFeatureDetail }>(
+      `/studio/projects/${projectId}/features/${featureId}/enqueue`,
+      { method: "POST" },
+    ),
+
+  studioBuild: (projectId: string, featureId: string) =>
+    request<{ feature: import("@vendo/shared").DevFeatureDetail; build: Record<string, unknown> }>(
+      `/studio/projects/${projectId}/features/${featureId}/build`,
+      { method: "POST" },
+    ),
+
+  studioAiReview: (projectId: string, featureId: string) =>
+    request<{ feature: import("@vendo/shared").DevFeatureDetail }>(
+      `/studio/projects/${projectId}/features/${featureId}/review/ai`,
+      { method: "POST" },
+    ),
+
+  studioApproveShip: (projectId: string, featureId: string) =>
+    request<{ feature: import("@vendo/shared").DevFeatureDetail; githubPrMerged: boolean }>(
+      `/studio/projects/${projectId}/features/${featureId}/approve-ship`,
+      { method: "POST" },
+    ),
+
+  studioMovePipeline: (projectId: string, featureId: string, status: import("@vendo/shared").DevQueueStatus) =>
+    request<{ feature: import("@vendo/shared").DevFeatureDetail }>(
+      `/studio/projects/${projectId}/features/${featureId}/pipeline`,
+      { method: "PATCH", body: JSON.stringify({ status }) },
+    ),
+
+  studioPublicProject: (projectId: string) =>
+    request<{ projectId: string; name: string; productName: string }>(`/studio/projects/${projectId}/public`),
+
+  studioSetup: () =>
+    request<{ githubConfigured: boolean; openaiConfigured: boolean; ready: boolean }>("/studio/setup"),
 };

@@ -14,10 +14,16 @@ export function HomeRoute() {
       setEmployeeChecked(true);
       return;
     }
-    api.session().then((s) => {
-      setIsEmployee(s.isDeveloper);
-      setEmployeeChecked(true);
-    });
+    api.session()
+      .then((s) => {
+        setIsEmployee(s.isDeveloper);
+      })
+      .catch(() => {
+        setIsEmployee(false);
+      })
+      .finally(() => {
+        setEmployeeChecked(true);
+      });
   }, [user]);
 
   if (loading || (user && !employeeChecked)) {

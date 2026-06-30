@@ -1,162 +1,284 @@
 <div align="center">
 
-# ✦ Vendo
+# ✦ JAL
 
-### Onboard vendors fast.
+### We didn't build another ticket board. We built a **river**.
 
-**Invite · Verify · Approve** — without the WhatsApp-and-spreadsheet chaos.
+**Customer feedback flows in as droplets. AI triages, builds, opens PRs. You merge. Done.**
+
+The world's first **Feedback River UI** — plus hosted **Jal Studio**, headless **`@buildwithrenuka/jal` npm**, and **Vendo** as live proof on a real product.
 
 <br />
 
 [![GitHub](https://img.shields.io/badge/GitHub-buildwithrenuka%2Fvendo-181717?style=for-the-badge&logo=github&logoColor=white)](https://github.com/buildwithrenuka/vendo)
-[![License](https://img.shields.io/badge/License-Private-red?style=for-the-badge)](https://github.com/buildwithrenuka/vendo)
+[![npm](https://img.shields.io/badge/npm-@buildwithrenuka%2Fjal-CB3837?style=for-the-badge&logo=npm&logoColor=white)](https://www.npmjs.com/package/@buildwithrenuka/jal)
+[![Cloudflare Workers](https://img.shields.io/badge/Edge-Cloudflare-F38020?style=for-the-badge&logo=cloudflare&logoColor=white)](https://workers.cloudflare.com/)
+[![OpenAI](https://img.shields.io/badge/AI-OpenAI_Pipeline-412991?style=for-the-badge&logo=openai&logoColor=white)](https://openai.com/)
+[![React](https://img.shields.io/badge/UI-React_19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
+[![TypeScript](https://img.shields.io/badge/Stack-TypeScript-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
 
 <br />
 
-[![Node.js](https://img.shields.io/badge/Node.js-≥20-339933?style=for-the-badge&logo=node.js&logoColor=white)](https://nodejs.org/)
-[![TypeScript](https://img.shields.io/badge/TypeScript-5.8-3178C6?style=for-the-badge&logo=typescript&logoColor=white)](https://www.typescriptlang.org/)
-[![Cloudflare Workers](https://img.shields.io/badge/Cloudflare-Workers-F38020?style=for-the-badge&logo=cloudflare&logoColor=white)](https://workers.cloudflare.com/)
-[![React](https://img.shields.io/badge/React-19-61DAFB?style=for-the-badge&logo=react&logoColor=black)](https://react.dev/)
-[![Hono](https://img.shields.io/badge/Hono-API-E36002?style=for-the-badge)](https://hono.dev/)
-[![Tailwind CSS](https://img.shields.io/badge/Tailwind-4-06B6D4?style=for-the-badge&logo=tailwindcss&logoColor=white)](https://tailwindcss.com/)
+| | |
+|:---:|:---|
+| **Live demo** | [`http://localhost:5173`](http://localhost:5173) after `npm run dev` |
+| **Attach a repo** | [`/studio/onboard`](http://localhost:5173/studio/onboard) |
+| **See the river** | Homepage `#river` → click droplets → Dual Lens |
+| **npm engine** | [`@buildwithrenuka/jal`](https://www.npmjs.com/package/@buildwithrenuka/jal) |
 
 <br />
 
-A procurement platform for buyers worldwide — share a link on **WhatsApp**, **email**, or **SMS**,  
-collect compliance docs, auto-approve clear cases, and keep finance audit-ready.
-
-**Free to start** · up to 3 suppliers · no credit card
-
-<br />
-
-[Quick Start](#-quick-start) · [Features](#-features) · [Architecture](#-architecture) · [API](#-api) · [Deploy](#-deployment) · [GitHub](https://github.com/buildwithrenuka/vendo)
+[90-Second Demo](#-90-second-demo-for-judges) · [What's New](#-what-jal-invented) · [Quick Start](#-quick-start) · [Documentation](/docs) · [Studio](#-jal-studio) · [Architecture](#-architecture) · [API](#-api)
 
 <br />
 
 ```bash
-git clone https://github.com/buildwithrenuka/vendo.git
-cd vendo
+git clone https://github.com/buildwithrenuka/vendo.git && cd vendo && npm install && npm run dev
 ```
 
 </div>
 
 ---
 
-## ✨ At a glance
+## ⚡ 90-second demo for judges
+
+> **Goal:** Show something no other team has — feedback as a *living river*, not a spreadsheet.
+
+| Step | Do this | What judges see |
+|:----:|---------|-----------------|
+| **1** | Open **`/`** (homepage) | Hero + **live pipeline animation** (Request → Merge) |
+| **2** | Scroll to **`#river`** | Interactive river — **click any droplet** |
+| **3** | Watch **Dual Lens** | Left = customer widget · Right = ship console · Same request |
+| **4** | Go **`/studio/onboard`** | Sign in → paste `owner/repo` → **Repo Pour** fills with AI context |
+| **5** | Open **`/studio/projects/:id`** | Real **Feedback River** inbox — enqueue → AI Build → PR → merge |
+| **6** | Optional: **`/internal/login`** | Vendo — same pipeline on a production procurement app |
+
+**One-liner for the panel:** *"Jal closes the loop from customer widget to merged GitHub PR — with a UI metaphor nobody else ships."*
+
+---
+
+## 💡 What Jal invented
+
+Every product tool looks the same: **lists, kanban, gray boxes.**  
+Jal asks: *what if feedback behaved like water?*
+
+```mermaid
+flowchart TB
+    subgraph OLD["Every other tool"]
+        L1["Ticket #1847"]
+        L2["Backlog column"]
+        L3["Sprint board"]
+    end
+
+    subgraph JAL["Jal — Feedback River"]
+        D["Droplet on animated river"]
+        DL["Dual Lens split view"]
+        P["Position = pipeline stage"]
+    end
+
+    OLD -.->|"same data, dead UI"| JAL
+
+    style JAL fill:#021418,stroke:#00f5d4,color:#d4fff8
+    style OLD fill:#1a1a1a,stroke:#666,color:#999
+```
+
+### Five UI primitives (not features — *inventions*)
+
+| Primitive | What it replaces | Experience |
+|-----------|------------------|------------|
+| **Feedback River** | Ticket list / inbox grid | Each request is a **droplet** on an SVG stream — `left %` = pipeline progress |
+| **Dual Lens** | Single admin view | **Customer lens** (widget mock) ↔ **Ship lens** (PR, tasks) — one stream, two truths |
+| **Repo Pour** | "Connect GitHub" form | Liquid vessel **fills** as AI absorbs README + stack — onboarding as ritual |
+| **Nexus** | Project list table | Projects orbit a central core — **tributaries** feeding one engine |
+| **Phosphor Abyss** | Generic cyan SaaS | Color **is narrative**: cold phosphor intake → violet depth → coral ship |
+
+Interactive proof: homepage **`#river`** · production UI: **`/studio/projects/:id`**
+
+---
+
+## 🔁 End-to-end: widget → merge
+
+One continuous loop. Fully traceable. No black holes.
+
+```mermaid
+sequenceDiagram
+    autonumber
+    participant C as Customer
+    participant W as JalWidget
+    participant R as Feedback River
+    participant AI as OpenAI
+    participant GH as GitHub
+
+    C->>W: Submit feature / bug
+    W->>R: Droplet appears upstream
+    R->>AI: Triage + assess
+    AI->>R: Planned + tasks
+    R->>AI: AI Build (repo context)
+    AI->>GH: Open PR
+    R->>AI: AI Review vs PRD
+    Note over R,GH: Human approves once
+    R->>GH: Merge PR
+    GH-->>C: Shipped (widget status)
+```
+
+| Stage | AI does | Human does |
+|-------|---------|------------|
+| **Triage** | Classify, dedupe, scope, clarify | — |
+| **Plan** | PRD outline + engineering tasks | Approve direction |
+| **Build** | Read attached repo, implement, open PR | — |
+| **Review** | Validate diff vs requirements | Fix or escalate |
+| **Ship** | — | One-click merge |
+
+---
+
+## 🚪 Three doors. One engine.
 
 <table>
 <tr>
-<td width="50%" valign="top">
+<td width="33%" valign="top">
 
-#### 🏢 For buyers
+### 🎨 Jal Studio
+**Zero setup · browser-only**
 
-- Message-first supplier invites
-- Versioned compliance forms
-- Plain-language auto-approval rules
-- Green / yellow / red scorecards
-- GST & invoice reconciliation *(Enterprise)*
-- Feature requests with live status
+Attach GitHub → AI scans context → drop widget → ship from UI.
+
+```
+/studio          Nexus
+/studio/onboard  Repo Pour
+/studio/projects Live River + Dual Lens
+/.../embed       Widget + API key
+```
+
+[**Open Studio →**](http://localhost:5173/studio/onboard)
 
 </td>
-<td width="50%" valign="top">
+<td width="33%" valign="top">
 
-#### 🚚 For suppliers
+### 📦 `@buildwithrenuka/jal`
+**Full control · your infra**
 
-- Sign in with Google in seconds
-- One checklist — tax IDs, certs, bank details
-- **Verify once, reuse everywhere**
-- Track submission status in one place
+Same pipeline as npm — triage, tasks, build, PR, merge.
+
+```bash
+npm install @buildwithrenuka/jal
+```
+
+Profiles: `vendo` · `travel` · `generic`
+
+[**Package docs →**](packages/shipflow/README.md)
+
+</td>
+<td width="33%" valign="top">
+
+### 🏢 Vendo
+**Live proof · real product**
+
+Procurement app with buyer widget + internal dev queue.
+
+```
+/dashboard       Buyer + feature requests
+/internal        Dev queue + AI build
+```
+
+Not a mock — production patterns.
+
+[**Dev demo →**](http://localhost:5173/internal/login)
 
 </td>
 </tr>
 </table>
 
-### The 3-step flow
+---
+
+## 🌊 The Feedback River
 
 ```mermaid
 flowchart LR
-    A["📨 Invite"] --> B["📋 Collect"]
-    B --> C["✅ Approve"]
+    F["💧 Feedback"] --> T["🧠 Triage"]
+    T --> P["📋 Planned"]
+    P --> B["⚙️ Build + PR"]
+    B --> R["🔍 Review"]
+    R --> S["🚀 Shipped"]
 
-    style A fill:#1a1a2e,stroke:#6366f1,color:#e2e8f0
-    style B fill:#1a1a2e,stroke:#6366f1,color:#e2e8f0
-    style C fill:#1a1a2e,stroke:#22c55e,color:#e2e8f0
+    style F fill:#021418,stroke:#00f5d4,color:#d4fff8
+    style T fill:#021418,stroke:#7c5cff,color:#e8e0ff
+    style S fill:#021418,stroke:#ff6b4a,color:#ffe8e0
 ```
 
-| Step | What happens |
-|:----:|--------------|
-| **1 · Invite** | Create a secure link from your dashboard — share on any channel |
-| **2 · Collect** | Supplier fills your form; docs are versioned & audit-ready |
-| **3 · Approve** | Valid submissions pass your rules instantly — only edge cases need you |
+**Studio routes**
+
+| Route | Purpose |
+|-------|---------|
+| `/studio` | Nexus — all projects as tributaries |
+| `/studio/onboard` | Pour repo → AI absorb → API key |
+| `/studio/projects/:id` | **Live river** + Dual Lens + Ship console |
+| `/studio/projects/:id/embed` | `<JalWidget />` snippet + iframe |
+| `/embed/:projectId` | Public embed page |
+
+**Studio API** (`/studio`)
+
+| Method | Path | Auth |
+|--------|------|------|
+| `GET` | `/studio/setup` | Public readiness check |
+| `POST` | `/studio/projects` | Session → project + `jal_live_*` key |
+| `POST` | `/studio/projects/:id/scan` | AI repo context scan |
+| `GET` | `/studio/projects/:id/inbox` | River droplets |
+| `POST` | `/studio/projects/:id/features/:id/build` | AI code → GitHub PR |
+| `POST` | `/studio/projects/:id/features/:id/approve-ship` | Merge PR |
+| `POST` | `/studio/feedback` | `Bearer jal_live_*` widget submit |
 
 ---
 
-## 🎯 Features
+## 🚀 Quick start
 
-### Buyer dashboard — `/dashboard`
+```bash
+git clone https://github.com/buildwithrenuka/vendo.git
+cd vendo && npm install
 
-```
-┌─────────────┬─────────────┬──────────────────────┬──────────────┐
-│  Overview   │  Suppliers  │        Setup         │   Feedback   │
-├─────────────┼─────────────┼──────────────────────┼──────────────┤
-│ Stats       │ Invites     │ Form builder         │ Feature reqs │
-│ Quick share │ Scorecards  │ Approval rules (NL)  │ Bug reports  │
-│ Activity    │ Submissions │ GST reconciliation   │ AI triage    │
-└─────────────┴─────────────┴──────────────────────┴──────────────┘
-```
+npm run build --workspace @vendo/shared
+npm run build --workspace @vendo/forms
 
-| Capability | Description |
-|------------|-------------|
-| 💬 **WhatsApp invites** | Share onboarding links where suppliers already are |
-| 📋 **Form builder** | Custom fields — text, files, dates, selects — versioned per buyer |
-| ⚡ **Auto-approve** | Describe rules in plain English; clear docs approve in seconds |
-| 🧾 **GST matching** | Match supplier invoices against onboarded GST numbers |
-| 📊 **Scorecards** | Traffic-light ratings from onboarding & review history |
-| 💡 **Feature requests** | Every request tracked — never lost in a black hole |
+cp apps/api/.dev.vars.example apps/api/.dev.vars
+cp apps/web/.env.example apps/web/.env
+# SESSION_SECRET (32+ chars) · OPENAI_API_KEY · GITHUB_TOKEN for Studio
 
-### Feature request lifecycle
-
-```mermaid
-flowchart LR
-    R[Received] --> A[AI Review]
-    A --> P[Planned]
-    P --> D[In Development]
-    D --> S[Shipped]
-
-    A -.->|declined| X[Declined]
-    A -.->|exists| E[Already Exists]
-
-    style R fill:#334155,stroke:#94a3b8,color:#f1f5f9
-    style A fill:#312e81,stroke:#818cf8,color:#f1f5f9
-    style P fill:#1e3a5f,stroke:#38bdf8,color:#f1f5f9
-    style D fill:#422006,stroke:#fbbf24,color:#f1f5f9
-    style S fill:#14532d,stroke:#4ade80,color:#f1f5f9
-    style X fill:#450a0a,stroke:#f87171,color:#f1f5f9
-    style E fill:#1e293b,stroke:#64748b,color:#f1f5f9
+npm run db:migrate:local
+npm run dev
 ```
 
-AI assesses business fit, detects existing features, and asks clarifying questions before engineering picks it up.
+| Service | URL |
+|---------|-----|
+| Web | `http://localhost:5173` |
+| API | `http://localhost:8787` |
+| Health | `GET /health` |
+| Studio | `/studio/onboard` |
+| **Docs** | [`/docs`](http://localhost:5173/docs) — step-by-step guides (Expo-style) |
 
-### ShipFlow — internal dev queue — `/internal`
+### Widget in your app
 
-```mermaid
-flowchart LR
-    Q[Queued] --> B[Building]
-    B --> R[PR Review]
-    R --> F[Fix Needed]
-    F --> R
-    R --> A[Ready to Ship]
-    A --> S[Shipped]
-
-    style Q fill:#1e293b,stroke:#64748b,color:#f1f5f9
-    style B fill:#312e81,stroke:#818cf8,color:#f1f5f9
-    style R fill:#422006,stroke:#fbbf24,color:#f1f5f9
-    style F fill:#450a0a,stroke:#f87171,color:#f1f5f9
-    style A fill:#14532d,stroke:#4ade80,color:#f1f5f9
-    style S fill:#064e3b,stroke:#34d399,color:#f1f5f9
+```tsx
+<JalWidget
+  projectId="your-project-id"
+  apiKey="jal_live_..."
+  productName="My App"
+  placement="bottom-right"
+/>
 ```
 
-OpenAI code generation · GitHub PRs · task kanban · AI code review · activity timeline · employee admin panel.
+### npm (headless)
+
+```typescript
+import { loadJalContext, triageFeatureRequest, runAiCodeBuilder } from "@buildwithrenuka/jal";
+
+const jal = loadJalContext({ JAL_PROFILE: "generic", JAL_PRODUCT_NAME: "My SaaS" });
+```
+
+### Vendo admin seed
+
+```bash
+npm run seed:admin --workspace @vendo/api
+# → /internal/login  (admin / VendoAdmin123!)
+```
 
 ---
 
@@ -164,337 +286,168 @@ OpenAI code generation · GitHub PRs · task kanban · AI code review · activit
 
 ```mermaid
 flowchart TB
-    subgraph Client["Browser"]
-        WEB["apps/web<br/>React · Vite · Tailwind"]
+    subgraph Surface["Experience layer"]
+        LAND["Landing + #river demo"]
+        STU["Jal Studio"]
+        VEN["Vendo app"]
+        WID["JalWidget embed"]
     end
 
-    subgraph Edge["Cloudflare Edge"]
-        API["apps/api<br/>Hono Worker"]
+    subgraph Edge["Cloudflare edge"]
+        API["Hono Worker"]
         D1[("D1 SQLite")]
     end
 
-    subgraph Packages["Shared packages"]
-        SH["@vendo/shared"]
-        FM["@vendo/forms"]
+    subgraph Brain["@buildwithrenuka/jal"]
+        TRI["Triage"]
+        BLDR["Code builder"]
+        REV["PR review"]
     end
 
-    subgraph External["External services"]
-        G[Google OAuth]
-        O[SeekID OIDC]
-        RS[Resend Email]
-        RZ[Razorpay]
-        GH[GitHub]
-        AI[OpenAI]
+    subgraph World["External"]
+        OAI["OpenAI"]
+        GH["GitHub"]
     end
 
-    WEB --> API
+    LAND & STU & VEN & WID --> API
     API --> D1
-    WEB --> SH
-    API --> SH
-    WEB --> FM
-    API --> FM
-    API --> G
-    API --> O
-    API --> RS
-    API --> RZ
-    API --> GH
-    API --> AI
+    API --> Brain
+    Brain --> OAI
+    Brain --> GH
 
-    style WEB fill:#1e3a5f,stroke:#38bdf8,color:#f1f5f9
-    style API fill:#422006,stroke:#fbbf24,color:#f1f5f9
-    style D1 fill:#14532d,stroke:#4ade80,color:#f1f5f9
+    style STU fill:#021418,stroke:#00f5d4,color:#d4fff8
+    style Brain fill:#021418,stroke:#7c5cff,color:#e8e0ff
 ```
-
-### Tech stack
-
-| Layer | Stack |
-|-------|-------|
-| **API** | Cloudflare Workers · Hono · D1 (SQLite) |
-| **Web** | React 19 · Vite 6 · Tailwind CSS 4 |
-| **Auth** | Google OAuth · SeekID (Poll-Seeker OIDC) · Employee login |
-| **Email** | Resend |
-| **Payments** | Razorpay |
-| **AI** | OpenAI — triage · code builder · PR review |
-
-### Monorepo
 
 ```
 vendo/
-│
 ├── apps/
-│   ├── api/                 #  Cloudflare Worker — routes, services, D1 migrations
-│   └── web/                 #  React SPA — landing, dashboard, internal tools
-│
+│   ├── api/              Cloudflare Worker — /studio, /dev, /buyer, …
+│   └── web/              React 19 · Vite · Tailwind 4 · Feedback River UI
 ├── packages/
-│   ├── shared/              #  Types, constants, status labels
-│   └── forms/               #  Zod schemas, field catalog, form flow
-│
-└── package.json             #  npm workspaces root
+│   ├── shared/           Types · Jal project models · status labels
+│   ├── forms/            Zod schemas · field catalog
+│   └── shipflow/         @buildwithrenuka/jal — portable AI pipeline
+└── package.json
 ```
+
+| Layer | Technology |
+|-------|------------|
+| Frontend | React 19 · Vite 6 · Tailwind CSS 4 · Sora + Figtree |
+| API | Cloudflare Workers · Hono · D1 |
+| AI | OpenAI — triage · codegen · PR review |
+| GitHub | Repo scan · branch · PR · merge |
+| Auth | Google OAuth · OIDC · employee login |
 
 ---
 
-## 🚀 Quick start
+## 🎨 Phosphor Abyss
 
-### Prerequisites
+Jal's color system maps **lifecycle to hue** — not decoration, narrative.
 
-| Tool | Version |
-|------|---------|
-| Node.js | ≥ 20 |
-| npm | workspaces enabled |
-| Wrangler | via `@vendo/api` devDependencies |
+| Token | Hex | Meaning |
+|-------|-----|---------|
+| Phosphor | `#00f5d4` | New feedback · river flow |
+| Current | `#7c5cff` | Pipeline depth · dev lens |
+| Coral | `#ff6b4a` | Customer warmth · bugs · shipped |
+| Abyss | `#010a0f` | Deep trench background |
 
-### Run locally
+CSS: `apps/web/src/index.css` · Tokens: `apps/web/src/lib/jal-brand.ts`
+
+---
+
+## 🏢 Vendo (reference deployment)
+
+Proves Jal isn't a demo — it's deployed patterns on a **real procurement platform**.
+
+| Module | Route | Jal integration |
+|--------|-------|-----------------|
+| Buyer dashboard | `/dashboard` | Feature request widget → AI triage |
+| Internal queue | `/internal` | Full dev pipeline → GitHub PRs |
+| Supplier onboarding | `/invite/:token` | Separate product surface |
+
+**Vendo-specific:** WhatsApp invites · compliance forms · auto-approve rules · GST reconciliation *(Enterprise)*
+
+Set `GITHUB_REPO=buildwithrenuka/vendo` for internal **AI Build** PRs.
+
+---
+
+## 🔐 Environment · Deploy · DB
+
+<details>
+<summary><strong>Environment variables</strong></summary>
+
+| Variable | Required | Purpose |
+|----------|:--------:|---------|
+| `SESSION_SECRET` | ✅ | Cookie signing |
+| `OPENAI_API_KEY` | 🤖 | AI pipeline |
+| `GITHUB_TOKEN` | 🐙 | Repo scan + PR automation |
+| `GITHUB_REPO` | 🐙 | Vendo internal PR target |
+| `GOOGLE_CLIENT_*` | 🔑 | Studio + buyer auth |
+
+Full list: [`apps/api/.dev.vars.example`](apps/api/.dev.vars.example)
+
+</details>
+
+<details>
+<summary><strong>Deploy</strong></summary>
 
 ```bash
-git clone https://github.com/buildwithrenuka/vendo.git
-cd vendo
-npm install
+# API → Cloudflare Workers
+wrangler secret put SESSION_SECRET OPENAI_API_KEY GITHUB_TOKEN
+npm run db:migrate:remote --workspace @vendo/api
+npm run deploy --workspace @vendo/api
 
-# Build shared packages (required first)
-npm run build --workspace @vendo/shared
-npm run build --workspace @vendo/forms
-
-# Environment
-cp apps/api/.dev.vars.example apps/api/.dev.vars
-cp apps/web/.env.example apps/web/.env
-# → Edit .dev.vars — set SESSION_SECRET (32+ random chars)
-
-# Database
-npm run db:migrate:local
-
-# Start everything
-npm run dev
+# Web → static (Pages / Vercel)
+npm run build --workspace @vendo/web
 ```
 
-<table>
-<tr>
-<td align="center"><strong>🌐 Web</strong><br/><code>http://localhost:5173</code></td>
-<td align="center"><strong>⚡ API</strong><br/><code>http://localhost:8787</code></td>
-<td align="center"><strong>❤️ Health</strong><br/><code>/health</code></td>
-</tr>
-</table>
+</details>
 
-### Seed internal admin
+<details>
+<summary><strong>Database — 9 migrations on D1</strong></summary>
 
-Employee login at **`/internal/login`** not working on first run?
+| Migration | Adds |
+|-----------|------|
+| `0001`–`0008` | Users, invites, forms, feature requests, dev queue, employees |
+| **`0009_jal_studio`** | **`jal_projects`, project-scoped feedback, API keys** |
+
+</details>
+
+<details>
+<summary><strong>Scripts</strong></summary>
 
 ```bash
-npm run seed:admin --workspace @vendo/api
+npm run dev              # API + web
+npm run typecheck        # All workspaces
+npm run db:migrate:local # Local D1
 ```
 
-Uses `VENDO_ADMIN_USERNAME` / `VENDO_ADMIN_PASSWORD` from `.dev.vars`  
-*(defaults: `admin` / `VendoAdmin123!`)*
-
----
-
-## 🔐 Authentication
-
-<details>
-<summary><strong>Google OAuth</strong></summary>
-
-<br />
-
-1. Create an OAuth client in [Google Cloud Console](https://console.cloud.google.com/)
-2. Add redirect URI:
-
-   ```
-   http://localhost:5173/auth/google/callback
-   ```
-
-3. Set in `apps/api/.dev.vars`:
-
-   ```
-   GOOGLE_CLIENT_ID=...
-   GOOGLE_CLIENT_SECRET=...
-   ```
-
-</details>
-
-<details>
-<summary><strong>SeekID — Poll-Seeker OIDC</strong></summary>
-
-<br />
-
-Register Vendo in Poll-Seeker's `CLIENTS`:
-
-```js
-vendo: {
-  clientId: 'vendo',
-  clientSecret: process.env.VENDO_OIDC_SECRET || 'vendo_secret',
-  redirectUris: ['http://localhost:5173/callback'],
-},
-```
-
-Mirror values in `apps/api/.dev.vars` and `apps/web/.env`.
-
-</details>
-
-<details>
-<summary><strong>Employee login</strong></summary>
-
-<br />
-
-Vendo team signs in at **`/internal/login`** with username + password.  
-Admins manage accounts from **Team** tab inside `/internal`.
-
 </details>
 
 ---
 
-## ⚙️ Environment variables
-
-<details>
-<summary><strong>API — <code>apps/api/.dev.vars</code></strong></summary>
-
-<br />
-
-| Variable | Required | Description |
-|----------|:--------:|-------------|
-| `SESSION_SECRET` | ✅ | Long random string for session cookies |
-| `APP_URL` | ✅ | Frontend URL (`http://localhost:5173`) |
-| `API_URL` | ✅ | API URL (`http://localhost:8787`) |
-| `GOOGLE_CLIENT_ID` | 🔑 | Google OAuth client ID |
-| `GOOGLE_CLIENT_SECRET` | 🔑 | Google OAuth secret |
-| `OIDC_ISSUER` | 🔑 | Poll-Seeker issuer URL |
-| `OIDC_CLIENT_ID` | 🔑 | OIDC client ID (`vendo`) |
-| `OIDC_CLIENT_SECRET` | 🔑 | OIDC client secret |
-| `RESEND_API_KEY` | 📧 | Email invite delivery |
-| `FROM_EMAIL` | 📧 | Sender address |
-| `RAZORPAY_KEY_ID` | 💳 | Payment keys |
-| `RAZORPAY_KEY_SECRET` | 💳 | Payment keys |
-| `OPENAI_API_KEY` | 🤖 | AI triage, code builder, review |
-| `GITHUB_TOKEN` | 🐙 | ShipFlow PR access |
-| `GITHUB_REPO` | 🐙 | Target repo (`owner/repo`) |
-| `VENDO_ADMIN_USERNAME` | 👤 | Bootstrap admin username |
-| `VENDO_ADMIN_PASSWORD` | 👤 | Bootstrap admin password |
-
-</details>
-
-<details>
-<summary><strong>Web — <code>apps/web/.env</code></strong></summary>
-
-<br />
-
-| Variable | Description |
-|----------|-------------|
-| `VITE_OIDC_ISSUER` | Same as API `OIDC_ISSUER` |
-| `VITE_OIDC_CLIENT_ID` | Same as API `OIDC_CLIENT_ID` |
-| `VITE_OIDC_CLIENT_SECRET` | Same as API `OIDC_CLIENT_SECRET` |
-
-</details>
-
----
-
-## 📜 Scripts
-
-```bash
-npm run dev              #  API + web concurrently
-npm run dev:api          #  Wrangler → :8787
-npm run dev:web          #  Vite → :5173
-npm run build            #  Build all workspaces
-npm run typecheck        #  Type-check everything
-npm run db:migrate:local #  Apply D1 migrations (local)
-```
-
-| Workspace command | What it does |
-|-------------------|--------------|
-| `npm run db:migrate:remote --workspace @vendo/api` | Migrate remote D1 |
-| `npm run deploy --workspace @vendo/api` | Deploy Worker |
-| `npm run seed:admin --workspace @vendo/api` | Seed local admin |
-
----
-
-## 🌐 API
-
-**Base URL:** `http://localhost:8787`
+## 🌐 API map
 
 | Prefix | Purpose |
 |--------|---------|
-| `GET /health` | Health check |
-| `/auth` | Google · OIDC · employee login |
-| `/me` | Current session |
-| `/invites` | Supplier invite flow |
-| `/buyer` | Profile · verification · forms |
-| `/buyer/feature-requests` | Feature & bug requests |
-| `/buyer/gst` | GST reconciliation |
+| `/studio` | **Jal Studio** — projects, river, widget, dev queue |
+| `/dev` | Vendo internal queue |
+| `/buyer` | Profiles · forms · feature requests |
 | `/supplier` | Onboarding submissions |
-| `/rules` | Approval rulesets |
-| `/review` | Submission review |
-| `/dev` | ShipFlow queue *(employees)* |
-| `/dev/employees` | Employee admin |
-
----
-
-## 🗄 Database
-
-SQLite on **Cloudflare D1** · migrations in `apps/api/migrations/`
-
-| # | Migration | Adds |
-|:-:|-----------|------|
-| 01 | `0001_init` | Users, sessions, invites, forms, rules |
-| 02 | `0002_invite_phone` | Phone on invites |
-| 03 | `0003_feature_requests` | Buyer feature requests |
-| 04 | `0004_profiles_scorecard_gst` | Profiles, scorecards, GST |
-| 05 | `0005_feature_request_assessment` | AI assessment |
-| 06 | `0006_dev_workflow` | Dev queue, tasks, PRs, reviews |
-| 07 | `0007_internal_workflow` | Activity log |
-| 08 | `0008_vendo_employees` | Employee accounts |
-
----
-
-## ☁️ Deployment
-
-### API → Cloudflare Workers
-
-```bash
-# 1. Create D1 DB → update database_id in wrangler.jsonc
-# 2. Set secrets
-wrangler secret put SESSION_SECRET
-# 3. Migrate & deploy
-npm run db:migrate:remote --workspace @vendo/api
-npm run deploy --workspace @vendo/api
-```
-
-### Web → Static hosting
-
-```bash
-npm run build --workspace @vendo/web
-# → apps/web/dist/
-```
-
-Host on **Cloudflare Pages**, Vercel, or any static CDN.  
-Update `APP_URL` / `API_URL` and OAuth redirect URIs for production.
+| `/auth` · `/me` | Sessions |
 
 ---
 
 ## 💎 Pricing
 
-<table>
-<tr>
-<th align="center">Standard — Free</th>
-<th align="center">Enterprise</th>
-</tr>
-<tr>
-<td valign="top">
+| Free trial | Pro $49/mo | Team |
+|------------|------------|------|
+| 3 pipeline runs | Unlimited runs | SSO + SLA |
+| 1 repo | Multi-repo | Custom context |
+| Widget + triage | PR automation | Dedicated support |
 
-✅ Up to **3 suppliers**  
-✅ Custom forms & rules  
-✅ Feature requests  
-✅ Supplier scorecards  
-
-</td>
-<td valign="top">
-
-✅ Unlimited suppliers  
-✅ GST / invoice reconciliation  
-✅ Priority support  
-
-</td>
-</tr>
-</table>
-
-> Tier limit enforced in `@vendo/shared` → `STANDARD_TIER_MAX_SUPPLIERS = 3`
+Vendo: **Standard** (3 suppliers free) · **Enterprise** (GST, unlimited)
 
 ---
 
@@ -502,14 +455,16 @@ Update `APP_URL` / `API_URL` and OAuth redirect URIs for production.
 
 <br />
 
-**Built for procurement teams who outgrew spreadsheets — not enterprise bloat.**
+## Like water — one pipeline, any product shape.
+
+**Feedback River** · **Dual Lens** · **Repo Pour** · **OpenAI → GitHub**
 
 <br />
 
-[**github.com/buildwithrenuka/vendo**](https://github.com/buildwithrenuka/vendo)
+[**▶ Run the demo**](http://localhost:5173) · [**Attach a repo**](http://localhost:5173/studio/onboard) · [**npm**](https://www.npmjs.com/package/@buildwithrenuka/jal) · [**GitHub**](https://github.com/buildwithrenuka/vendo)
 
 <br />
 
-*Private · All rights reserved · © buildwithrenuka*
+*Built by [buildwithrenuka](https://github.com/buildwithrenuka) · Private*
 
 </div>

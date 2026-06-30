@@ -11,6 +11,12 @@ import { HomeRoute } from "./pages/HomeRoute";
 import { GoogleCallbackPage } from "./pages/GoogleCallbackPage";
 import { VendoInternalPage } from "./pages/VendoInternalPage";
 import { EmployeeLoginPage } from "./pages/EmployeeLoginPage";
+import { StudioHomePage } from "./pages/studio/StudioHomePage";
+import { StudioOnboardPage } from "./pages/studio/StudioOnboardPage";
+import { StudioProjectPage } from "./pages/studio/StudioProjectPage";
+import { StudioEmbedPage } from "./pages/studio/StudioEmbedPage";
+import { EmbedWidgetPage } from "./pages/studio/EmbedWidgetPage";
+import { DocsLayout } from "./components/docs/DocsLayout";
 
 function ProtectedRoute({ children }: { children: React.ReactNode }) {
   const { user, loading } = useAuth();
@@ -31,6 +37,13 @@ export function App() {
           <Route path="/auth/google/callback" element={<GoogleCallbackPage />} />
           <Route path="/invite/:token" element={<InvitePage />} />
           <Route path="/internal/login" element={<EmployeeLoginPage />} />
+          <Route path="/studio" element={<StudioHomePage />} />
+          <Route path="/studio/onboard" element={<StudioOnboardPage />} />
+          <Route path="/studio/projects/:projectId" element={<StudioProjectPage />} />
+          <Route path="/studio/projects/:projectId/embed" element={<StudioEmbedPage />} />
+          <Route path="/embed/:projectId" element={<EmbedWidgetPage />} />
+          <Route path="/docs" element={<DocsLayout />} />
+          <Route path="/docs/:slug" element={<DocsLayout />} />
           <Route
             path="/internal"
             element={

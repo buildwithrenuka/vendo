@@ -1,13 +1,14 @@
 import { Link } from "react-router-dom";
-import { GoogleIcon, googleAuthStartUrl } from "../../lib/google-auth";
-import { VendoLogo } from "../VendoLogo";
+import { JalLogo } from "../JalLogo";
 import { ThemeToggle } from "../ThemeToggle";
 import { useTheme } from "../../context/ThemeContext";
+import { JAL_TAGLINE } from "../../lib/jal-brand";
 
 const links = [
-  { href: "#features", label: "Features" },
-  { href: "#how", label: "How it works" },
-  { href: "#feature-requests", label: "Feature requests" },
+  { href: "#river", label: "River" },
+  { href: "#studio", label: "Studio" },
+  { href: "#pipeline", label: "Pipeline" },
+  { href: "#dual", label: "Studio + npm" },
   { href: "#pricing", label: "Pricing" },
 ];
 
@@ -17,9 +18,23 @@ export function LandingNav() {
   return (
     <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4">
       <div className="glass-nav mx-auto flex max-w-5xl items-center justify-between rounded-full px-2 py-2 pl-4">
-        <Link to="/" className="flex items-center gap-2">
-          <VendoLogo size={28} variant={theme === "light" ? "light" : "dark"} showTagline showWordmark className="hidden sm:inline-flex" />
-          <VendoLogo size={28} variant={theme === "light" ? "light" : "dark"} showWordmark className="sm:hidden" />
+        <Link to="/" className="flex items-center gap-2.5">
+          <JalLogo
+            size={32}
+            variant={theme === "light" ? "light" : "dark"}
+            animated
+            showWordmark
+            showTagline
+            tagline={JAL_TAGLINE}
+            className="hidden sm:inline-flex"
+          />
+          <JalLogo
+            size={32}
+            variant={theme === "light" ? "light" : "dark"}
+            animated={false}
+            showWordmark={false}
+            className="sm:hidden"
+          />
         </Link>
 
         <nav className="hidden items-center gap-1 md:flex">
@@ -32,16 +47,15 @@ export function LandingNav() {
 
         <div className="flex items-center gap-2">
           <ThemeToggle />
-          <Link to="/login" className="nav-link hidden rounded-full px-3 py-1.5 text-sm sm:inline">
-            Sign in
+          <Link to="/docs" className="nav-link hidden rounded-full px-3 py-1.5 text-sm sm:inline">
+            Docs
           </Link>
-          <a
-            href={googleAuthStartUrl({ redirect: "/dashboard" })}
-            className="btn-primary inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold"
-          >
-            <GoogleIcon size={14} />
-            Start free
-          </a>
+          <Link to="/studio" className="nav-link hidden rounded-full px-3 py-1.5 text-sm lg:inline">
+            Studio
+          </Link>
+          <Link to="/studio/onboard" className="btn-primary inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold">
+            Attach repo
+          </Link>
         </div>
       </div>
     </header>

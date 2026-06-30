@@ -53,6 +53,8 @@ export interface FeatureRequestAssessment {
 export interface FeatureRequest {
   id: string;
   buyerId: string;
+  projectId?: string | null;
+  submitterEmail?: string | null;
   title: string;
   description: string;
   requestType: FeatureRequestType;
@@ -180,8 +182,8 @@ export const DEV_QUEUE_STATUS_LABELS: Record<DevQueueStatus, string> = {
   shipped: "Shipped",
 };
 
-/** ShipFlow pipeline order for employee board columns */
-export const SHIPFLOW_PIPELINE: DevQueueStatus[] = [
+/** Jal pipeline order for employee board columns */
+export const JAL_PIPELINE: DevQueueStatus[] = [
   "queued",
   "building",
   "in_review",
@@ -189,6 +191,9 @@ export const SHIPFLOW_PIPELINE: DevQueueStatus[] = [
   "ready_for_approval",
   "shipped",
 ];
+
+/** @deprecated use JAL_PIPELINE */
+export const SHIPFLOW_PIPELINE = JAL_PIPELINE;
 
 export const REQUEST_TYPE_LABELS: Record<FeatureRequestType, string> = {
   feature: "Feature",
@@ -354,4 +359,46 @@ export const STANDARD_TIER_MAX_SUPPLIERS = 3;
 export interface ApiError {
   error: string;
   code?: string;
+}
+
+/** Jal Studio — per-product workspace attached to a GitHub repo */
+export interface JalProjectContext {
+  profile: "vendo" | "travel" | "generic";
+  productName: string;
+  productContext: string;
+  stackContext: string;
+  existingFeatures: Array<{
+    keywords: string[];
+    name: string;
+    url: string;
+    description: string;
+  }>;
+  outOfScopeTerms: string[];
+  primaryUserLabels: string[];
+  feedbackTabUrl: string;
+}
+
+export interface JalProject {
+  id: string;
+  ownerUserId: string;
+  name: string;
+  githubRepo: string;
+  jalContext: JalProjectContext;
+  repoScannedAt: string | null;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface JalProjectPublic extends JalProject {
+  githubConfigured: boolean;
+  embedUrl: string;
+}
+
+export interface JalRepoScanResult {
+  productName: string;
+  productContext: string;
+  stackContext: string;
+  detectedStack: string[];
+  existingFeatures: JalProjectContext["existingFeatures"];
+  treeSample: string[];
 }

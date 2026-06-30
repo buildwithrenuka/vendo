@@ -53,7 +53,7 @@ export function EmployeeAdminPanel() {
       <Card>
         <SectionHeader
           title="Onboard employee"
-          description="Create username + password. Engineer can access ShipFlow; admin can onboard others."
+          description="Create username + password. Engineer can access Jal; admin can onboard others."
         />
         <form onSubmit={onboard} className="grid gap-3 sm:grid-cols-2">
           <Input label="Username" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="e.g. priya_dev" required />

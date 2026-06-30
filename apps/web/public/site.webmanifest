@@ -1,0 +1,23 @@
+{
+  "name": "Jal",
+  "short_name": "Jal",
+  "description": "Feedback flows. Features ship. Context-adaptive AI pipeline from feedback to merged PR.",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo.svg",
+      "sizes": "512x512",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ],
+  "theme_color": "#f0f9ff",
+  "background_color": "#f0f9ff",
+  "display": "standalone",
+  "start_url": "/"
+}

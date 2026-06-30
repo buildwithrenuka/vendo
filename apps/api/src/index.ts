@@ -13,6 +13,7 @@ import { gstRoutes } from "./routes/gst";
 import { devQueueRoutes } from "./routes/dev-queue";
 import { employeeAdminRoutes } from "./routes/employee-admin";
 import { meRoutes } from "./routes/me";
+import { studioRoutes } from "./routes/studio";
 import { corsHeaders } from "./lib/utils";
 import { ensureBootstrapAdmin } from "./lib/employee-auth";
 
@@ -34,6 +35,8 @@ const allowedOrigins = (env: Env) => [
   env.APP_URL,
   "http://localhost:5173",
   "http://127.0.0.1:5173",
+  "http://localhost:5174",
+  "http://127.0.0.1:5174",
 ];
 
 app.use("*", async (c, next) => {
@@ -54,7 +57,7 @@ app.use("*", async (c, next) => {
 app.use("*", authMiddleware);
 
 app.use("*", async (c, next) => {
-  await bootstrapEmployees(c.env, c.env.DB);
+  void bootstrapEmployees(c.env, c.env.DB);
   await next();
 });
 
@@ -70,12 +73,14 @@ app.route("/rules", rulesRoutes);
 app.route("/review", reviewRoutes);
 app.route("/buyer/gst", gstRoutes);
 app.route("/dev", devQueueRoutes);
+app.route("/studio", studioRoutes);
 app.route("/dev/employees", employeeAdminRoutes);
 
 app.onError((err, c) => {
   console.error(err);
   if (err.name === "ZodError") {
-    return c.json({ error: "Validation failed", details: err.message }, 400);
+    const first = (err as { issues?: Array<{ message: string }> }).issues?.[0]?.message;
+    return c.json({ error: first ?? "Validation failed", details: err.message }, 400);
   }
   return c.json({ error: "Internal server error" }, 500);
 });

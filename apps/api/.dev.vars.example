@@ -14,10 +14,20 @@ RESEND_API_KEY=
 FROM_EMAIL=onboarding@vendo.app
 OPENAI_API_KEY=
 
-# ShipFlow dev queue
+# Jal — adapts AI to host product (vendo | travel | generic)
+JAL_PROFILE=vendo
+# JAL_PRODUCT_NAME=My Travel App
+# JAL_PRODUCT_CONTEXT=Custom markdown describing your product...
+# JAL_STACK_CONTEXT=Custom tech stack notes for the code builder...
+# JAL_EXISTING_FEATURES=[{"keywords":["flight"],"name":"Flight search","url":"/flights","description":"..."}]
+# JAL_OUT_OF_SCOPE=supplier onboarding,gst
+# JAL_USER_LABELS=traveler,agent,admin
+# JAL_FEEDBACK_URL=/feedback
+
+# GitHub — AI opens PRs against this monorepo (owner/repo, no .git)
 DEV_EMAILS=you@gmail.com
-GITHUB_TOKEN=
-GITHUB_REPO=your-org/your-repo
+GITHUB_TOKEN=ghp_xxxxxxxxxxxx
+GITHUB_REPO=buildwithrenuka/vendo
 
 # Bootstrap first Vendo admin (created once if no admin exists)
 VENDO_ADMIN_USERNAME=admin

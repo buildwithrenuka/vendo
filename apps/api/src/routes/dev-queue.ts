@@ -16,7 +16,8 @@ import type {
   PrReviewStatus,
 } from "@vendo/shared";
 import { isVendoEmployeeUser } from "../lib/dev-access";
-import { fetchPullRequest, fetchPullRequestDiff, githubConfigured, repoDisplayName } from "../lib/github";
+import { fetchPullRequest, fetchPullRequestDiff, githubConfigured, mergePullRequest, repoDisplayName } from "../lib/github";
+import { getJalContext } from "../lib/jal-env";
 import { sendFeatureShippedEmailOrLog } from "../lib/email";
 import { parseJson } from "../lib/utils";
 import { reviewPullRequestAgainstPrd } from "../services/code-review";
@@ -185,12 +186,15 @@ async function notifyCustomerShipped(
   return emailResult;
 }
 
-devQueueRoutes.get("/config", (c) =>
-  c.json({
+devQueueRoutes.get("/config", (c) => {
+  const jal = getJalContext(c.env);
+  return c.json({
     githubConfigured: githubConfigured(c.env),
     githubRepo: repoDisplayName(c.env),
-  }),
-);
+    jalProfile: jal.profile,
+    productName: jal.productName,
+  });
+});
 
 devQueueRoutes.get("/stats", async (c) => {
   const row = await c.env.DB
@@ -366,7 +370,7 @@ devQueueRoutes.post("/features/:id/enqueue", async (c) => {
     return c.json({ error: "Feature must be planned before entering dev queue" }, 400);
   }
 
-  await enqueueFeatureForDevelopment(c.env.DB, id, row.title, row.ai_assessment_json, c.env.OPENAI_API_KEY, user.email);
+  await enqueueFeatureForDevelopment(c.env, c.env.DB, id, row.title, row.ai_assessment_json, c.env.OPENAI_API_KEY, user.email);
   const feature = await loadFeatureDetail(c.env.DB, id);
   return c.json({ feature });
 });
@@ -414,7 +418,7 @@ devQueueRoutes.post("/features/:id/tasks/regenerate", async (c) => {
   if (!row) return c.json({ error: "Not found" }, 404);
 
   const assessment = parseJson<FeatureRequestAssessment | null>(row.ai_assessment_json, null);
-  const tasks = await generateTasksFromAssessment(c.env.OPENAI_API_KEY, row.title, assessment);
+  const tasks = await generateTasksFromAssessment(c.env, row.title, assessment);
   await insertDevTasks(c.env.DB, id, tasks);
 
   const feature = await loadFeatureDetail(c.env.DB, id);
@@ -432,7 +436,7 @@ devQueueRoutes.post("/features/:id/build", async (c) => {
     return c.json({ error: "GitHub not configured — set GITHUB_TOKEN and GITHUB_REPO in .dev.vars" }, 503);
   }
 
-  await logFeatureActivity(c.env.DB, id, "ai", "ai_build_started", "ShipFlow AI builder is writing code and opening a PR…", {
+  await logFeatureActivity(c.env.DB, id, "ai", "ai_build_started", "Jal AI builder is writing code and opening a PR…", {
     actorEmail: user.email,
   });
 
@@ -563,7 +567,7 @@ devQueueRoutes.post("/features/:id/review/ai", async (c) => {
   }
 
   const diff = await fetchPullRequestDiff(c.env, pr.prNumber);
-  const aiResult = await reviewPullRequestAgainstPrd(c.env.OPENAI_API_KEY, {
+  const aiResult = await reviewPullRequestAgainstPrd(c.env.OPENAI_API_KEY, c.env, {
     featureTitle: detail.title,
     assessment: detail.aiAssessment,
     prDiff: diff,
@@ -619,6 +623,50 @@ devQueueRoutes.post("/features/:id/approve-ship", async (c) => {
   const detail = await loadFeatureDetail(c.env.DB, id);
   if (!detail) return c.json({ error: "Not found" }, 404);
 
+  const latestPr = detail.pullRequests[0] ?? null;
+  let githubPrMerged = false;
+  let githubMergeSha: string | null = null;
+  let githubMergeMessage: string | null = null;
+  let githubMergeError: string | null = null;
+
+  if (latestPr && githubConfigured(c.env)) {
+    try {
+      const mergeResult = await mergePullRequest(c.env, latestPr.prNumber, {
+        title: `feat(jal): ${detail.title}`,
+        message: `Approved by ${user.email} via Vendo Jal`,
+      });
+      githubPrMerged = mergeResult.merged;
+      githubMergeSha = mergeResult.sha;
+      githubMergeMessage = mergeResult.message;
+
+      await logFeatureActivity(
+        c.env.DB,
+        id,
+        "system",
+        "github_pr_merged",
+        mergeResult.message,
+        {
+          actorEmail: user.email,
+          metadata: {
+            prNumber: latestPr.prNumber,
+            prUrl: latestPr.prUrl,
+            sha: mergeResult.sha,
+            alreadyMerged: mergeResult.alreadyMerged,
+          },
+        },
+      );
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "GitHub merge failed";
+      await logFeatureActivity(c.env.DB, id, "system", "github_merge_failed", message, {
+        actorEmail: user.email,
+        metadata: { prNumber: latestPr.prNumber, prUrl: latestPr.prUrl },
+      });
+      return c.json({ error: message, code: "GITHUB_MERGE_FAILED" }, 502);
+    }
+  } else if (latestPr) {
+    githubMergeError = "GitHub not configured — PR was not merged on GitHub";
+  }
+
   const reviewId = crypto.randomUUID();
   await c.env.DB
     .prepare(
@@ -637,8 +685,8 @@ devQueueRoutes.post("/features/:id/approve-ship", async (c) => {
     c.env.DB.prepare(
       "UPDATE feature_requests SET status = 'shipped', dev_queue_status = 'shipped', updated_at = datetime('now') WHERE id = ?",
     ).bind(id),
-    ...(detail.pullRequests[0]
-      ? [c.env.DB.prepare("UPDATE feature_pull_requests SET review_status = 'approved', updated_at = datetime('now') WHERE id = ?").bind(detail.pullRequests[0].id)]
+    ...(latestPr
+      ? [c.env.DB.prepare("UPDATE feature_pull_requests SET review_status = 'approved', updated_at = datetime('now') WHERE id = ?").bind(latestPr.id)]
       : []),
   ]);
 
@@ -656,6 +704,10 @@ devQueueRoutes.post("/features/:id/approve-ship", async (c) => {
     feature,
     customerEmailSent: emailResult.sent,
     customerEmailError: emailResult.emailError,
+    githubPrMerged,
+    githubMergeSha,
+    githubMergeMessage,
+    githubMergeError,
   });
 });
 
