@@ -1,0 +1,167 @@
+/*
+ * Jal water palette — depth, mist, flow
+ * Uses lagoon / aqua / foam / current (green) / ember (live)
+ * Loaded after material-theme; keeps one brand, adds life
+ */
+
+/* ─── Hero wash ─── */
+.mesh-hero {
+  background-color: var(--color-landing-bg);
+  background-image:
+    radial-gradient(ellipse 100% 80% at 50% -25%, var(--jal-mist), transparent 58%),
+    radial-gradient(ellipse 45% 35% at 100% 0%, rgba(var(--jal-aqua-rgb), 0.14), transparent 52%),
+    radial-gradient(ellipse 40% 30% at 0% 100%, rgba(var(--jal-phosphor-rgb), 0.08), transparent 48%);
+}
+
+[data-theme="dark"] .mesh-hero {
+  background-image:
+    radial-gradient(ellipse 90% 70% at 50% -20%, rgba(var(--jal-aqua-rgb), 0.1), transparent 55%),
+    radial-gradient(ellipse 50% 40% at 100% 5%, rgba(var(--jal-phosphor-rgb), 0.12), transparent 50%),
+    radial-gradient(ellipse 45% 35% at 0% 95%, rgba(var(--jal-lagoon-rgb), 0.35), transparent 48%);
+}
+
+/* ─── Alt sections — foam tint instead of flat gray ─── */
+.landing-section-alt {
+  background: linear-gradient(
+    180deg,
+    var(--color-landing-bg) 0%,
+    var(--color-landing-surface-tint) 12%,
+    var(--color-landing-surface-tint) 88%,
+    var(--color-landing-bg) 100%
+  );
+}
+
+/* ─── Hero accent — teal → aqua (water shimmer) ─── */
+.jal-hero-accent {
+  background: linear-gradient(
+    120deg,
+    var(--color-landing-accent) 0%,
+    var(--color-landing-accent-glow) 100%
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.jal-hero-mark {
+  filter: drop-shadow(0 10px 28px rgba(var(--jal-phosphor-rgb), 0.22));
+}
+
+[data-theme="dark"] .jal-hero-mark {
+  filter: drop-shadow(0 10px 32px rgba(var(--jal-aqua-rgb), 0.28));
+}
+
+/* ─── Manifesto pill — soft water glass ─── */
+.jal-memorable-pill {
+  border-color: color-mix(in srgb, var(--color-landing-accent-glow) 45%, var(--color-landing-border));
+  background: linear-gradient(
+    135deg,
+    color-mix(in srgb, var(--jal-mist) 80%, var(--color-landing-accent-soft)),
+    var(--color-landing-accent-soft)
+  );
+}
+
+/* ─── Links — deep lagoon on hover ─── */
+.jal-link:hover {
+  color: var(--color-landing-accent-deep);
+}
+
+[data-theme="dark"] .jal-link:hover {
+  color: var(--color-landing-accent-glow);
+}
+
+/* ─── Device chrome — water tricolor dots ─── */
+.jal-device-chrome .jal-device-dot:nth-child(1) {
+  background: color-mix(in srgb, var(--jal-error) 85%, var(--color-landing-border));
+}
+
+.jal-device-chrome .jal-device-dot:nth-child(2) {
+  background: var(--jal-ember);
+}
+
+.jal-device-chrome .jal-device-dot:nth-child(3) {
+  background: var(--color-landing-accent-current);
+}
+
+/* ─── Live indicator — warm ember pulse (unused token) ─── */
+.jal-live-dot::before,
+.studio-flow-live {
+  background: var(--jal-ember);
+  box-shadow: 0 0 8px color-mix(in srgb, var(--jal-ember) 55%, transparent);
+}
+
+/* ─── Pipeline — teal progress → green when shipping ─── */
+.jal-pipeline-fill {
+  background: linear-gradient(
+    90deg,
+    var(--color-landing-accent) 0%,
+    var(--color-landing-accent-glow) 55%,
+    var(--color-landing-accent-current) 100%
+  );
+}
+
+.jal-step-dot--active {
+  background: var(--color-landing-accent);
+  color: var(--color-landing-btn-primary-text);
+}
+
+.jal-step-dot--done {
+  background: var(--color-landing-accent-current);
+  color: #fff;
+}
+
+.jal-step-dot--pending {
+  background: var(--color-landing-elevated);
+  color: var(--color-landing-muted);
+}
+
+.jal-pipeline-step-row.is-done:not(.is-active) {
+  opacity: 0.92;
+}
+
+.jal-pipeline-step-row.is-done:not(.is-active) .text-sm.font-medium {
+  color: color-mix(in srgb, var(--color-landing-accent-current) 75%, var(--color-landing-text));
+}
+
+/* ─── River — lit stages use green at end of flow ─── */
+.river-showcase-stage.lit:last-child .river-showcase-stage-dot {
+  background: var(--color-landing-accent-current);
+}
+
+.river-showcase-stage.lit .river-showcase-stage-dot {
+  background: var(--color-landing-accent);
+}
+
+/* ─── CTA panel — subtle lagoon depth ─── */
+.jal-cta-panel,
+.with-panel {
+  background: linear-gradient(
+    165deg,
+    var(--color-landing-surface-tint) 0%,
+    var(--color-landing-elevated) 100%
+  );
+}
+
+/* ─── Pricing popular — accent + aqua ring ─── */
+.pricing-popular {
+  box-shadow:
+    0 0 0 1px color-mix(in srgb, var(--color-landing-accent-glow) 35%, transparent),
+    0 16px 40px rgba(var(--jal-phosphor-rgb), 0.1);
+}
+
+/* ─── Footer scroll cue — accent gradient line ─── */
+.jal-scroll-cue-line {
+  background: linear-gradient(
+    to bottom,
+    transparent,
+    var(--color-landing-accent-glow),
+    var(--color-landing-accent)
+  );
+}
+
+/* ─── Studio / app — focus ring uses aqua glow ─── */
+.app-field:focus,
+.landing-card .app-field:focus,
+.studio-field:focus {
+  box-shadow: 0 0 0 3px color-mix(in srgb, var(--color-landing-accent-glow) 35%, transparent);
+}

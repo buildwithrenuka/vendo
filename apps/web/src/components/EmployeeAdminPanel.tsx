@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import type { VendoEmployeePublic } from "@vendo/shared";
 import { api } from "../lib/api";
+import { JAL_NAME } from "../lib/jal-brand";
 import { Badge, Button, Card, Input, SectionHeader } from "../components/ui";
 
 export function EmployeeAdminPanel() {
@@ -53,7 +54,7 @@ export function EmployeeAdminPanel() {
       <Card>
         <SectionHeader
           title="Onboard employee"
-          description="Create username + password. Engineer can access Jal; admin can onboard others."
+          description={`Create username + password. Engineer can access ${JAL_NAME}; admin can onboard others.`}
         />
         <form onSubmit={onboard} className="grid gap-3 sm:grid-cols-2">
           <Input label="Username" value={username} onChange={(e) => setUsername(e.target.value)} placeholder="e.g. priya_dev" required />

@@ -6,6 +6,8 @@ import npm from "@jal/docs/npm.md?raw";
 import api from "@jal/docs/api.md?raw";
 import troubleshooting from "@jal/docs/troubleshooting.md?raw";
 
+import { JAL_STUDIO } from "../lib/jal-brand";
+
 export type DocSlug =
   | "overview"
   | "get-started"
@@ -18,7 +20,7 @@ export type DocSlug =
 export const DOC_PAGES: Record<DocSlug, { title: string; body: string }> = {
   overview: { title: "Overview", body: overview },
   "get-started": { title: "Get started", body: getStarted },
-  studio: { title: "Jal Studio", body: studio },
+  studio: { title: JAL_STUDIO, body: studio },
   widget: { title: "Embed widget", body: widget },
   npm: { title: "npm package", body: npm },
   api: { title: "API reference", body: api },
@@ -34,7 +36,7 @@ export const DOC_NAV: { section: string; items: { slug: DocSlug; title: string }
     ],
   },
   {
-    section: "Jal Studio",
+    section: JAL_STUDIO,
     items: [
       { slug: "studio", title: "Studio walkthrough" },
       { slug: "widget", title: "Embed widget" },

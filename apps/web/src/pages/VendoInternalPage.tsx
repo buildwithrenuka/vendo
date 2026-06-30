@@ -16,6 +16,7 @@ import {
   REQUEST_TYPE_LABELS,
   JAL_PIPELINE,
 } from "@vendo/shared";
+import { JAL_NAME } from "../lib/jal-brand";
 import { api } from "../lib/api";
 import { useAuth } from "../context/AuthContext";
 import { FeatureRequestAssessmentCard } from "../components/FeatureRequestAssessmentCard";
@@ -142,7 +143,7 @@ export function VendoInternalPage() {
   return (
     <Shell
       title="Vendo Engineering"
-      subtitle={employeeUsername ? `@${employeeUsername} · Jal` : "Jal"}
+      subtitle={employeeUsername ? `@${employeeUsername} · ${JAL_NAME}` : JAL_NAME}
       actions={
         <Button variant="ghost" onClick={() => logout()}>Sign out</Button>
       }
@@ -177,7 +178,7 @@ export function VendoInternalPage() {
                 view === tab ? "bg-[var(--color-copper)]/20 text-[var(--color-copper)]" : "text-[var(--color-ink-muted)]"
               }`}
             >
-              {tab === "pipeline" ? "Jal pipeline" : tab === "inbox" ? "All customer requests" : "Team admin"}
+              {tab === "pipeline" ? `${JAL_NAME} pipeline` : tab === "inbox" ? "All customer requests" : "Team admin"}
             </button>
           ))}
         </div>
@@ -306,7 +307,7 @@ export function VendoInternalPage() {
               {detail.devQueueStatus && (
                 <Card>
                   <SectionHeader
-                    title="Jal actions"
+                    title={`${JAL_NAME} actions`}
                     description="AI can write code + open GitHub PR automatically"
                   />
                   <div className="flex flex-wrap gap-2">

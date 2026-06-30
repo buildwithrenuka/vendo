@@ -65,7 +65,7 @@ export function SubmissionReviewCard({
       </div>
 
       {dataKeys.length > 0 && (
-        <dl className="mt-4 grid gap-3 rounded-xl border border-[var(--color-border)] bg-black/20 p-3 sm:grid-cols-2">
+        <dl className="mt-4 grid gap-3 rounded-xl border border-[var(--color-border)] bg-[var(--color-landing-elevated)] p-3 sm:grid-cols-2">
           {dataKeys.map((key) => (
             <div key={key}>
               <dt className="text-[10px] font-semibold uppercase tracking-wider text-[var(--color-ink-muted)]">

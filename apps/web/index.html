@@ -1,40 +1,70 @@
 <!doctype html>
+
 <html lang="en">
+
   <head>
+
     <meta charset="UTF-8" />
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Jal — Feedback flows. Features ship.</title>
-    <meta name="description" content="Feedback flows. Features ship. Jal is the context-adaptive AI pipeline — triage, tasks, code builder, PR merge. Free trial: 3 requests." />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+
+    <title>Jal — One widget. Full pipeline.</title>
+
+    <meta name="description" content="Feedback flows. Features ship. Customer idea to merged pull request — one widget, one pipeline." />
+
+    <meta property="og:title" content="Jal — Feedback in. Features out." />
+
+    <meta property="og:description" content="One widget. Full pipeline. Customer feedback becomes merged pull requests." />
+
+    <meta property="og:type" content="website" />
+
+    <meta name="twitter:card" content="summary" />
+
+    <meta name="twitter:title" content="Jal — One widget. Full pipeline." />
+
+    <meta name="twitter:description" content="Feedback flows. Features ship." />
+
     <script>
+
       (function () {
+
         var t = localStorage.getItem("vendo-theme") || localStorage.getItem("vinmaya-theme");
-        var theme =
-          t === "light" || t === "dark"
-            ? t
-            : window.matchMedia("(prefers-color-scheme: light)").matches
-              ? "light"
-              : "dark";
+
+        var theme = t === "light" || t === "dark" ? t : "light";
+
         document.documentElement.setAttribute("data-theme", theme);
+
         document.documentElement.style.colorScheme = theme;
+
       })();
+
     </script>
-    <meta name="theme-color" content="#030303" media="(prefers-color-scheme: dark)" />
-    <meta name="theme-color" content="#f0f9ff" media="(prefers-color-scheme: light)" />
+
+    <meta name="theme-color" content="#006B7D" media="(prefers-color-scheme: light)" />
+
+    <meta name="theme-color" content="#000000" media="(prefers-color-scheme: dark)" />
+
     <meta name="application-name" content="Jal" />
+
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" sizes="any" />
+
     <link rel="icon" href="/favicon.svg" type="image/svg+xml" />
+
     <link rel="shortcut icon" href="/favicon.svg" />
+
     <link rel="apple-touch-icon" href="/logo.svg" sizes="180x180" />
+
     <link rel="manifest" href="/site.webmanifest" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Figtree:ital,wght@0,400..700;1,400..600&family=JetBrains+Mono:wght@400;500;600&family=Sora:wght@400;500;600;700;800&display=swap"
-      rel="stylesheet"
-    />
+
   </head>
+
   <body>
+
     <div id="root"></div>
+
     <script type="module" src="/src/main.tsx"></script>
+
   </body>
+
 </html>
+

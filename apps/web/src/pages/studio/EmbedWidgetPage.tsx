@@ -3,6 +3,7 @@ import { useParams, useSearchParams } from "react-router-dom";
 import { api } from "../../lib/api";
 import { StudioFeedbackPanel } from "../../components/studio/StudioFeedbackPanel";
 import { JalLogo } from "../../components/JalLogo";
+import { JAL_NAME } from "../../lib/jal-brand";
 import { storageKey } from "../../lib/studio-api";
 
 export function EmbedWidgetPage() {
@@ -32,7 +33,7 @@ export function EmbedWidgetPage() {
     <div className="min-h-screen bg-[var(--color-landing-bg)] text-[var(--color-landing-text)]">
       <header className="border-b border-[var(--color-landing-border)] px-6 py-4">
         <JalLogo size={28} showWordmark showTagline={false} />
-        <p className="mt-1 text-xs text-landing-muted">Powered by Jal · {meta?.productName}</p>
+        <p className="mt-1 text-xs text-landing-muted">Powered by {JAL_NAME} · {meta?.productName}</p>
       </header>
       <main className="mx-auto max-w-lg px-6 py-8">
         <StudioFeedbackPanel projectId={projectId} apiKey={apiKey} productName={meta?.productName} />

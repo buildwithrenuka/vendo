@@ -1,68 +1,56 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { JalLogo } from "../JalLogo";
 import { ThemeToggle } from "../ThemeToggle";
-import { useTheme } from "../../context/ThemeContext";
 import { useAuth } from "../../context/AuthContext";
-import { JAL_TAGLINE } from "../../lib/jal-brand";
+import { useTheme } from "../../context/ThemeContext";
 
 const links = [
   { href: "#river", label: "River" },
-  { href: "#try", label: "Try it" },
   { href: "#studio", label: "Studio" },
   { href: "#pipeline", label: "Pipeline" },
-  { href: "#dual", label: "Studio + npm" },
   { href: "#pricing", label: "Pricing" },
 ];
 
 export function LandingNav() {
-  const { theme } = useTheme();
   const { user } = useAuth();
+  const { theme } = useTheme();
+  const [scrolled, setScrolled] = useState(false);
+
+  useEffect(() => {
+    const onScroll = () => setScrolled(window.scrollY > 8);
+    onScroll();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    return () => window.removeEventListener("scroll", onScroll);
+  }, []);
 
   return (
-    <header className="fixed inset-x-0 top-0 z-50 px-4 pt-4">
-      <div className="glass-nav mx-auto flex max-w-5xl items-center justify-between rounded-full px-2 py-2 pl-4">
-        <Link to="/" className="flex items-center gap-2.5">
-          <JalLogo
-            size={32}
-            variant={theme === "light" ? "light" : "dark"}
-            animated
-            showWordmark
-            showTagline
-            tagline={JAL_TAGLINE}
-            className="hidden sm:inline-flex"
-          />
-          <JalLogo
-            size={32}
-            variant={theme === "light" ? "light" : "dark"}
-            animated={false}
-            showWordmark={false}
-            className="sm:hidden"
-          />
+    <header className={`jal-nav google-nav-bar fixed inset-x-0 top-0 z-50 ${scrolled ? "is-scrolled" : ""}`}>
+      <div className="jal-container flex h-[3.25rem] items-center justify-between gap-4 px-4 sm:px-6">
+        <Link to="/" className="flex shrink-0 items-center" aria-label="Jal home" style={{ fontSize: 28 }}>
+          <JalLogo size={28} variant={theme === "light" ? "light" : "dark"} showWordmark iconStyle="mark" />
         </Link>
 
-        <nav className="hidden items-center gap-1 md:flex">
+        <nav className="hidden items-center md:flex" aria-label="Main">
           {links.map((l) => (
-            <a key={l.href} href={l.href} className="nav-link rounded-full px-3.5 py-1.5 text-sm">
+            <a key={l.href} href={l.href} className="nav-link px-3 py-2">
               {l.label}
             </a>
           ))}
         </nav>
 
-        <div className="flex items-center gap-2">
+        <div className="flex items-center gap-1">
           <ThemeToggle />
-          <Link to="/docs" className="nav-link hidden rounded-full px-3 py-1.5 text-sm sm:inline">
+          <Link to="/docs" className="nav-link hidden px-3 py-2 sm:inline">
             Docs
           </Link>
-          <Link to="/studio" className="nav-link hidden rounded-full px-3 py-1.5 text-sm lg:inline">
-            Studio
-          </Link>
           {user && (
-            <Link to="/dashboard" className="nav-link hidden rounded-full px-3 py-1.5 text-sm md:inline">
+            <Link to="/dashboard" className="nav-link hidden px-3 py-2 md:inline">
               Dashboard
             </Link>
           )}
-          <Link to="/studio/onboard" className="btn-primary inline-flex items-center gap-2 rounded-full px-4 py-2 text-xs font-bold">
-            Attach repo
+          <Link to="/studio/onboard" className="btn-primary ml-1 px-4 py-2 text-sm">
+            Get started
           </Link>
         </div>
       </div>

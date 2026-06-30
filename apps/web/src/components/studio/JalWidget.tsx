@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { JalLogo } from "../JalLogo";
+import { JAL_NAME } from "../../lib/jal-brand";
 import { StudioFeedbackPanel } from "./StudioFeedbackPanel";
 import { storageKey } from "../../lib/studio-api";
 
@@ -24,10 +25,10 @@ export function JalWidget({ projectId, apiKey, productName, placement = "bottom-
         <div
           className={`fixed bottom-24 ${pos} z-[9998] w-[min(100vw-2rem,380px)] overflow-hidden rounded-2xl border border-[var(--color-landing-border)] bg-[var(--color-landing-surface)] shadow-2xl`}
           role="dialog"
-          aria-label="Jal feedback"
+          aria-label={`${JAL_NAME} feedback`}
         >
           <div className="flex items-center justify-between border-b border-[var(--color-landing-border)] px-4 py-3">
-            <JalLogo size={24} showWordmark showTagline={false} animated={false} />
+            <JalLogo size={24} showWordmark showTagline={false} />
             <button
               type="button"
               onClick={() => setOpen(false)}
@@ -47,10 +48,10 @@ export function JalWidget({ projectId, apiKey, productName, placement = "bottom-
         type="button"
         onClick={() => setOpen((v) => !v)}
         className={`fixed bottom-6 ${pos} z-[9999] flex h-14 w-14 items-center justify-center rounded-full border border-[var(--color-landing-border)] bg-[var(--color-landing-accent)] shadow-lg transition hover:scale-105`}
-        aria-label={open ? "Close Jal feedback" : "Open Jal feedback"}
-        title="Feedback powered by Jal"
+        aria-label={open ? `Close ${JAL_NAME} feedback` : `Open ${JAL_NAME} feedback`}
+        title={`Feedback powered by ${JAL_NAME}`}
       >
-        <JalLogo size={28} variant="dark" showWordmark={false} animated={false} />
+        <JalLogo size={28} variant="dark" showWordmark={false} iconStyle="badge" />
       </button>
     </>
   );

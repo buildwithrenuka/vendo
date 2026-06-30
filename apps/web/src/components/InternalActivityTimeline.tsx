@@ -42,7 +42,7 @@ export function InternalActivityTimeline({ entries }: Props) {
     <ol className="relative space-y-0 border-l border-[var(--color-border)] pl-4">
       {entries.map((entry) => (
         <li key={entry.id} className="relative pb-4 last:pb-0">
-          <span className="absolute -left-[21px] top-1 h-2.5 w-2.5 rounded-full bg-[var(--color-copper)] ring-2 ring-[var(--color-surface)]" />
+          <span className="absolute -left-[21px] top-1 h-2.5 w-2.5 rounded-full bg-[var(--color-landing-accent)] ring-2 ring-[var(--color-landing-bg)]" />
           <div className="flex flex-wrap items-center gap-2 text-xs">
             <span className="font-semibold text-[var(--color-ink)]">
               {EVENT_LABELS[entry.event] ?? entry.event}

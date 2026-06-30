@@ -11,7 +11,7 @@ export function StudioNav() {
     <header className="studio-nav sticky top-0 z-50">
       <div className="studio-nav-inner">
         <Link to="/studio" className="flex items-center gap-2.5 transition opacity-90 hover:opacity-100">
-          <JalLogo size={30} showWordmark showTagline={false} animated={false} />
+          <JalLogo size={30} showWordmark showTagline={false} />
           <span className="studio-badge studio-badge-accent">Studio</span>
         </Link>
 
@@ -47,7 +47,7 @@ export function StudioNav() {
           <Link to="/" className="hidden text-sm text-landing-muted transition hover:text-[var(--color-landing-text)] sm:inline">
             Home
           </Link>
-          <Link to="/studio/onboard" className="btn-primary rounded-full px-4 py-2 text-xs font-bold sm:text-sm">
+          <Link to="/studio/onboard" className="btn-primary rounded-full px-4 py-2 text-sm">
             + Attach repo
           </Link>
         </div>

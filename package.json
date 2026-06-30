@@ -13,7 +13,9 @@
     "db:migrate:local": "npm run db:migrate:local --workspace @vendo/api",
     "typecheck": "npm run typecheck --workspaces --if-present",
     "demo:record": "node scripts/record-jal-demo.mjs",
-    "demo:music": "node scripts/mux-youtube-music.mjs"
+    "demo:record:ui": "node scripts/record-jal-ui-demo.mjs",
+    "demo:music": "node scripts/mux-youtube-music.mjs",
+    "demo:music:ui": "node scripts/mux-youtube-music.mjs -- ui"
   },
   "engines": {
     "node": ">=20"

@@ -1,125 +1,162 @@
 @import "tailwindcss";
 
 @theme {
-  --font-display: "Sora", system-ui, sans-serif;
-  --font-body: "Figtree", system-ui, sans-serif;
-  --font-mono: "JetBrains Mono", ui-monospace, monospace;
-  /* Phosphor Abyss — bioluminescent river palette (not cyan/pink SaaS) */
-  --color-ink: #0a2e33;
-  --color-ink-muted: #3d6b66;
-  --color-cream: #ecfbf9;
-  --color-copper: #ff6b4a;
-  --color-copper-dark: #e85d4c;
-  --color-sage: #00f5d4;
-  --color-border: #b8e8e0;
-  --color-cyan: #00f5d4;
-  --color-pink: #ff6b4a;
+  --font-display: -apple-system, BlinkMacSystemFont, "SF Pro Display", "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-body: -apple-system, BlinkMacSystemFont, "SF Pro Text", "Helvetica Neue", Helvetica, Arial, sans-serif;
+  --font-mono: "SF Mono", ui-monospace, "Cascadia Code", "Roboto Mono", monospace;
+  --color-ink: #1d1d1f;
+  --color-ink-muted: #6e6e73;
+  --color-cream: #fbfbfd;
+  --color-copper: #006B7D;
+  --color-copper-dark: #005A6A;
+  --color-sage: #006B7D;
+  --color-border: #d2d2d7;
+  --color-cyan: #006B7D;
+  --color-pink: #D70015;
+  --color-surface: #ffffff;
 }
 
 /*
- * ═══ Phosphor Abyss ═══
- * Deep trench void + bioluminescent phosphor stream + living coral + aurora current.
- * River metaphor: cold intake (phosphor) → depth (violet) → warm ship (coral/ember).
+ * Jal — Apple-inspired design tokens
  */
 :root {
-  --jal-abyss: #010a0f;
-  --jal-abyss-mid: #021418;
-  --jal-phosphor: #00f5d4;
-  --jal-phosphor-dim: #00c4aa;
-  --jal-coral: #ff6b4a;
-  --jal-coral-soft: #ff8f73;
-  --jal-current: #7c5cff;
-  --jal-current-soft: #a78bfa;
-  --jal-ember: #ffc857;
-  --jal-pearl: #d4fff8;
-  --jal-seaweed: #6b9e96;
-  --jal-phosphor-rgb: 0, 245, 212;
-  --jal-coral-rgb: 255, 107, 74;
-  --jal-current-rgb: 124, 92, 255;
-  --jal-ember-rgb: 255, 200, 87;
+  --jal-primary: #006B7D;
+  --jal-primary-hover: #005A6A;
+  --jal-primary-dark: #5AC8D8;
+  --jal-primary-container: rgba(0, 107, 125, 0.12);
+  --jal-success: #248A3D;
+  --jal-error: #D70015;
+  --jal-warning: #ff9500;
+  --jal-surface: #ffffff;
+  --jal-surface-dim: #fbfbfd;
+  --jal-surface-container: #f5f5f7;
+  --jal-outline: #d2d2d7;
+  --jal-text: #1d1d1f;
+  --jal-text-secondary: #6e6e73;
+  --jal-cta: #1d1d1f;
+  --jal-cta-hover: #000000;
+  /* Legacy aliases */
+  --jal-abyss: #000000;
+  --jal-abyss-mid: #1d1d1f;
+  --jal-phosphor: #006B7D;
+  --jal-phosphor-dim: #005A6A;
+  --jal-coral: #D70015;
+  --jal-coral-soft: #ff6961;
+  --jal-current: #248A3D;
+  --jal-current-soft: #34c759;
+  --jal-ember: #ff9500;
+  --jal-pearl: #f5f5f7;
+  --jal-seaweed: #86868b;
+  --jal-phosphor-rgb: 0, 107, 125;
+  --jal-coral-rgb: 215, 0, 21;
+  --jal-current-rgb: 36, 138, 61;
+  --jal-ember-rgb: 255, 149, 0;
+  /* Water depth — decorative surfaces & gradients */
+  --jal-lagoon: #003D47;
+  --jal-mist: #E8F4F6;
+  --jal-aqua: #4EC4D4;
+  --jal-foam: #F0FAFB;
+  --jal-lagoon-rgb: 0, 61, 71;
+  --jal-aqua-rgb: 78, 196, 212;
 }
 
-/* Dark theme (default) — abyssal bioluminescence */
 :root,
-[data-theme="dark"] {
-  --color-landing-bg: var(--jal-abyss);
-  --color-landing-surface: rgba(var(--jal-phosphor-rgb), 0.045);
-  --color-landing-elevated: rgba(var(--jal-phosphor-rgb), 0.08);
-  --color-landing-muted: var(--jal-seaweed);
-  --color-landing-text: var(--jal-pearl);
-  --color-landing-border: rgba(var(--jal-phosphor-rgb), 0.14);
-  --color-landing-accent: var(--jal-phosphor);
-  --color-landing-accent-soft: rgba(var(--jal-phosphor-rgb), 0.16);
-  --color-landing-accent-coral: var(--jal-coral);
-  --color-landing-accent-coral-soft: rgba(var(--jal-coral-rgb), 0.14);
-  --color-landing-accent-current: var(--jal-current);
-  --color-landing-nav-bg: rgba(1, 10, 15, 0.82);
-  --color-landing-btn-primary-bg: var(--jal-phosphor);
-  --color-landing-btn-primary-text: var(--jal-abyss);
-  --color-landing-panel: var(--jal-abyss-mid);
-  --color-landing-grid-line: rgba(var(--jal-phosphor-rgb), 0.06);
-  --color-landing-genZ-start: var(--jal-pearl);
-  --color-cyan: var(--jal-phosphor);
-  --color-pink: var(--jal-coral);
-}
-
-/* Light theme — tidal dawn on glacier foam */
 [data-theme="light"] {
-  --color-landing-bg: #ecfbf9;
+  --color-landing-bg: #ffffff;
   --color-landing-surface: #ffffff;
-  --color-landing-elevated: #e4f9f6;
-  --color-landing-muted: #3d6b66;
-  --color-landing-text: #0a2e33;
-  --color-landing-border: #b8e8e0;
-  --color-landing-accent: #00a896;
-  --color-landing-accent-soft: rgba(0, 168, 150, 0.14);
-  --color-landing-accent-coral: #e85d4c;
-  --color-landing-accent-coral-soft: rgba(232, 93, 76, 0.12);
-  --color-landing-accent-current: #6d4ed6;
-  --color-landing-nav-bg: rgba(236, 251, 249, 0.92);
-  --color-landing-btn-primary-bg: #00a896;
+  --color-landing-elevated: #fbfbfd;
+  --color-landing-muted: #6e6e73;
+  --color-landing-text: #1d1d1f;
+  --color-landing-border: #d2d2d7;
+  --color-landing-accent: #006B7D;
+  --color-landing-accent-soft: rgba(0, 107, 125, 0.12);
+  --color-landing-accent-coral: #D70015;
+  --color-landing-accent-coral-soft: rgba(215, 0, 21, 0.1);
+  --color-landing-accent-current: #248A3D;
+  --color-landing-nav-bg: rgba(255, 255, 255, 0.72);
+  --color-landing-btn-primary-bg: #1d1d1f;
+  --color-landing-btn-primary-hover: #000000;
   --color-landing-btn-primary-text: #ffffff;
-  --color-landing-panel: #e0f5f2;
-  --color-landing-grid-line: rgba(0, 168, 150, 0.09);
-  --color-landing-genZ-start: #0a2e33;
-  --color-cyan: #00c9b1;
-  --color-pink: #e85d4c;
-  --jal-phosphor: #00c9b1;
-  --jal-phosphor-rgb: 0, 201, 177;
-  --jal-coral-rgb: 232, 93, 76;
-  --jal-current-rgb: 109, 78, 214;
+  --color-landing-panel: #f5f5f7;
+  --color-landing-grid-line: rgba(0, 0, 0, 0.04);
+  --color-landing-genZ-start: #006B7D;
+  --color-cyan: #006B7D;
+  --color-pink: #D70015;
+  --color-copper: #006B7D;
+  --color-copper-dark: #005A6A;
+  --color-surface: #ffffff;
+  --color-landing-accent-deep: #003D47;
+  --color-landing-accent-glow: #4EC4D4;
+  --color-landing-surface-tint: #F0FAFB;
 }
 
 [data-theme="light"] body {
-  background:
-    radial-gradient(ellipse 90% 60% at 100% 0%, rgba(var(--jal-coral-rgb), 0.14), transparent 55%),
-    radial-gradient(ellipse 80% 50% at 0% 100%, rgba(var(--jal-phosphor-rgb), 0.22), transparent 50%),
-    radial-gradient(ellipse 60% 40% at 50% 50%, rgba(var(--jal-current-rgb), 0.06), transparent 60%),
-    #ecfbf9;
+  background: #ffffff;
   color: var(--color-landing-text);
+}
+
+[data-theme="dark"] {
+  --color-landing-bg: #000000;
+  --color-landing-surface: #1d1d1f;
+  --color-landing-elevated: #161617;
+  --color-landing-muted: #a1a1a6;
+  --color-landing-text: #f5f5f7;
+  --color-landing-border: #424245;
+  --color-landing-accent: #5AC8D8;
+  --color-landing-accent-soft: rgba(90, 200, 216, 0.14);
+  --color-landing-accent-coral: #ff6961;
+  --color-landing-accent-coral-soft: rgba(255, 105, 97, 0.14);
+  --color-landing-accent-current: #30d158;
+  --color-landing-nav-bg: rgba(0, 0, 0, 0.72);
+  --color-landing-btn-primary-bg: #f5f5f7;
+  --color-landing-btn-primary-hover: #ffffff;
+  --color-landing-btn-primary-text: #1d1d1f;
+  --color-landing-panel: #1d1d1f;
+  --color-landing-grid-line: rgba(255, 255, 255, 0.04);
+  --color-landing-genZ-start: #5AC8D8;
+  --color-cyan: #5AC8D8;
+  --color-pink: #ff6961;
+  --color-copper: #5AC8D8;
+  --color-copper-dark: #64D2FF;
+  --color-surface: #1d1d1f;
+  --jal-lagoon: #002830;
+  --jal-mist: rgba(90, 200, 216, 0.07);
+  --jal-aqua: #7DD3E0;
+  --jal-foam: #0c1416;
+  --jal-lagoon-rgb: 0, 40, 48;
+  --jal-aqua-rgb: 125, 211, 224;
+  --color-landing-accent-deep: #003338;
+  --color-landing-accent-glow: #7DD3E0;
+  --color-landing-surface-tint: #0c1416;
+  --jal-phosphor: #5AC8D8;
+  --jal-phosphor-rgb: 90, 200, 216;
+  --jal-phosphor-dim: #64D2FF;
+  --jal-pearl: #f5f5f7;
+  --jal-seaweed: #a1a1a6;
 }
 
 body {
   font-family: var(--font-body);
-  background: var(--jal-abyss);
-  color: var(--jal-pearl);
+  background: var(--color-landing-bg);
+  color: var(--color-landing-text);
   min-height: 100vh;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  font-feature-settings: "kern" 1, "liga" 1;
+  font-feature-settings: "kern" 1;
   line-height: 1.6;
+  font-size: 16px;
 }
 
 h1, h2, h3, h4, .font-display {
   font-family: var(--font-display);
-  letter-spacing: -0.03em;
-  line-height: 1.15;
-  font-weight: 700;
+  letter-spacing: -0.02em;
+  line-height: 1.2;
+  font-weight: 500;
 }
 
 h1 {
-  letter-spacing: -0.045em;
-  font-weight: 800;
+  letter-spacing: -0.03em;
+  font-weight: 400;
 }
 
 .font-mono { font-family: var(--font-mono); }
@@ -339,7 +376,7 @@ html { scroll-behavior: smooth; }
 
 [data-theme="light"] .status-pill-active {
   background: linear-gradient(135deg, rgba(var(--jal-phosphor-rgb), 0.16) 0%, rgba(var(--jal-current-rgb), 0.12) 100%);
-  color: #0a5c54;
+  color: #005A6A;
 }
 
 [data-theme="light"] .jal-ambient {
@@ -914,7 +951,7 @@ button:hover .vendo-logo,
 }
 
 [data-theme="light"] .vendo-typewriter--done .vendo-typewriter-text {
-  background: linear-gradient(90deg, #0a5c54, var(--jal-phosphor), #0a5c54);
+  background: linear-gradient(90deg, #005A6A, var(--jal-phosphor), #005A6A);
   background-size: 200% auto;
   -webkit-background-clip: text;
   background-clip: text;
@@ -1044,7 +1081,7 @@ button:hover .vendo-logo,
 }
 
 @keyframes vendo-grad-shift-a-light {
-  0%, 100% { stop-color: #0a5c54; }
+  0%, 100% { stop-color: #005A6A; }
   50% { stop-color: #00c9b1; }
 }
 
@@ -3404,3 +3441,8 @@ button:hover .jal-logo,
   font-size: 0.925rem;
   color: var(--color-landing-muted);
 }
+
+@import "./styles/material-theme.css";
+@import "./styles/jal-motion.css";
+@import "./styles/jal-water.css";
+@import "./styles/app-unified.css";

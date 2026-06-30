@@ -148,57 +148,61 @@ export function FeedbackRiverShowcase() {
         <article className="river-lens river-lens-customer">
           <header>
             <span className="river-lens-badge customer">Customer lens</span>
-            <p className="text-[10px] text-landing-muted">Widget · what users see</p>
+            <p className="text-xs text-landing-muted">Widget · what users see</p>
           </header>
-          <div className="river-widget-mock">
+          <div key={`c-${active}`} className="jal-lens-swap river-widget-mock">
             <div className="river-widget-bar">
               <span className="h-2 w-2 rounded-full bg-[var(--color-landing-accent)]" />
-              <span className="text-[10px] font-bold">Your feedback</span>
+              <span className="text-xs font-medium">Your feedback</span>
             </div>
-            <p className="mt-3 text-sm font-bold">{droplet.title}</p>
+            <p className="mt-3 text-base font-medium">{droplet.title}</p>
             <span className="river-status-pill">{droplet.customer.status}</span>
-            <p className="mt-3 text-xs leading-relaxed text-landing-muted">{droplet.customer.message}</p>
+            <p className="mt-3 text-sm leading-relaxed text-landing-muted">{droplet.customer.message}</p>
           </div>
         </article>
 
         <div className="river-lens-bridge" aria-hidden>
           <div className="river-lens-stream" />
-          <span className="river-lens-bridge-label">{droplet.stage}</span>
+          <span key={droplet.stage} className="jal-lens-swap river-lens-bridge-label">
+            {droplet.stage}
+          </span>
         </div>
 
         <article className="river-lens river-lens-dev">
           <header>
             <span className="river-lens-badge dev">Ship lens</span>
-            <p className="text-[10px] text-landing-muted">Studio · what you ship</p>
+            <p className="text-xs text-landing-muted">Studio · what you ship</p>
           </header>
-          <ul className="river-dev-meta">
-            <li>
-              <span>Pipeline</span>
-              <strong>{droplet.dev.pipeline}</strong>
-            </li>
-            {droplet.dev.pr && (
+          <div key={`d-${active}`} className="jal-lens-swap">
+            <ul className="river-dev-meta">
               <li>
-                <span>Pull request</span>
-                <strong className="text-[var(--color-landing-accent)]">{droplet.dev.pr}</strong>
+                <span>Pipeline</span>
+                <strong>{droplet.dev.pipeline}</strong>
               </li>
-            )}
-            <li>
-              <span>Tasks</span>
-              <strong>{droplet.dev.tasks}</strong>
-            </li>
-          </ul>
-          <p className="mt-4 font-mono text-[10px] text-landing-muted">
-            {droplet.progress < 50
-              ? "await api.studioEnqueue()"
-              : droplet.progress < 80
-                ? "await api.studioBuild() → PR"
-                : "await api.studioApproveShip()"}
-          </p>
+              {droplet.dev.pr && (
+                <li>
+                  <span>Pull request</span>
+                  <strong className="text-[var(--color-landing-accent)]">{droplet.dev.pr}</strong>
+                </li>
+              )}
+              <li>
+                <span>Tasks</span>
+                <strong>{droplet.dev.tasks}</strong>
+              </li>
+            </ul>
+            <p className="mt-4 font-mono text-[10px] text-landing-muted">
+              {droplet.progress < 50
+                ? "await api.studioEnqueue()"
+                : droplet.progress < 80
+                  ? "await api.studioBuild() → PR"
+                  : "await api.studioApproveShip()"}
+            </p>
+          </div>
         </article>
       </div>
 
       <p className="river-showcase-hint">
-        <span className="studio-flow-live" />
+        <span className="studio-flow-live" aria-hidden />
         {paused ? "Click any droplet · dual lens updates live" : "Auto-flowing demo · hover to pause"}
       </p>
     </div>

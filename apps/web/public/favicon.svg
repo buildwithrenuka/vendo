@@ -1,42 +1,15 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 48 48" fill="none" role="img" aria-label="Jal">
-  <defs>
-    <linearGradient id="fav-grad" x1="10" y1="6" x2="38" y2="42" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#00f5d4"/>
-      <stop offset="0.55" stop-color="#7c5cff"/>
-      <stop offset="1" stop-color="#ff6b4a"/>
-    </linearGradient>
-    <linearGradient id="fav-stream" x1="24" y1="8" x2="24" y2="40" gradientUnits="userSpaceOnUse">
-      <stop stop-color="#00f5d4" stop-opacity="0.35"/>
-      <stop offset="0.4" stop-color="#00f5d4"/>
-      <stop offset="0.65" stop-color="#7c5cff"/>
-      <stop offset="1" stop-color="#ff6b4a" stop-opacity="0.85"/>
-    </linearGradient>
-  </defs>
-  <rect width="48" height="48" rx="14" fill="#010a0f"/>
+  <rect width="48" height="48" rx="11" fill="#006B7D"/>
   <path
-    d="M24 7 C15 7 11 17 11 25 C11 31 17 38 24 41 C31 38 37 31 37 25 C37 17 33 7 24 7 Z"
-    fill="rgba(0,245,212,0.12)"
-    stroke="url(#fav-grad)"
-    stroke-width="2"
+    d="M24 9 C15 9 12 19 12 26 C12 32 17 38 24 40 C31 38 36 32 36 26 C36 19 33 9 24 9 Z"
+    fill="#ffffff"
   />
   <path
-    d="M24 10 C17 14 17 20 24 24 C31 28 31 34 24 38"
-    stroke="url(#fav-stream)"
-    stroke-width="3"
+    d="M24 13 C18 16 18 21 24 24 C30 27 30 32 24 35"
+    stroke="#006B7D"
+    stroke-width="2.25"
     stroke-linecap="round"
     fill="none"
-  />
-  <circle cx="24" cy="11" r="2.5" fill="#00f5d4"/>
-  <circle cx="19" cy="18" r="2.2" fill="#00f5d4"/>
-  <circle cx="29" cy="24" r="2.2" fill="#7c5cff"/>
-  <circle cx="20" cy="30" r="2.2" fill="#7c5cff"/>
-  <circle cx="24" cy="36" r="2.6" fill="#ff6b4a"/>
-  <path
-    d="M20 37 L24 40.5 L28 37"
-    stroke="#00f5d4"
-    stroke-width="2"
-    stroke-linecap="round"
-    stroke-linejoin="round"
-    fill="none"
+    opacity="0.85"
   />
 </svg>

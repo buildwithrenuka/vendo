@@ -98,7 +98,7 @@ export function HypnoticPortal() {
       </svg>
 
       <div className="hypno-portal-logo">
-        <JalLogo size={72} variant="dark" animated showWordmark={false} />
+        <JalLogo size={72} variant="dark" showWordmark={false} iconStyle="badge" />
       </div>
 
       <div className="hypno-portal-label">

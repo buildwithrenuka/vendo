@@ -116,7 +116,7 @@ export function OnboardingFormBuilder({
         <Input label="Description" value={description} onChange={(e) => setDescription(e.target.value)} />
       </div>
 
-      <div className="mb-4 flex gap-1 rounded-xl border border-[var(--color-border)] bg-black/20 p-1">
+      <div className="mb-4 flex gap-1 rounded-xl border border-[var(--color-border)] bg-[var(--color-landing-elevated)] p-1">
         {(["design", "preview"] as const).map((t) => (
           <button
             key={t}
@@ -134,7 +134,7 @@ export function OnboardingFormBuilder({
       </div>
 
       {tab === "preview" ? (
-        <div className="rounded-2xl border border-[var(--color-border)] bg-black/20 p-5">
+        <div className="rounded-2xl border border-[var(--color-border)] bg-[var(--color-landing-elevated)] p-5">
           <p className="mb-4 text-xs text-[var(--color-ink-muted)]">
             Interactive preview — test conditional fields by filling values below.
           </p>

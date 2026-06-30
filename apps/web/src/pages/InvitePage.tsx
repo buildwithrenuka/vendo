@@ -42,7 +42,7 @@ export function InvitePage() {
         </p>
         <a
           href={googleAuthStartUrl({ invite: token, redirect: "/supplier/onboarding" })}
-          className="inline-flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--color-copper)] px-4 py-3 text-sm font-semibold text-white"
+          className="inline-flex w-full items-center justify-center gap-2 rounded-full bg-[var(--color-landing-btn-primary-bg)] px-4 py-3 text-sm font-medium text-[var(--color-landing-btn-primary-text)] transition hover:bg-[var(--color-landing-btn-primary-hover)]"
         >
           <GoogleIcon size={18} />
           Accept invite with Google
@@ -60,7 +60,7 @@ export function InvitePage() {
           </Button>
         )}
         <p className="text-xs text-[var(--color-ink-muted)]">
-          Already signed in? <Link className="text-[var(--color-copper)] underline" to="/dashboard">Go to dashboard</Link>
+          Already signed in? <Link className="text-[var(--color-landing-accent)] underline" to="/dashboard">Go to dashboard</Link>
         </p>
       </Card>
     </Shell>

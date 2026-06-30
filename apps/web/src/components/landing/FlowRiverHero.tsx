@@ -1,77 +1,78 @@
 import { useEffect, useState } from "react";
+import { JAL_STUDIO } from "../../lib/jal-brand";
 
 const STAGES = [
-  { id: "request", label: "Request", detail: "Customer submits feedback" },
-  { id: "triage", label: "Triage", detail: "AI classifies & scopes" },
-  { id: "tasks", label: "Tasks", detail: "Engineering plan generated" },
-  { id: "build", label: "Build", detail: "Code + GitHub PR opened" },
-  { id: "merge", label: "Merge", detail: "Human approves → shipped" },
+  { label: "Request", detail: "Customer submits feedback" },
+  { label: "Triage", detail: "AI classifies the request" },
+  { label: "Tasks", detail: "Engineering plan created" },
+  { label: "Build", detail: "Code and PR opened" },
+  { label: "Merge", detail: "Approved and shipped" },
 ];
 
 export function FlowRiverHero() {
   const [active, setActive] = useState(0);
+  const progress = ((active + 1) / STAGES.length) * 100;
 
   useEffect(() => {
-    const t = window.setInterval(() => setActive((i) => (i + 1) % STAGES.length), 2200);
+    const t = window.setInterval(() => setActive((i) => (i + 1) % STAGES.length), 2800);
     return () => window.clearInterval(t);
   }, []);
 
   return (
-    <div className="jal-flow-hero relative mx-auto aspect-square max-w-md lg:max-w-none">
-      <div className="jal-flow-orbit pointer-events-none absolute inset-0 rounded-[2rem]" aria-hidden />
-      <div className="jal-flow-glass relative flex h-full min-h-[340px] flex-col overflow-hidden rounded-[2rem] border border-[var(--color-landing-border)] p-6 sm:min-h-[400px]">
-        <div className="flex items-center justify-between border-b border-[var(--color-landing-border)] pb-4">
+    <div className="jal-device-frame">
+      <div className="jal-device-chrome">
+        <span className="jal-device-dot" />
+        <span className="jal-device-dot" />
+        <span className="jal-device-dot" />
+        <span className="ml-2 text-xs text-landing-muted">{JAL_STUDIO} · Pipeline</span>
+      </div>
+      <div className="jal-flow-glass border-0 p-5 sm:p-6">
+        <div className="flex items-baseline justify-between gap-4 border-b border-[var(--color-landing-border)] pb-4">
           <div>
-            <p className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-landing-accent)]">
-              Live pipeline
-            </p>
-            <p className="mt-1 text-sm font-semibold">feat-042 · Multi-city search</p>
+            <p className="text-sm font-semibold">Multi-city search</p>
+            <p className="text-xs text-landing-muted">feat-042</p>
           </div>
-          <span className="jal-live-dot flex items-center gap-1.5 rounded-full border border-[var(--color-landing-border)] px-2.5 py-1 text-[10px] font-semibold uppercase tracking-wide text-[var(--color-landing-accent)]">
-            <span className="h-1.5 w-1.5 animate-pulse rounded-full bg-[var(--color-landing-accent)]" />
-            Flowing
+          <span className="jal-live-dot inline-flex items-center gap-2 text-xs text-landing-muted">
+            Live
           </span>
         </div>
 
-        <div className="relative mt-6 flex flex-1 items-stretch gap-4">
-          <div className="relative w-3 shrink-0 overflow-hidden rounded-full bg-[var(--color-landing-elevated)]">
-            <div className="jal-stream absolute inset-x-0 top-0 h-full w-full" />
-            {STAGES.map((_, i) => (
-              <span
-                key={STAGES[i].id}
-                className="absolute left-1/2 z-10 h-2 w-2 -translate-x-1/2 rounded-full border-2 border-[var(--color-landing-bg)] transition-all duration-500"
-                style={{
-                  top: `${8 + i * 19}%`,
-                  background: i <= active ? "var(--color-landing-accent)" : "var(--color-landing-muted)",
-                  boxShadow: i === active ? "0 0 12px var(--color-landing-accent)" : "none",
-                  transform: `translateX(-50%) scale(${i === active ? 1.35 : 1})`,
-                }}
-              />
-            ))}
-          </div>
+        <div className="jal-pipeline-track mt-5 h-1 bg-[var(--color-landing-elevated)]">
+          <div className="jal-pipeline-fill h-full rounded-full" style={{ width: `${progress}%` }} />
+        </div>
 
-          <div className="flex flex-1 flex-col justify-between py-1">
-            {STAGES.map((stage, i) => (
-              <div
-                key={stage.id}
-                className={`rounded-xl border px-3 py-2.5 transition-all duration-500 ${
-                  i === active
-                    ? "jal-stage-active border-[var(--color-landing-accent)] bg-[var(--color-landing-accent-soft)]"
-                    : i < active
-                      ? "border-[var(--color-landing-border)] opacity-70"
-                      : "border-transparent opacity-40"
+        <ol className="mt-5 space-y-2">
+          {STAGES.map((stage, i) => {
+            const isActive = i === active;
+            const isDone = i < active;
+            const state = isActive ? "is-active" : isDone ? "is-done" : "is-pending";
+
+            return (
+              <li
+                key={stage.label}
+                className={`jal-pipeline-step-row flex items-center gap-3 rounded-xl px-3 py-2.5 ${state} ${
+                  isActive ? "jal-stage-active bg-[color-mix(in_srgb,var(--color-landing-accent)_8%,var(--color-landing-surface))]" : ""
                 }`}
               >
-                <p className="text-xs font-bold">{stage.label}</p>
-                <p className="text-[11px] text-landing-muted">{stage.detail}</p>
-              </div>
-            ))}
-          </div>
-        </div>
+                <span
+                  className={`jal-step-dot flex h-6 w-6 shrink-0 items-center justify-center rounded-full text-xs font-semibold ${
+                    isActive ? "jal-step-dot--active" : isDone ? "jal-step-dot--done" : "jal-step-dot--pending"
+                  }`}
+                >
+                  {i + 1}
+                </span>
+                <div>
+                  <p className="text-sm font-medium">{stage.label}</p>
+                  <p className="text-xs text-landing-muted">{stage.detail}</p>
+                </div>
+              </li>
+            );
+          })}
+        </ol>
 
-        <div className="mt-4 truncate rounded-lg border border-[var(--color-landing-border)] bg-[var(--color-landing-elevated)] px-3 py-2 font-mono text-[11px] text-[var(--color-landing-accent)]">
+        <p className="mt-4 truncate rounded-lg bg-[var(--color-landing-elevated)] px-3 py-2 font-mono text-xs text-landing-muted">
           github.com/your-org/repo/pull/18
-        </div>
+        </p>
       </div>
     </div>
   );

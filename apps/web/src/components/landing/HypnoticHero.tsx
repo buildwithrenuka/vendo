@@ -20,7 +20,7 @@ export function HypnoticHero() {
 
       <div className="hypno-hero-content animate-fade-up">
         <p className="hypno-badge">
-          <JalLogo size={20} variant={theme === "light" ? "light" : "dark"} animated={false} showWordmark={false} />
+          <JalLogo size={20} variant={theme === "light" ? "light" : "dark"} showWordmark={false} />
           <span>{JAL_TAGLINE}</span>
           <span className="hypno-live">LIVE</span>
         </p>

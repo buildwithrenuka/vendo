@@ -1,6 +1,8 @@
 import type { ReactNode } from "react";
 import { Link } from "react-router-dom";
 import { VendoLogo } from "./VendoLogo";
+import { ThemeToggle } from "./ThemeToggle";
+import { useTheme } from "../context/ThemeContext";
 
 export function Shell({
   children,
@@ -13,14 +15,15 @@ export function Shell({
   subtitle?: string;
   actions?: ReactNode;
 }) {
+  const { theme } = useTheme();
+
   return (
     <div className="app-shell relative min-h-screen">
-      <div className="app-mesh pointer-events-none fixed inset-0" aria-hidden />
       <header className="app-header sticky top-0 z-40">
         <div className="mx-auto flex max-w-6xl items-center justify-between gap-4 px-4 py-3 sm:px-6">
           <div className="flex min-w-0 items-center gap-4">
             <Link to="/dashboard" className="shrink-0 transition opacity-90 hover:opacity-100">
-              <VendoLogo size={32} variant="dark" />
+              <VendoLogo size={32} variant={theme === "light" ? "light" : "dark"} animated={false} />
             </Link>
             <div className="min-w-0 border-l border-[var(--color-border)] pl-4">
               {title && (
@@ -33,7 +36,13 @@ export function Shell({
               )}
             </div>
           </div>
-          {actions && <div className="flex shrink-0 items-center gap-2">{actions}</div>}
+          <div className="flex shrink-0 items-center gap-2">
+            {actions}
+            <ThemeToggle />
+            <Link to="/" className="hidden text-sm text-[var(--color-ink-muted)] hover:text-[var(--color-ink)] sm:inline">
+              Home
+            </Link>
+          </div>
         </div>
       </header>
       <main className="relative mx-auto max-w-6xl px-4 py-6 sm:px-6 sm:py-8">{children}</main>
@@ -111,7 +120,7 @@ export function Button({
 
   return (
     <button
-      className={`app-btn inline-flex items-center justify-center rounded-xl px-4 py-2.5 text-sm font-semibold transition disabled:opacity-40 disabled:pointer-events-none ${styles[variant]} ${className}`}
+      className={`app-btn inline-flex items-center justify-center rounded-full px-4 py-2.5 text-sm font-medium transition disabled:pointer-events-none disabled:opacity-40 ${styles[variant]} ${className}`}
       {...props}
     >
       {children}

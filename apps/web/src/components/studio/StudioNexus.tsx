@@ -15,7 +15,7 @@ export function StudioNexus({ projects }: Props) {
         <div className="studio-nexus-ring studio-nexus-ring-2" />
         <div className="studio-nexus-ring studio-nexus-ring-3" />
         <div className="studio-nexus-orb">
-          <JalLogo size={48} showWordmark={false} animated />
+          <JalLogo size={48} showWordmark={false} iconStyle="badge" />
         </div>
       </div>
 

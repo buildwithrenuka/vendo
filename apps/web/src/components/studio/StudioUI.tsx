@@ -4,8 +4,6 @@ import { StudioNav } from "./StudioNav";
 export function StudioShell({ children }: { children: ReactNode }) {
   return (
     <div className="studio-root relative min-h-screen text-[var(--color-landing-text)]">
-      <div className="landing-grid pointer-events-none fixed inset-0 z-0" />
-      <div className="jal-ambient pointer-events-none fixed inset-0 z-0" aria-hidden />
       <div className="relative z-10 flex min-h-screen flex-col">
         <StudioNav />
         {children}

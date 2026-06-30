@@ -30,6 +30,7 @@ The world's first **Feedback River UI** — plus hosted **Jal Studio**, headless
 | **npm engine** | [`@jal_ai/jal`](https://www.npmjs.com/package/@jal_ai/jal) |
 | **Product domain** | **`jal.app`** *(DNS migration in progress)* |
 | **Hackathon demo video** | `demo-output/jal-hackathon-demo.mp4` (~2 min) — `npm run demo:record` |
+| **UI refresh demo video** | `demo-output/jal-ui-demo.mp4` (~3 min, light theme + PR pipeline) — `npm run demo:record:ui` |
 
 <br />
 
@@ -83,9 +84,10 @@ git clone https://github.com/buildwithrenuka/vendo.git && cd vendo && npm instal
 
 | What | Details |
 |------|---------|
-| **Final video** | `demo-output/jal-hackathon-demo.mp4` (~2 min 21 sec, 1080p) |
-| **Record** | `npm run demo:record` |
-| **Change background music** | `npm run demo:music` or `npm run demo:music -- "https://youtube.com/watch?v=..."` |
+| **Final video (cinematic)** | `demo-output/jal-hackathon-demo.mp4` (~2 min 21 sec, 1080p) |
+| **Final video (new UI)** | `demo-output/jal-ui-demo.mp4` (~3 min, light theme + AI Build→PR, 1080p) |
+| **Record** | `npm run demo:record` · `npm run demo:record:ui` |
+| **Change background music** | `npm run demo:music` · `npm run demo:music:ui` or `npm run demo:music -- "https://youtube.com/watch?v=..."` |
 
 Upload `jal-hackathon-demo.mp4` to your hackathon portal (or host on YouTube / Drive and paste that URL in the submission form).
 

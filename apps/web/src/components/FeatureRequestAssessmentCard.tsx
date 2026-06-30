@@ -17,7 +17,7 @@ const FIT_TONE: Record<FeatureRequestAssessment["businessFit"], "success" | "neu
 
 function PrdOutline({ outline }: { outline: FeatureRequestPrdOutline }) {
   return (
-    <div className="mt-4 rounded-xl border border-[var(--color-border)] bg-black/20 p-4 text-sm">
+    <div className="mt-4 rounded-xl border border-[var(--color-border)] bg-[var(--color-landing-elevated)] p-4 text-sm">
       <p className="app-kicker">Requirements snapshot</p>
       <p className="mt-2 font-medium text-[var(--color-ink)]">{outline.problemStatement}</p>
 

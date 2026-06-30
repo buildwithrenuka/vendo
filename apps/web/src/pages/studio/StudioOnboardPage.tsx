@@ -13,6 +13,7 @@ import {
   StudioShell,
   StudioStepBar,
 } from "../../components/studio/StudioUI";
+import { JAL_NAME } from "../../lib/jal-brand";
 
 export function StudioOnboardPage() {
   const navigate = useNavigate();
@@ -71,7 +72,7 @@ export function StudioOnboardPage() {
         <StudioMain>
           <StudioPageHeader
             eyebrow="First pour"
-            title="Pour your repo into Jal"
+            title={`Pour your repo into ${JAL_NAME}`}
             subtitle="Like water taking shape — AI absorbs your codebase and becomes your product brain."
             back={
               <Link to="/studio" className="text-sm text-landing-muted transition hover:text-[var(--color-landing-accent)]">
@@ -148,7 +149,7 @@ OPENAI_API_KEY=sk-...`}</pre>
                     <GitHubIcon className="relative z-10 h-8 w-8 text-[var(--color-landing-accent)]" />
                   </div>
                   <p className="mt-6 text-lg font-semibold">Absorbing repository…</p>
-                  <p className="mt-2 text-sm text-landing-muted">Context is flowing into Jal</p>
+                  <p className="mt-2 text-sm text-landing-muted">Context is flowing into {JAL_NAME}</p>
                 </div>
               )}
 
@@ -159,7 +160,7 @@ OPENAI_API_KEY=sk-...`}</pre>
                   {apiKey && (
                     <div className="mx-auto mt-8 max-w-md rounded-xl border border-amber-500/40 bg-gradient-to-br from-amber-500/15 to-transparent p-5">
                       <p className="text-xs font-bold uppercase tracking-wide text-amber-200">Widget API key</p>
-                      <code className="mt-3 block break-all rounded-lg bg-black/20 px-3 py-2 font-mono text-xs">{apiKey}</code>
+                      <code className="mt-3 block break-all rounded-lg bg-[var(--color-landing-elevated)] px-3 py-2 font-mono text-xs">{apiKey}</code>
                     </div>
                   )}
 

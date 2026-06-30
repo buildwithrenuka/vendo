@@ -516,7 +516,7 @@ export function BuyerDashboard() {
                     {showRulesJson ? "Hide" : "View"} parsed rules
                   </Button>
                   {showRulesJson && (
-                    <pre className="mt-2 overflow-auto rounded-xl border border-[var(--color-border)] bg-black/20 p-3 font-mono text-xs text-[var(--color-ink-muted)]">
+                    <pre className="mt-2 overflow-auto rounded-xl border border-[var(--color-border)] bg-[var(--color-landing-elevated)] p-3 font-mono text-xs text-[var(--color-ink-muted)]">
                       {JSON.stringify(structuredRules, null, 2)}
                     </pre>
                   )}

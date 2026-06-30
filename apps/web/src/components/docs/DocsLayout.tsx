@@ -10,6 +10,7 @@ import {
   isDocSlug,
   type DocSlug,
 } from "../../docs/docs-content";
+import { JAL_STUDIO } from "../../lib/jal-brand";
 
 function DocsSidebar({ active }: { active: DocSlug }) {
   return (
@@ -81,7 +82,7 @@ export function DocsLayout() {
               <p>
                 Next:{" "}
                 {slug === "overview" && <Link to="/docs/get-started" className="docs-link">Get started →</Link>}
-                {slug === "get-started" && <Link to="/docs/studio" className="docs-link">Jal Studio →</Link>}
+                {slug === "get-started" && <Link to="/docs/studio" className="docs-link">{JAL_STUDIO} →</Link>}
                 {slug === "studio" && <Link to="/docs/widget" className="docs-link">Embed widget →</Link>}
                 {slug === "widget" && <Link to="/docs/api" className="docs-link">API reference →</Link>}
                 {slug === "npm" && <Link to="/docs/api" className="docs-link">API reference →</Link>}

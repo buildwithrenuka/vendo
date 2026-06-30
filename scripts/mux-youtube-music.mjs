@@ -17,8 +17,13 @@ const OUT_DIR = path.join(ROOT, "demo-output");
 const DEFAULT_URL = "https://www.youtube.com/watch?v=uTDMVdzIhqQ";
 const YTDLP = path.join(__dirname, "bin", "yt-dlp.exe");
 const MP3 = path.join(__dirname, "demo", "youtube-music.mp3");
-const silentMp4 = path.join(OUT_DIR, "jal-hackathon-demo-silent.mp4");
-const finalMp4 = path.join(OUT_DIR, "jal-hackathon-demo.mp4");
+const args = process.argv.slice(2);
+const isUi = args[0] === "ui" || args[0] === "--ui";
+const urlArg = isUi ? args[1] : args[0];
+
+const PREFIX = isUi ? "jal-ui-demo" : "jal-hackathon-demo";
+const silentMp4 = path.join(OUT_DIR, `${PREFIX}-silent.mp4`);
+const finalMp4 = path.join(OUT_DIR, `${PREFIX}.mp4`);
 
 function run(cmd, args, opts = {}) {
   const r = spawnSync(cmd, args, { stdio: opts.inherit ? "inherit" : "pipe", encoding: "utf8", ...opts });
@@ -69,7 +74,7 @@ if (process.argv[2] === "--local") {
     process.exit(1);
   }
   if (!fs.existsSync(silentMp4)) {
-    console.error(`Missing ${silentMp4} — run npm run demo:record first`);
+    console.error(`Missing ${silentMp4} — run npm run demo:record${isUi ? ":ui" : ""} first`);
     process.exit(1);
   }
   if (!mux(musicFile)) process.exit(1);
@@ -78,10 +83,10 @@ if (process.argv[2] === "--local") {
 }
 
 // ── YouTube URL mode ──
-const url = process.argv[2] ?? DEFAULT_URL;
+const url = urlArg ?? DEFAULT_URL;
 
 if (!fs.existsSync(silentMp4)) {
-  console.error(`Missing ${silentMp4} — run npm run demo:record first`);
+  console.error(`Missing ${silentMp4} — run npm run demo:record${isUi ? ":ui" : ""} first`);
   process.exit(1);
 }
 
