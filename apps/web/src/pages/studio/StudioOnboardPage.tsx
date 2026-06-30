@@ -47,11 +47,13 @@ export function StudioOnboardPage() {
     setNormalizedRepo(repo);
     setBusy(true);
     setError(null);
+    let createdProjectId: string | null = null;
     try {
       const { project, apiKey: key } = await api.studioCreateProject({
         name: name.trim(),
         githubRepo: repo,
       });
+      createdProjectId = project.id;
       setProjectId(project.id);
       setApiKey(key);
       setStep("scan");
@@ -59,8 +61,29 @@ export function StudioOnboardPage() {
       setScan(scanResult);
       setStep("done");
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Failed to attach repo");
-      setStep("form");
+      const message = err instanceof Error ? err.message : "Failed to attach repo";
+      setError(message.includes("timeout") || message === "Request failed"
+        ? "Repo scan timed out — try again (large repos can take up to 2 minutes)"
+        : message);
+      setStep(createdProjectId ? "scan" : "form");
+    } finally {
+      setBusy(false);
+    }
+  };
+
+  const handleRetryScan = async () => {
+    if (!projectId) return;
+    setBusy(true);
+    setError(null);
+    setScan(null);
+    setStep("scan");
+    try {
+      const { scan: scanResult } = await api.studioScanRepo(projectId);
+      setScan(scanResult);
+      setStep("done");
+    } catch (err) {
+      const message = err instanceof Error ? err.message : "Repo scan failed";
+      setError(message);
     } finally {
       setBusy(false);
     }
@@ -148,8 +171,20 @@ OPENAI_API_KEY=sk-...`}</pre>
                   <div className="studio-scan-ring mx-auto flex items-center justify-center">
                     <GitHubIcon className="relative z-10 h-8 w-8 text-[var(--color-landing-accent)]" />
                   </div>
-                  <p className="mt-6 text-lg font-semibold">Absorbing repository…</p>
-                  <p className="mt-2 text-sm text-landing-muted">Context is flowing into {JAL_NAME}</p>
+                  <p className="mt-6 text-lg font-semibold">{busy ? "Absorbing repository…" : "Scan interrupted"}</p>
+                  <p className="mt-2 text-sm text-landing-muted">
+                    {busy ? `Context is flowing into ${JAL_NAME}` : "The project was created — you can retry the scan."}
+                  </p>
+                  {error && (
+                    <p className="mx-auto mt-4 max-w-md rounded-lg border border-red-500/30 bg-red-500/10 px-3 py-2 text-sm text-red-300">
+                      {error}
+                    </p>
+                  )}
+                  {!busy && projectId && (
+                    <button type="button" onClick={handleRetryScan} className="btn-primary mt-6 rounded-xl px-8 py-3 text-sm font-bold">
+                      Retry scan
+                    </button>
+                  )}
                 </div>
               )}
 

@@ -44,6 +44,61 @@ type GitCommit = { tree: { sha: string } };
 type GitTreeItem = { path: string; type: string; sha: string; size?: number };
 type GitTree = { tree: GitTreeItem[]; truncated?: boolean };
 
+const KEY_ROOT_FILES = [
+  "README.md",
+  "readme.md",
+  "package.json",
+  "wrangler.jsonc",
+  "tsconfig.json",
+  "apps/api/package.json",
+  "apps/web/package.json",
+  "packages/shared/package.json",
+];
+
+async function loadGitTreeItems(config: GitHubConfig, treeSha: string): Promise<GitTreeItem[]> {
+  try {
+    const tree = await githubJson<GitTree>(config, `/git/trees/${treeSha}?recursive=1`);
+    return tree.tree ?? [];
+  } catch (err) {
+    const msg = err instanceof Error ? err.message : String(err);
+    if (!/422|too large|truncated/i.test(msg)) throw err;
+  }
+
+  const collected: GitTreeItem[] = [];
+  const queue: Array<{ sha: string; prefix: string; depth: number }> = [{ sha: treeSha, prefix: "", depth: 0 }];
+
+  while (queue.length > 0 && collected.length < 600) {
+    const { sha, prefix, depth } = queue.shift()!;
+    const node = await githubJson<GitTree>(config, `/git/trees/${sha}`);
+    for (const item of node.tree ?? []) {
+      const path = prefix ? `${prefix}/${item.path}` : item.path;
+      if (item.type === "blob") {
+        collected.push({ ...item, path });
+      } else if (item.type === "tree" && depth < 3) {
+        queue.push({ sha: item.sha, prefix: path, depth: depth + 1 });
+      }
+    }
+  }
+
+  return collected;
+}
+
+async function fetchFileSample(
+  config: GitHubConfig,
+  path: string,
+  branch: string,
+): Promise<{ path: string; content: string } | null> {
+  try {
+    const encodedPath = path.split("/").map(encodeURIComponent).join("/");
+    const res = await githubFetch(config, `/contents/${encodedPath}?ref=${encodeURIComponent(branch)}`);
+    if (!res.ok) return null;
+    const text = await res.text();
+    return { path, content: text.slice(0, 6000) };
+  } catch {
+    return null;
+  }
+}
+
 export type CodeChange = {
   path: string;
   content: string;
@@ -100,32 +155,42 @@ export async function fetchRepoContext(config: GitHubConfig, maxFiles = 8): Prom
 }> {
   const repo = await githubJson<RepoMeta>(config, "");
   const branch = repo.default_branch;
-  const ref = await githubJson<GitRef>(config, `/git/ref/heads/${branch}`);
+  const ref = await githubJson<GitRef>(config, `/git/ref/heads/${encodeURIComponent(branch)}`);
   const baseSha = ref.object.sha;
   const commit = await githubJson<GitCommit>(config, `/git/commits/${baseSha}`);
-  const tree = await githubJson<GitTree>(config, `/git/trees/${commit.tree.sha}?recursive=1`);
+  const treeItems = await loadGitTreeItems(config, commit.tree.sha);
 
-  const candidates = (tree.tree ?? [])
+  const candidates = treeItems
     .filter((item) => item.type === "blob")
     .map((item) => item.path)
     .filter((p) =>
-      (p.startsWith("apps/") || p.startsWith("packages/") || p.startsWith("src/"))
+      (p.startsWith("apps/") || p.startsWith("packages/") || p.startsWith("src/") || KEY_ROOT_FILES.includes(p))
       && !p.includes("node_modules")
       && !p.includes(".wrangler")
       && !p.includes("/dist/")
-      && /\.(ts|tsx|sql|jsonc?|jsx?)$/.test(p),
+      && /\.(ts|tsx|sql|jsonc?|jsx?|md)$/i.test(p),
     )
     .slice(0, 120);
 
   const fileSamples: Array<{ path: string; content: string }> = [];
-  for (const path of candidates.slice(0, maxFiles)) {
-    try {
-      const res = await githubFetch(config, `/contents/${path}?ref=${branch}`);
-      if (!res.ok) continue;
-      const text = await res.text();
-      fileSamples.push({ path, content: text.slice(0, 6000) });
-    } catch {
-      /* skip */
+  const seen = new Set<string>();
+
+  for (const path of KEY_ROOT_FILES) {
+    if (fileSamples.length >= maxFiles) break;
+    const sample = await fetchFileSample(config, path, branch);
+    if (sample) {
+      fileSamples.push(sample);
+      seen.add(path);
+    }
+  }
+
+  for (const path of candidates) {
+    if (fileSamples.length >= maxFiles) break;
+    if (seen.has(path)) continue;
+    const sample = await fetchFileSample(config, path, branch);
+    if (sample) {
+      fileSamples.push(sample);
+      seen.add(path);
     }
   }
 

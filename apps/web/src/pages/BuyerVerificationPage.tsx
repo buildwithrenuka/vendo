@@ -47,12 +47,12 @@ export function BuyerVerificationPage() {
   };
 
   return (
-    <Shell title="Become a buyer" subtitle="Instant setup with your work email">
+    <Shell title="Become a buyer" subtitle="Instant setup — verify your company in minutes">
       <Card className="max-w-xl">
         <SectionHeader
           label="Onboarding"
           title="Verify your company"
-          description="Use your work email — not Gmail or Yahoo. Paste GST certificate text for AI-assisted extraction."
+          description="Paste GST certificate text for AI-assisted extraction, or fill in the details below."
         />
         <div className="mb-4 space-y-2">
           <Textarea
@@ -68,12 +68,12 @@ export function BuyerVerificationPage() {
         </div>
         <form className="space-y-4" onSubmit={submit}>
           <Input
-            label="Business email"
+            label="Email"
             type="email"
             required
             value={form.businessEmail}
             onChange={(e) => setForm({ ...form, businessEmail: e.target.value })}
-            placeholder="you@yourcompany.com"
+            placeholder="you@example.com"
           />
           <Input
             label="Company name"

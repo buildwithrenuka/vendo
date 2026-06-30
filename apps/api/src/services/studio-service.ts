@@ -168,10 +168,10 @@ export async function scanRepoForContext(
   });
 
   if (!github) {
-    throw new Error("GitHub not configured — set GITHUB_TOKEN in .dev.vars");
+    throw new Error("GitHub not configured — set GITHUB_TOKEN on the API server");
   }
 
-  const repo = await fetchRepoContext(github, 10);
+  const repo = await fetchRepoContext(github, 6);
   const scan = await openAiJson<{
     productName: string;
     productContext: string;

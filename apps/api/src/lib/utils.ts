@@ -62,15 +62,6 @@ export function corsHeaders(origin: string | null, allowedOrigins: string[]): He
   };
 }
 
-export function isBusinessEmail(email: string): boolean {
-  const freeDomains = new Set([
-    "gmail.com", "yahoo.com", "hotmail.com", "outlook.com",
-    "icloud.com", "proton.me", "protonmail.com", "aol.com",
-  ]);
-  const domain = email.split("@")[1]?.toLowerCase();
-  return Boolean(domain && !freeDomains.has(domain));
-}
-
 export function extractDomain(email: string): string {
   return email.split("@")[1]?.toLowerCase() ?? "";
 }

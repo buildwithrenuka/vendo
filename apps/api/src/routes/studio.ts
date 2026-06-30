@@ -241,22 +241,43 @@ studioRoutes.patch("/projects/:projectId", requireAuth(), requireProjectOwner(),
 
 studioRoutes.post("/projects/:projectId/scan", requireAuth(), requireProjectOwner(), async (c) => {
   const project = c.get("project");
-  if (!c.env.OPENAI_API_KEY) return c.json({ error: "OPENAI_API_KEY not configured" }, 503);
+  if (!githubConfigForProject(c.env, project)) {
+    return c.json({ error: "GitHub not configured — set GITHUB_TOKEN on the API server" }, 503);
+  }
+  if (!c.env.OPENAI_API_KEY?.trim()) {
+    return c.json({ error: "OPENAI_API_KEY not configured" }, 503);
+  }
 
-  const scan = await scanRepoForContext(c.env, project.githubRepo);
-  const jalContext: JalProjectContext = {
-    ...project.jalContext,
-    productName: scan.productName,
-    productContext: scan.productContext,
-    stackContext: scan.stackContext,
-    existingFeatures: scan.existingFeatures,
-  };
+  try {
+    const scan = await scanRepoForContext(c.env, project.githubRepo);
+    const jalContext: JalProjectContext = {
+      ...project.jalContext,
+      productName: scan.productName,
+      productContext: scan.productContext,
+      stackContext: scan.stackContext,
+      existingFeatures: scan.existingFeatures,
+    };
 
-  await c.env.DB.prepare(
-    `UPDATE jal_projects SET jal_context_json = ?, repo_scanned_at = datetime('now'), updated_at = datetime('now') WHERE id = ?`,
-  ).bind(JSON.stringify(jalContext), project.id).run();
+    await c.env.DB.prepare(
+      `UPDATE jal_projects SET jal_context_json = ?, repo_scanned_at = datetime('now'), updated_at = datetime('now') WHERE id = ?`,
+    ).bind(JSON.stringify(jalContext), project.id).run();
 
-  return c.json({ scan, jalContext });
+    return c.json({ scan, jalContext });
+  } catch (err) {
+    const message = err instanceof Error ? err.message : "Repo scan failed";
+    const lower = message.toLowerCase();
+    const status =
+      lower.includes("404") || lower.includes("not found")
+        ? 404
+        : lower.includes("403") || lower.includes("forbidden")
+          ? 403
+          : lower.includes("401") || lower.includes("bad credentials")
+            ? 401
+            : lower.includes("rate limit")
+              ? 429
+              : 502;
+    return c.json({ error: message }, status);
+  }
 });
 
 studioRoutes.post("/projects/:projectId/regenerate-key", requireAuth(), requireProjectOwner(), async (c) => {

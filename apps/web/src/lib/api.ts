@@ -1,10 +1,13 @@
 const API_BASE = "/api";
 
-async function request<T>(path: string, init?: RequestInit): Promise<T> {
+type ApiRequestInit = RequestInit & { timeoutMs?: number };
+
+async function request<T>(path: string, init?: ApiRequestInit): Promise<T> {
+  const { timeoutMs = 10_000, ...fetchInit } = init ?? {};
   const res = await fetch(`${API_BASE}${path}`, {
-    ...init,
+    ...fetchInit,
     credentials: "include",
-    signal: init?.signal ?? AbortSignal.timeout(10_000),
+    signal: fetchInit.signal ?? AbortSignal.timeout(timeoutMs),
     headers: {
       "Content-Type": "application/json",
       ...init?.headers,
@@ -310,7 +313,7 @@ export const api = {
   studioScanRepo: (projectId: string) =>
     request<{ scan: import("@vendo/shared").JalRepoScanResult; jalContext: import("@vendo/shared").JalProjectContext }>(
       `/studio/projects/${projectId}/scan`,
-      { method: "POST" },
+      { method: "POST", timeoutMs: 120_000 },
     ),
 
   studioRegenerateKey: (projectId: string) =>

@@ -1,8 +1,7 @@
 import { Hono } from "hono";
 import type { AppEnv } from "../middleware/auth";
 import { requireAuth, requireRole } from "../middleware/auth";
-import { isLocalDev } from "../lib/config";
-import { extractDomain, isBusinessEmail, parseJson } from "../lib/utils";
+import { extractDomain, parseJson } from "../lib/utils";
 import { ensurePublishedDefaultForm } from "../lib/buyer-setup";
 import { SaveFormInput, FormSchemaPayload, SUPPLIER_STARTER_FIELDS } from "@vendo/forms";
 import { extractBuyerInfoFromDocument } from "../services/prefill";
@@ -32,10 +31,6 @@ buyerRoutes.post("/verify/extract", requireAuth(), requireRole("undecided"), asy
 buyerRoutes.post("/verify", requireAuth(), requireRole("undecided"), async (c) => {
   const user = c.get("user")!;
   const body = verificationSchema.parse(await c.req.json());
-
-  if (!isBusinessEmail(body.businessEmail) && !isLocalDev(c.env)) {
-    return c.json({ error: "Use a business email domain (not Gmail, Yahoo, etc.)", code: "FREE_EMAIL" }, 400);
-  }
 
   const verificationId = crypto.randomUUID();
   const domain = extractDomain(body.businessEmail);
